@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure full viewport coverage without scrollbars */
+html, body, #root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Leaflet map container fixes */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+/* Remove default Leaflet control margins that can cause overflow */
+.leaflet-control-container {
+  pointer-events: none;
+}
+
+.leaflet-control {
+  pointer-events: auto;
+}
+
 :root {
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(20, 14.3%, 4.1%);

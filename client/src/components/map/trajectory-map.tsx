@@ -164,12 +164,13 @@ export default function TrajectoryMap({
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full overflow-hidden">
       <MapContainer
         center={[5.0, 40.0]}
         zoom={5}
         className="h-full w-full"
-        zoomControl={true}
+        zoomControl={false}
+        style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
           url={getBasemapUrl()}

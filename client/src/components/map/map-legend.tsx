@@ -23,7 +23,7 @@ export default function MapLegend({
   }
 
   return (
-    <div className="absolute bottom-4 right-4 z-[9999] pointer-events-none">
+    <div className="absolute top-4 left-4 z-[9999] pointer-events-none">
       <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
         <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
@@ -44,11 +44,11 @@ export default function MapLegend({
       </CardHeader>
       
       {isExpanded && (
-        <CardContent className="pt-0 pb-3 space-y-4">
-          {/* Outbreak Stages */}
+        <CardContent className="pt-0 pb-3 space-y-3">
+          {/* Current Observations Group */}
           {showOutbreakStages && (
             <div>
-              <h4 className="text-xs font-medium text-gray-600 mb-2">Locust Phases</h4>
+              <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Current Observations</h4>
               <div className="space-y-1.5">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF0000' }}></div>
@@ -66,48 +66,51 @@ export default function MapLegend({
             </div>
           )}
 
-          {/* Trajectory Points */}
+          {/* Movement Predictions Group */}
           {showTrajectory && (
             <div>
-              <h4 className="text-xs font-medium text-gray-600 mb-2">Swarm Trajectories (155 Particles)</h4>
+              <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Movement Predictions</h4>
               <div className="space-y-1.5">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(137.5, 65%, 45%)' }}></div>
-                  <span className="text-xs text-gray-700">Particle 1</span>
+                <div className="text-xs text-gray-600 font-medium">155 Particle Trajectories</div>
+                <div className="grid grid-cols-2 gap-1">
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(137.5, 65%, 45%)' }}></div>
+                    <span className="text-xs text-gray-700">ID 1</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(275, 80%, 55%)' }}></div>
+                    <span className="text-xs text-gray-700">ID 2</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(52.5, 95%, 65%)' }}></div>
+                    <span className="text-xs text-gray-700">ID 3</span>
+                  </div>
+                  <div className="flex items-center space-x-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(190, 65%, 75%)' }}></div>
+                    <span className="text-xs text-gray-700">ID 4</span>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(275, 80%, 55%)' }}></div>
-                  <span className="text-xs text-gray-700">Particle 2</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(52.5, 95%, 65%)' }}></div>
-                  <span className="text-xs text-gray-700">Particle 3</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(190, 65%, 75%)' }}></div>
-                  <span className="text-xs text-gray-700">Particle 4</span>
-                </div>
-                <div className="text-xs text-gray-500 italic">Each particle (1-155) has unique color</div>
+                <div className="text-xs text-gray-500 italic">+ 151 more unique colors</div>
               </div>
             </div>
           )}
 
-          {/* Breeding Suitability */}
+          {/* Environmental Conditions Group */}
           {showBreedingSuitability && (
             <div>
-              <h4 className="text-xs font-medium text-gray-600 mb-2">Breeding Suitability</h4>
+              <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Environmental Conditions</h4>
               <div className="space-y-1.5">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[4] }}></div>
-                  <span className="text-xs text-gray-700">High Suitability</span>
+                  <span className="text-xs text-gray-700">High Breeding Suitability</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[3] }}></div>
-                  <span className="text-xs text-gray-700">Moderate</span>
+                  <span className="text-xs text-gray-700">Moderate Suitability</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[2] }}></div>
-                  <span className="text-xs text-gray-700">Low</span>
+                  <span className="text-xs text-gray-700">Low Suitability</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[1] }}></div>
