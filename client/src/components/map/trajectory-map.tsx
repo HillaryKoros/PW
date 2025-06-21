@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Polyline, CircleMarker, GeoJSON, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, CircleMarker, GeoJSON, Marker, Popup } from "react-leaflet";
 import { LatLngTuple, DivIcon } from "leaflet";
 import { processTrajectoryData, getParticleTrajectories, getTrajectoryColor, getRiskLevel, getRiskColor } from "@/lib/map-utils";
 import { generateBreedingSuitabilityData, generateOutbreakStagesData, BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatial-data";
@@ -30,50 +30,51 @@ export default function TrajectoryMap({
   animationSpeed,
   selectedCountry,
   showBreedingSuitability = false,
-  showOutbreakStages = true
+  showOutbreakStages = false,
+  selectedBasemap = "openstreetmap",
+  showAdminBoundaries = false,
+  showFeedingSusceptibility = false,
 }: TrajectoryMapProps) {
-  const [particleTrajectories, setParticleTrajectories] = useState<any[]>([]);
+  const animationRef = useRef<NodeJS.Timeout | null>(null);
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());
+  const [particleTrajectories, setParticleTrajectories] = useState<any[]>([]);
   const [breedingSuitabilityData, setBreedingSuitabilityData] = useState<any>(null);
   const [outbreakStagesData, setOutbreakStagesData] = useState<any>(null);
-  const animationRef = useRef<NodeJS.Timeout>();
 
+  // Process trajectory data
   useEffect(() => {
     if (trajectoryData) {
-      const processed = processTrajectoryData(trajectoryData);
-      const trajectories = getParticleTrajectories(processed);
+      const processedData = processTrajectoryData(trajectoryData);
+      const trajectories = getParticleTrajectories(processedData);
       setParticleTrajectories(trajectories);
-      
-      // Initialize current positions
-      const initialPositions = new Map();
-      trajectories.forEach(trajectory => {
-        if (trajectory.coordinates.length > 0) {
-          initialPositions.set(trajectory.particleId, trajectory.coordinates[0]);
-        }
-      });
-      setCurrentPositions(initialPositions);
     }
-
-    // Load spatial data layers
-    setBreedingSuitabilityData(generateBreedingSuitabilityData());
-    setOutbreakStagesData(generateOutbreakStagesData());
   }, [trajectoryData]);
 
+  // Generate spatial data layers
+  useEffect(() => {
+    if (showBreedingSuitability) {
+      setBreedingSuitabilityData(generateBreedingSuitabilityData());
+    }
+    if (showOutbreakStages) {
+      setOutbreakStagesData(generateOutbreakStagesData());
+    }
+  }, [showBreedingSuitability, showOutbreakStages]);
+
+  // Animation effect
   useEffect(() => {
     if (isPlaying && particleTrajectories.length > 0) {
       animationRef.current = setInterval(() => {
-        const maxTimeSteps = Math.max(...particleTrajectories.map(t => t.coordinates.length));
+        const maxLength = Math.max(...particleTrajectories.map(t => t.coordinates.length));
+        const nextIndex = currentTimeIndex + 1;
         
-        if (currentTimeIndex >= maxTimeSteps - 1) {
+        if (nextIndex >= maxLength) {
           onTimeIndexChange(0); // Reset to beginning
-          return;
+        } else {
+          onTimeIndexChange(nextIndex);
         }
 
-        const nextIndex = currentTimeIndex + 1;
-        onTimeIndexChange(nextIndex);
-
         // Update current positions
-        const newPositions = new Map();
+        const newPositions = new Map<number, LatLngTuple>();
         particleTrajectories.forEach(trajectory => {
           const index = Math.min(nextIndex, trajectory.coordinates.length - 1);
           if (trajectory.coordinates[index]) {
@@ -110,6 +111,18 @@ export default function TrajectoryMap({
     }
   }, [currentTimeIndex, particleTrajectories]);
 
+  // Get basemap tile layer URL
+  const getBasemapUrl = () => {
+    switch (selectedBasemap) {
+      case "satellite":
+        return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+      case "terrain":
+        return "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+      default:
+        return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    }
+  };
+
   if (!trajectoryData) {
     return (
       <div className="h-full w-full flex items-center justify-center bg-gray-100">
@@ -127,9 +140,18 @@ export default function TrajectoryMap({
         zoomControl={true}
       >
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={getBasemapUrl()}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
+
+        {/* Feeding Susceptibility Raster Layer */}
+        {showFeedingSusceptibility && (
+          <RasterLayer
+            url="/api/mapserver"
+            visible={showFeedingSusceptibility}
+            opacity={0.7}
+          />
+        )}
 
         {/* Outbreak Stages Layer */}
         {showOutbreakStages && outbreakStagesData && (
@@ -181,87 +203,57 @@ export default function TrajectoryMap({
           />
         )}
         
-        {/* Trajectory Lines with Flow Animation */}
+        {/* Trajectory Lines */}
         {particleTrajectories.map((trajectory) => {
           const visiblePath = trajectory.coordinates.slice(0, currentTimeIndex + 1);
-          const recentPath = trajectory.coordinates.slice(Math.max(0, currentTimeIndex - 5), currentTimeIndex + 1);
           
           return (
-            <div key={`trajectory-group-${trajectory.particleId}`}>
-              {/* Full trajectory path (faded) */}
-              <Polyline
-                key={`trajectory-full-${trajectory.particleId}`}
-                positions={visiblePath}
-                color={getTrajectoryColor(trajectory.particleId)}
-                weight={2}
-                opacity={0.3}
-              />
-              {/* Recent path (bright) to show flow direction */}
-              {recentPath.length > 1 && (
-                <Polyline
-                  key={`trajectory-recent-${trajectory.particleId}`}
-                  positions={recentPath}
-                  color={getTrajectoryColor(trajectory.particleId)}
-                  weight={4}
-                  opacity={0.9}
-                />
-              )}
-            </div>
+            <Polyline
+              key={`trajectory-${trajectory.particleId}`}
+              positions={visiblePath}
+              color={getTrajectoryColor(trajectory.particleId)}
+              weight={2}
+              opacity={0.6}
+            />
           );
         })}
 
-        {/* Current Position Markers with Risk-Based Colors and Movement Indicators */}
+        {/* Current Position Markers with Static Locust Symbols */}
         {Array.from(currentPositions.entries()).map(([particleId, position]) => {
           const riskLevel = getRiskLevel(particleId);
           const riskColor = getRiskColor(riskLevel);
-          const trajectory = particleTrajectories.find(t => t.particleId === particleId);
-          const previousPosition = trajectory && currentTimeIndex > 0 
-            ? trajectory.coordinates[Math.max(0, currentTimeIndex - 1)]
-            : null;
+          
+          // Create custom locust icon
+          const locustIcon = new DivIcon({
+            html: renderToString(
+              <LocustIcon 
+                size={16} 
+                color={riskColor}
+              />
+            ),
+            className: 'locust-marker',
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+          });
           
           return (
-            <div key={`marker-group-${particleId}`}>
-              {/* Movement trail for direction indication */}
-              {previousPosition && (
-                <CircleMarker
-                  key={`trail-${particleId}`}
-                  center={previousPosition}
-                  radius={5}
-                  fillColor={riskColor}
-                  color="white"
-                  weight={1}
-                  fillOpacity={0.4}
-                />
-              )}
-              {/* Current position with enhanced flow animation */}
-              <CircleMarker
-                key={`marker-${particleId}`}
-                center={position}
-                radius={10}
-                fillColor={riskColor}
-                color="white"
-                weight={3}
-                fillOpacity={1}
-                className="swarm-flow"
-              />
-              {/* Direction indicator (small arrow effect) */}
-              {previousPosition && (
-                <CircleMarker
-                  key={`direction-${particleId}`}
-                  center={position}
-                  radius={3}
-                  fillColor="white"
-                  color={riskColor}
-                  weight={2}
-                  fillOpacity={1}
-                  className="direction-indicator"
-                />
-              )}
-            </div>
+            <Marker
+              key={`locust-${particleId}`}
+              position={position}
+              icon={locustIcon}
+            >
+              <Popup>
+                <div>
+                  <h4>Locust Swarm #{particleId}</h4>
+                  <p><strong>Risk Level:</strong> {riskLevel}</p>
+                  <p><strong>Position:</strong> {position[0].toFixed(3)}, {position[1].toFixed(3)}</p>
+                </div>
+              </Popup>
+            </Marker>
           );
         })}
 
-        {/* Start Position Markers with Risk-Based Colors */}
+        {/* Start Position Markers */}
         {particleTrajectories.map((trajectory) => {
           if (trajectory.coordinates.length === 0) return null;
           const riskLevel = getRiskLevel(trajectory.particleId);

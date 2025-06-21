@@ -30,10 +30,6 @@ export default function RasterLayer({
         format: 'image/png',
         transparent: true,
         opacity: opacity,
-        service: 'WMS',
-        request: 'GetMap',
-        version: '1.3.0',
-        srs: 'EPSG:4326',
         attribution: 'Feeding Susceptibility Data - MapServer WMS'
       });
 
