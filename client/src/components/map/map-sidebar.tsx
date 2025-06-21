@@ -92,52 +92,6 @@ export default function MapSidebar({
       
       {/* Layer Controls - Scrollable */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* Data and Animation Controls Combined */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-medium text-gray-700">Data: {currentDate}</h3>
-            <div className="flex space-x-1">
-              <Button
-                onClick={isPlaying ? onPause : onPlay}
-                size="sm"
-                variant="outline"
-                className="text-xs px-2 py-1"
-              >
-                {isPlaying ? <Pause size={12} /> : <Play size={12} />}
-              </Button>
-              <Button
-                onClick={onReset}
-                size="sm"
-                variant="outline"
-                className="text-xs px-2 py-1"
-              >
-                <RotateCcw size={12} />
-              </Button>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Slider
-              value={[currentTimeIndex]}
-              onValueChange={(value) => onTimeIndexChange(value[0])}
-              max={maxTimeIndex}
-              min={0}
-              step={1}
-              className="w-full"
-            />
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>Speed</span>
-              <Slider
-                value={[animationSpeed]}
-                onValueChange={(value) => onSpeedChange(value[0])}
-                max={1000}
-                min={50}
-                step={50}
-                className="w-16"
-              />
-            </div>
-          </div>
-        </div>
-        
         {/* Spatial Data Layers */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Model Output Layers</h3>

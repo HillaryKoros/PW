@@ -31,7 +31,7 @@ export default function MapLegend({
   }
 
   return (
-    <div className="absolute top-4 left-4 z-[9999] pointer-events-none max-h-96 overflow-y-auto">
+    <div className="absolute top-4 right-4 z-[9999] pointer-events-none max-h-96 overflow-y-auto">
       <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
