@@ -162,7 +162,7 @@ export default function MapSidebar({
         
         {/* Spatial Data Layers */}
         <div>
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Spatial Data Layers</h3>
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Model Output Layers</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label htmlFor="outbreak-stages" className="text-xs text-gray-600">Outbreak Stages</label>
@@ -180,6 +180,36 @@ export default function MapSidebar({
                 onCheckedChange={onToggleBreedingSuitability}
               />
             </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="temporal-breeding" className="text-xs text-gray-600">Temporal Breeding</label>
+              <Switch
+                id="temporal-breeding"
+                checked={false}
+                disabled
+                onCheckedChange={() => {}}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="gregarization" className="text-xs text-gray-600">Gregarization & Swarming</label>
+              <Switch
+                id="gregarization"
+                checked={false}
+                disabled
+                onCheckedChange={() => {}}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="feeding-susceptibility" className="text-xs text-gray-600">Feeding Susceptibility</label>
+              <Switch
+                id="feeding-susceptibility"
+                checked={false}
+                disabled
+                onCheckedChange={() => {}}
+              />
+            </div>
+          </div>
+          <div className="mt-2">
+            <span className="text-xs text-gray-500">Note: Additional layers available via MapCache/MapServer endpoints</span>
           </div>
         </div>
 

@@ -175,32 +175,82 @@ export default function TrajectoryMap({
           />
         )}
         
-        {/* Trajectory Lines */}
-        {particleTrajectories.map((trajectory) => (
-          <Polyline
-            key={`trajectory-${trajectory.particleId}`}
-            positions={trajectory.coordinates.slice(0, currentTimeIndex + 1)}
-            color={getTrajectoryColor(trajectory.particleId)}
-            weight={3}
-            opacity={0.7}
-          />
-        ))}
+        {/* Trajectory Lines with Flow Animation */}
+        {particleTrajectories.map((trajectory) => {
+          const visiblePath = trajectory.coordinates.slice(0, currentTimeIndex + 1);
+          const recentPath = trajectory.coordinates.slice(Math.max(0, currentTimeIndex - 5), currentTimeIndex + 1);
+          
+          return (
+            <div key={`trajectory-group-${trajectory.particleId}`}>
+              {/* Full trajectory path (faded) */}
+              <Polyline
+                key={`trajectory-full-${trajectory.particleId}`}
+                positions={visiblePath}
+                color={getTrajectoryColor(trajectory.particleId)}
+                weight={2}
+                opacity={0.3}
+              />
+              {/* Recent path (bright) to show flow direction */}
+              {recentPath.length > 1 && (
+                <Polyline
+                  key={`trajectory-recent-${trajectory.particleId}`}
+                  positions={recentPath}
+                  color={getTrajectoryColor(trajectory.particleId)}
+                  weight={4}
+                  opacity={0.9}
+                />
+              )}
+            </div>
+          );
+        })}
 
-        {/* Current Position Markers with Risk-Based Colors */}
+        {/* Current Position Markers with Risk-Based Colors and Movement Indicators */}
         {Array.from(currentPositions.entries()).map(([particleId, position]) => {
           const riskLevel = getRiskLevel(particleId);
           const riskColor = getRiskColor(riskLevel);
+          const trajectory = particleTrajectories.find(t => t.particleId === particleId);
+          const previousPosition = trajectory && currentTimeIndex > 0 
+            ? trajectory.coordinates[Math.max(0, currentTimeIndex - 1)]
+            : null;
+          
           return (
-            <CircleMarker
-              key={`marker-${particleId}`}
-              center={position}
-              radius={8}
-              fillColor={riskColor}
-              color="white"
-              weight={2}
-              fillOpacity={0.9}
-              className="animate-pulse-slow"
-            />
+            <div key={`marker-group-${particleId}`}>
+              {/* Movement trail for direction indication */}
+              {previousPosition && (
+                <CircleMarker
+                  key={`trail-${particleId}`}
+                  center={previousPosition}
+                  radius={5}
+                  fillColor={riskColor}
+                  color="white"
+                  weight={1}
+                  fillOpacity={0.4}
+                />
+              )}
+              {/* Current position with pulsing animation */}
+              <CircleMarker
+                key={`marker-${particleId}`}
+                center={position}
+                radius={10}
+                fillColor={riskColor}
+                color="white"
+                weight={3}
+                fillOpacity={1}
+                className="animate-pulse-slow"
+              />
+              {/* Direction indicator (small arrow effect) */}
+              {previousPosition && (
+                <CircleMarker
+                  key={`direction-${particleId}`}
+                  center={position}
+                  radius={3}
+                  fillColor="white"
+                  color={riskColor}
+                  weight={2}
+                  fillOpacity={1}
+                />
+              )}
+            </div>
           );
         })}
 
