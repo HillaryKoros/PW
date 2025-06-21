@@ -140,7 +140,7 @@ export default function MapViewer() {
           {/* Sidebar Toggle Button */}
           <Button
             onClick={toggleSidebar}
-            className="absolute top-4 left-4 z-40 w-10 h-10 p-0 bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+            className="absolute top-4 left-4 z-[9999] w-10 h-10 p-0 bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 shadow-lg"
             variant="outline"
           >
             <Menu size={16} />

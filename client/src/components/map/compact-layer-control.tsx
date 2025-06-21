@@ -29,7 +29,7 @@ export default function CompactLayerControl({
   };
 
   return (
-    <div className="absolute bottom-4 right-4 z-[1000]">
+    <div className="absolute bottom-12 right-4 z-[1000]">
       <Card className="bg-white border border-gray-300 shadow-lg w-48">
         <CardContent className="p-2">
           <div className="space-y-2">
