@@ -68,10 +68,7 @@ export default function TrajectoryMap({
     if (showBreedingSuitability) {
       setBreedingSuitabilityData(generateBreedingSuitabilityData());
     }
-    if (showOutbreakStages) {
-      setOutbreakStagesData(generateOutbreakStagesData());
-    }
-  }, [showBreedingSuitability, showOutbreakStages]);
+  }, [showBreedingSuitability]);
 
   // Animation effect
   useEffect(() => {
