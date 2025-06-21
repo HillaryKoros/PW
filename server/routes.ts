@@ -95,17 +95,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
 </svg>`;
           }
         } else if (layerParam === 'outbreak_stages') {
-          const outbreakGeoJsonPath = path.join(process.cwd(), "attached_assets", "locust_outbreak_stages_1750531268081.geojson");
+          const outbreakGeoJsonPath = path.join(process.cwd(), "attached_assets", "locust_outbreak_stages_1750531579460.geojson");
           
           if (fs.existsSync(outbreakGeoJsonPath)) {
-            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+            try {
+              const geoJsonData = JSON.parse(fs.readFileSync(outbreakGeoJsonPath, 'utf8'));
+              
+              // Create SVG with authentic outbreak stage data
+              let circles = '';
+              const stageColors = {
+                'Crisis Stage': '#FF0000',
+                'Alert Stage': '#FF8C00', 
+                'Alarm Stage': '#FFD700',
+                'Calm Stage': '#90EE90'
+              };
+              
+              // Sample representative points from the authentic data
+              geoJsonData.features.slice(0, 50).forEach((feature: any, index: number) => {
+                const [lon, lat] = feature.geometry.coordinates;
+                const stage = feature.properties.outbreak_stage;
+                const color = stageColors[stage as keyof typeof stageColors] || '#CCCCCC';
+                
+                // Convert geographic coordinates to SVG coordinates (simple projection)
+                const x = Math.max(0, Math.min(256, ((lon - 35) / 10) * 256));
+                const y = Math.max(0, Math.min(256, ((20 - lat) / 10) * 256));
+                const radius = stage === 'Crisis Stage' ? 4 : stage === 'Alert Stage' ? 3 : 2;
+                
+                circles += `<circle cx="${x}" cy="${y}" r="${radius}" fill="${color}" opacity="0.8"/>`;
+              });
+              
+              svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
   <rect width="256" height="256" fill="transparent"/>
-  <circle cx="120" cy="80" r="8" fill="#FF0000" opacity="0.9"/>
-  <circle cx="150" cy="100" r="6" fill="#FF8C00" opacity="0.8"/>
-  <circle cx="80" cy="150" r="6" fill="#FFD700" opacity="0.7"/>
-  <circle cx="40" cy="200" r="3" fill="#90EE90" opacity="0.6"/>
+  ${circles}
 </svg>`;
+            } catch (parseError) {
+              console.error("Error parsing outbreak stages GeoJSON:", parseError);
+              svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" fill="transparent"/>
+  <text x="10" y="20" font-size="12" fill="#FF0000">Outbreak data loading...</text>
+</svg>`;
+            }
           }
         } else if (layerParam.startsWith('temporal_breeding_')) {
           const month = layerParam.split('_')[2];
@@ -163,6 +194,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("MapServer WMS error:", error);
       res.status(500).json({ error: "MapServer WMS processing failed" });
+    }
+  });
+
+  // Serve authentic outbreak stages GeoJSON data
+  app.get("/api/outbreak-stages", (req, res) => {
+    try {
+      const outbreakGeoJsonPath = path.join(process.cwd(), "attached_assets", "locust_outbreak_stages_1750531579460.geojson");
+      
+      if (!fs.existsSync(outbreakGeoJsonPath)) {
+        return res.status(404).json({ error: "Outbreak stages data file not found" });
+      }
+
+      const geoJsonData = fs.readFileSync(outbreakGeoJsonPath, 'utf8');
+      const parsedData = JSON.parse(geoJsonData);
+      
+      res.json(parsedData);
+    } catch (error) {
+      console.error("Error serving outbreak stages data:", error);
+      res.status(500).json({ error: "Failed to load outbreak stages data" });
     }
   });
 
