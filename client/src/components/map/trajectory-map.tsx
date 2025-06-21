@@ -248,8 +248,8 @@ export default function TrajectoryMap({
 
         {/* Current Position Markers with Static Locust Symbols */}
         {showTrajectory && Array.from(currentPositions.entries()).map(([particleId, position]) => {
-          const riskLevel = getRiskLevel(particleId);
-          const riskColor = getRiskColor(riskLevel);
+          // Use trajectory color since risk level is not in data
+          const riskColor = getTrajectoryColor(particleId);
           
           // Create custom locust icon
           const locustIcon = new DivIcon({
@@ -273,7 +273,7 @@ export default function TrajectoryMap({
               <Popup>
                 <div>
                   <h4>Locust Swarm #{particleId}</h4>
-                  <p><strong>Risk Level:</strong> {riskLevel}</p>
+                  <p><strong>Trajectory Color:</strong> {getTrajectoryColor(particleId)}</p>
                   <p><strong>Position:</strong> {position[0].toFixed(3)}, {position[1].toFixed(3)}</p>
                 </div>
               </Popup>
@@ -284,8 +284,7 @@ export default function TrajectoryMap({
         {/* Start Position Markers */}
         {showTrajectory && particleTrajectories.map((trajectory) => {
           if (trajectory.coordinates.length === 0) return null;
-          const riskLevel = getRiskLevel(trajectory.particleId);
-          const riskColor = getRiskColor(riskLevel);
+          const riskColor = getTrajectoryColor(trajectory.particleId);
           return (
             <CircleMarker
               key={`start-${trajectory.particleId}`}

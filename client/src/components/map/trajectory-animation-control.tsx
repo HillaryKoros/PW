@@ -34,15 +34,39 @@ export default function TrajectoryAnimationControl({
 
   useEffect(() => {
     if (trajectoryData?.features) {
-      const timeSteps = Math.max(1, trajectoryData.features.length / 100);
-      setMaxTimeIndex(Math.floor(timeSteps));
+      // Get unique time steps from trajectory data
+      const times: string[] = [];
+      trajectoryData.features.forEach((f: any) => {
+        if (!times.includes(f.properties.time)) {
+          times.push(f.properties.time);
+        }
+      });
+      setMaxTimeIndex(times.length - 1);
     }
   }, [trajectoryData]);
 
   useEffect(() => {
-    const date = getDateFromTimeIndex(currentTimeIndex);
-    setCurrentDate(date);
-  }, [currentTimeIndex]);
+    if (trajectoryData?.features && trajectoryData.features.length > 0) {
+      // Get unique sorted dates from trajectory data
+      const times: string[] = [];
+      trajectoryData.features.forEach((f: any) => {
+        if (!times.includes(f.properties.time)) {
+          times.push(f.properties.time);
+        }
+      });
+      times.sort();
+      
+      if (currentTimeIndex < times.length) {
+        const isoDate = times[currentTimeIndex];
+        const date = new Date(isoDate);
+        setCurrentDate(date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        }));
+      }
+    }
+  }, [currentTimeIndex, trajectoryData]);
 
   if (!visible) return null;
 
