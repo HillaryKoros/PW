@@ -16,8 +16,9 @@ export default function MapLegend({
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <Card className="absolute top-4 right-4 min-w-48 z-50 bg-white border border-gray-300 shadow-xl">
-      <CardHeader className="pb-2">
+    <div className="fixed top-20 right-4 z-[9999] pointer-events-none">
+      <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
+        <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-gray-800">Legend</h3>
           <Button 
@@ -123,5 +124,6 @@ export default function MapLegend({
         </CardContent>
       )}
     </Card>
+    </div>
   );
 }
