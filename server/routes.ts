@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import fs from "fs";
 import path from "path";
+import * as shapefile from 'shapefile';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve trajectory data
@@ -213,6 +214,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error serving outbreak stages data:", error);
       res.status(500).json({ error: "Failed to load outbreak stages data" });
+    }
+  });
+
+  // Serve swarm coverage shapefile data as GeoJSON
+  app.get("/api/swarm-coverage", async (req, res) => {
+    try {
+      const shpPath = path.join(process.cwd(), "attached_assets", "locust_swarm_coverage_2024_1750530695098.shp");
+      
+      if (!fs.existsSync(shpPath)) {
+        return res.status(404).json({ error: "Swarm coverage shapefile not found" });
+      }
+
+      // Convert shapefile to GeoJSON
+      const features: any[] = [];
+      
+      await shapefile.read(shpPath)
+        .then(geojson => {
+          if (geojson.features) {
+            features.push(...geojson.features);
+          }
+        })
+        .catch(error => {
+          console.error("Error reading shapefile:", error);
+          throw error;
+        });
+
+      const geojsonData = {
+        type: "FeatureCollection",
+        features: features
+      };
+
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      res.json(geojsonData);
+    } catch (error) {
+      console.error("Error serving swarm coverage data:", error);
+      res.status(500).json({ error: "Failed to load swarm coverage data" });
     }
   });
 

@@ -60,7 +60,7 @@ export default function SwarmCoverageLayer({
     }
   };
 
-  const getSwarmStyle = (feature?: SwarmFeature) => {
+  const getSwarmStyle = (feature?: any) => {
     // Style based on swarm properties
     const intensity = feature?.properties?.intensity || 0.5;
     const swarmType = feature?.properties?.type || 'unknown';
@@ -90,7 +90,7 @@ export default function SwarmCoverageLayer({
     };
   };
 
-  const onEachFeature = (feature: SwarmFeature, layer: any) => {
+  const onEachFeature = (feature: any, layer: any) => {
     if (feature.properties) {
       const props = feature.properties;
       const popupContent = `

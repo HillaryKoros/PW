@@ -132,59 +132,7 @@ export default function MapLegend({
               </div>
             )}
 
-            {/* Feeding Periods */}
-            {(showBreedingSuitability || showOutbreakStages) && (
-              <div>
-                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Feeding Periods</h4>
-                <div className="space-y-1.5">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#8B0000' }}></div>
-                    <span className="text-xs text-gray-700">8+ days</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF4444' }}></div>
-                    <span className="text-xs text-gray-700">5-7 days</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF8800' }}></div>
-                    <span className="text-xs text-gray-700">2-4 days</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFCC00' }}></div>
-                    <span className="text-xs text-gray-700">1-2 days</span>
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {/* Gregarization Levels */}
-            {(showBreedingSuitability || showOutbreakStages) && (
-              <div>
-                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Gregarization Intensity</h4>
-                <div className="space-y-1.5">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#CC0000' }}></div>
-                    <span className="text-xs text-gray-700">Very High (80-100%)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF4444' }}></div>
-                    <span className="text-xs text-gray-700">High (60-80%)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF8800' }}></div>
-                    <span className="text-xs text-gray-700">Moderate (40-60%)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFCC00' }}></div>
-                    <span className="text-xs text-gray-700">Low (20-40%)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFFF99' }}></div>
-                    <span className="text-xs text-gray-700">Very Low (0-20%)</span>
-                  </div>
-                </div>
-              </div>
-            )}
           </CardContent>
         )}
       </Card>

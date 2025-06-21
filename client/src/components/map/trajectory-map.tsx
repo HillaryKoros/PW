@@ -9,6 +9,7 @@ import GregarizationLayer from "./gregarization-layer";
 import LocustCoverageLayer from "./locust-coverage-layer";
 import TemporalBreedingLayer from "./temporal-breeding-layer";
 import OutbreakStagesLayer from "./outbreak-stages-layer";
+import SwarmCoverageLayer from "./swarm-coverage-layer";
 import TrajectoryAnimationControl from "./trajectory-animation-control";
 import TrajectoryDateDisplay from "./trajectory-date-display";
 import MapLegend from "./map-legend";
