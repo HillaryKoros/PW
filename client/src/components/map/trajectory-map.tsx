@@ -238,7 +238,7 @@ export default function TrajectoryMap({
 
 
         {/* Current Position Markers with Static Locust Symbols */}
-        {Array.from(currentPositions.entries()).map(([particleId, position]) => {
+        {showTrajectory && Array.from(currentPositions.entries()).map(([particleId, position]) => {
           const riskLevel = getRiskLevel(particleId);
           const riskColor = getRiskColor(riskLevel);
           
@@ -273,7 +273,7 @@ export default function TrajectoryMap({
         })}
 
         {/* Start Position Markers */}
-        {particleTrajectories.map((trajectory) => {
+        {showTrajectory && particleTrajectories.map((trajectory) => {
           if (trajectory.coordinates.length === 0) return null;
           const riskLevel = getRiskLevel(trajectory.particleId);
           const riskColor = getRiskColor(riskLevel);
