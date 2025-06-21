@@ -145,13 +145,15 @@ export default function MapViewer() {
             showOutbreakStages={showOutbreakStages}
           />
 
-          {/* Layer Control */}
-          <LayerControl
-            selectedBasemap={selectedBasemap}
-            onBasemapChange={setSelectedBasemap}
-            showAdminBoundaries={showAdminBoundaries}
-            onToggleAdminBoundaries={setShowAdminBoundaries}
-          />
+          {/* Layer Control - Bottom Left */}
+          <div className="absolute bottom-4 left-4 z-40">
+            <LayerControl
+              selectedBasemap={selectedBasemap}
+              onBasemapChange={setSelectedBasemap}
+              showAdminBoundaries={showAdminBoundaries}
+              onToggleAdminBoundaries={setShowAdminBoundaries}
+            />
+          </div>
         </div>
       </div>
     </div>

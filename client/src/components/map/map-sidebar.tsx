@@ -2,6 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { getUniqueParticleCount, getDateFromTimeIndex } from "@/lib/map-utils";
 
@@ -244,6 +245,54 @@ export default function MapSidebar({
                 onCheckedChange={onToggleTrajectory}
               />
             </div>
+            {showTrajectory && (
+              <div className="ml-4 mt-2 p-3 bg-gray-50 rounded border">
+                <h4 className="text-xs font-medium text-gray-700 mb-2">Animation Controls</h4>
+                <div className="flex items-center justify-between mb-2">
+                  <Button
+                    onClick={onPlay}
+                    disabled={isPlaying}
+                    size="sm"
+                    variant="outline"
+                    className="text-xs"
+                  >
+                    Play
+                  </Button>
+                  <Button
+                    onClick={onPause}
+                    disabled={!isPlaying}
+                    size="sm"
+                    variant="outline"
+                    className="text-xs"
+                  >
+                    Pause
+                  </Button>
+                  <Button
+                    onClick={onReset}
+                    size="sm"
+                    variant="outline"
+                    className="text-xs"
+                  >
+                    Reset
+                  </Button>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs text-gray-600">Animation Speed</label>
+                  <Slider
+                    value={[animationSpeed]}
+                    onValueChange={(value) => onSpeedChange(value[0])}
+                    max={1000}
+                    min={50}
+                    step={50}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>Fast</span>
+                    <span>Slow</span>
+                  </div>
+                </div>
+              </div>
+            )}
             {showTemporalBreeding && (
               <div className="ml-4 mt-2">
                 <label className="text-xs text-gray-600 mb-1 block">Select Month:</label>
