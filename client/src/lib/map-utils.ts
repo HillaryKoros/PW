@@ -71,16 +71,17 @@ export function getParticleTrajectories(processedData: ProcessedTrajectoryData):
 }
 
 export function getTrajectoryColor(particleId: number): string {
-  // Match colors from legend - particle ID-based ranges
-  if (particleId <= 10) {
-    return '#FF6B6B'; // Red range for particles 1-10
-  } else if (particleId <= 20) {
-    return '#4ECDC4'; // Teal range for particles 11-20
-  } else if (particleId <= 30) {
-    return '#45B7D1'; // Blue range for particles 21-30
-  } else {
-    return '#96CEB4'; // Green range for particles 31+
-  }
+  // Generate unique colors for each particle using a wide color palette
+  const colors = [
+    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F',
+    '#BB8FCE', '#85C1E9', '#F8C471', '#82E0AA', '#F1948A', '#85C1E9', '#D2B4DE', '#A9DFBF',
+    '#F9E79F', '#D5A6BD', '#AED6F1', '#A3E4D7', '#F4D03F', '#E8DAEF', '#D6EAF8', '#D1F2EB',
+    '#FCF3CF', '#FADBD8', '#EBF5FB', '#E8F6F3', '#FEF9E7', '#FDF2E9', '#EAEDED', '#F8F9F9',
+    '#FF5733', '#33FF57', '#3357FF', '#FF33F5', '#F5FF33', '#33FFF5', '#5733FF', '#FF3357',
+    '#57FF33', '#3357FF', '#F533FF', '#33F5FF', '#FF5733', '#5733FF', '#33FF57', '#FF33F5'
+  ];
+  
+  return colors[particleId % colors.length];
 }
 
 export function getUniqueParticleCount(data: TrajectoryData): number {

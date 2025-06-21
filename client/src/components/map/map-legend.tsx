@@ -23,7 +23,7 @@ export default function MapLegend({
   }
 
   return (
-    <div className="fixed bottom-4 left-4 z-[9999] pointer-events-none">
+    <div className="absolute bottom-4 right-4 z-[9999] pointer-events-none">
       <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
         <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
@@ -73,20 +73,21 @@ export default function MapLegend({
               <div className="space-y-1.5">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF6B6B' }}></div>
-                  <span className="text-xs text-gray-700">Particle 1-10</span>
+                  <span className="text-xs text-gray-700">Particle 1</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#4ECDC4' }}></div>
-                  <span className="text-xs text-gray-700">Particle 11-20</span>
+                  <span className="text-xs text-gray-700">Particle 2</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#45B7D1' }}></div>
-                  <span className="text-xs text-gray-700">Particle 21-30</span>
+                  <span className="text-xs text-gray-700">Particle 3</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#96CEB4' }}></div>
-                  <span className="text-xs text-gray-700">Particle 31+</span>
+                  <span className="text-xs text-gray-700">Particle 4</span>
                 </div>
+                <div className="text-xs text-gray-500 italic">+ Additional particles with unique colors</div>
               </div>
             </div>
           )}
