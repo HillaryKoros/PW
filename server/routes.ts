@@ -24,27 +24,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Serve feeding susceptibility TIFF as WMS
-  app.get("/api/wms", (req, res) => {
+  // MapServer WMS endpoint
+  app.get("/api/mapserver", (req, res) => {
     try {
-      const tiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
+      const { SERVICE, REQUEST, LAYERS, BBOX, WIDTH, HEIGHT, FORMAT, SRS } = req.query;
       
-      if (!fs.existsSync(tiffPath)) {
-        return res.status(404).json({ error: "TIFF file not found" });
+      if (SERVICE !== 'WMS' || REQUEST !== 'GetMap') {
+        return res.status(400).json({ error: "Invalid WMS request" });
       }
 
-      // For now, return a placeholder response indicating TIFF file is available
-      // In production, this would use a proper WMS server like MapServer or GeoServer
-      res.json({ 
-        message: "TIFF file available for WMS processing",
-        file: "FEEDING_PERIODS_2024_LULC_BASED.tif",
-        layers: ["feeding_susceptibility"],
-        bounds: [[-5, 29], [20, 52]], // East Africa approximate bounds
-        note: "Requires WMS server integration for full raster rendering"
-      });
+      // Mock WMS response for feeding susceptibility
+      // In production, this would proxy to actual MapServer CGI
+      const wmsResponse = {
+        service: "WMS",
+        version: "1.3.0",
+        request: REQUEST,
+        layers: LAYERS,
+        bbox: BBOX,
+        width: WIDTH,
+        height: HEIGHT,
+        format: FORMAT || "image/png",
+        srs: SRS || "EPSG:4326",
+        mapfile: "server/mapserver.map",
+        data_source: "FEEDING_PERIODS_2024_LULC_BASED.tif"
+      };
+
+      res.json(wmsResponse);
     } catch (error) {
-      console.error("Error accessing TIFF file:", error);
-      res.status(500).json({ error: "Failed to access TIFF data" });
+      console.error("MapServer WMS error:", error);
+      res.status(500).json({ error: "MapServer WMS processing failed" });
     }
   });
 

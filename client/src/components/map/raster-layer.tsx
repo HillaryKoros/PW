@@ -24,14 +24,17 @@ export default function RasterLayer({
     if (!map) return;
 
     if (visible && !layerRef.current) {
-      // Create WMS layer for TIFF raster data
-      const wmsLayer = L.tileLayer.wms('/api/wms', {
+      // Create WMS layer for TIFF raster data through MapServer
+      const wmsLayer = L.tileLayer.wms('/api/mapserver', {
         layers: 'feeding_susceptibility',
         format: 'image/png',
         transparent: true,
         opacity: opacity,
-        styles: `colormap=${colorMap}`,
-        attribution: 'Feeding Susceptibility Data'
+        service: 'WMS',
+        request: 'GetMap',
+        version: '1.3.0',
+        srs: 'EPSG:4326',
+        attribution: 'Feeding Susceptibility Data - MapServer WMS'
       });
 
       wmsLayer.addTo(map);
