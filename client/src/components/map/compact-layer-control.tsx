@@ -58,8 +58,8 @@ export default function CompactLayerControl({
   };
 
   return (
-    <div className="absolute bottom-4 right-4 z-[1000] max-h-96 overflow-y-auto">
-      <Card className="bg-white border border-gray-300 shadow-lg w-64">
+    <div className="absolute bottom-4 right-4 z-[1000] max-h-80 overflow-y-auto">
+      <Card className="bg-white border border-gray-300 shadow-lg w-56">
         <CardContent className="p-2">
           <div className="space-y-2">
             {/* Header */}

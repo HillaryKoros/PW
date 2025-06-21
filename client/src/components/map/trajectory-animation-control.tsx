@@ -71,7 +71,7 @@ export default function TrajectoryAnimationControl({
   if (!visible) return null;
 
   return (
-    <Card className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-[10000] bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg pointer-events-auto">
+    <Card className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-[10000] bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg pointer-events-auto">
       <CardContent className="p-4">
         <div className="flex items-center space-x-4">
           {/* Date Display */}

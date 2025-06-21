@@ -61,8 +61,8 @@ export default function MapViewer() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex flex-col bg-gray-50">
-      <div className="flex flex-1 relative" style={{ minHeight: 'calc(100vh - 120px)' }}>
+    <div className="h-screen w-screen flex flex-col bg-gray-50 overflow-hidden">
+      <div className="flex flex-1 relative">
         {/* Sidebar */}
         <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-0'} overflow-hidden flex-shrink-0`}>
           <MapSidebar

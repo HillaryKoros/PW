@@ -253,14 +253,7 @@ export default function MapSidebar({
           </div>
         </div>
 
-        {/* Particle Count */}
-        <Card className="bg-blue-50">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-blue-800 mb-2">Active Trajectories</h3>
-            <div className="text-2xl font-bold text-blue-600">{particleCount}</div>
-            <div className="text-xs text-blue-600">Locust swarms tracked</div>
-          </CardContent>
-        </Card>
+
       </div>
     </div>
   );

@@ -42,10 +42,10 @@ export default function TrajectoryDateDisplay({
   if (!visible) return null;
 
   return (
-    <Card className="fixed top-4 left-1/2 transform -translate-x-1/2 z-[10000] bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg pointer-events-none">
-      <CardContent className="p-3">
+    <Card className="absolute top-16 left-4 z-[9999] bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg pointer-events-none">
+      <CardContent className="p-2">
         <div className="text-center">
-          <div className="text-lg font-bold text-gray-800">{currentDate}</div>
+          <div className="text-sm font-bold text-gray-800">{currentDate}</div>
         </div>
       </CardContent>
     </Card>
