@@ -1,11 +1,23 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { Play, Pause, RotateCcw } from "lucide-react";
 
 interface MapSidebarProps {
   selectedCountry: string;
   onCountryChange: (country: string) => void;
   activeDataType: string;
   onDataTypeChange: (type: string) => void;
+  isPlaying: boolean;
+  onPlay: () => void;
+  onPause: () => void;
+  onReset: () => void;
+  currentTimeIndex: number;
+  onTimeIndexChange: (index: number) => void;
+  animationSpeed: number;
+  onSpeedChange: (speed: number) => void;
+  trajectoryData: any;
   showBreedingSuitability?: boolean;
   onToggleBreedingSuitability?: (show: boolean) => void;
   showOutbreakStages?: boolean;
@@ -29,6 +41,15 @@ export default function MapSidebar({
   onCountryChange,
   activeDataType,
   onDataTypeChange,
+  isPlaying,
+  onPlay,
+  onPause,
+  onReset,
+  currentTimeIndex,
+  onTimeIndexChange,
+  animationSpeed,
+  onSpeedChange,
+  trajectoryData,
   showBreedingSuitability = false,
   onToggleBreedingSuitability,
   showOutbreakStages = true,
@@ -56,6 +77,8 @@ export default function MapSidebar({
     "Sudan"
   ];
 
+  const maxTimeIndex = trajectoryData?.features?.length ? Math.max(...trajectoryData.features.map((f: any) => parseInt(f.properties.time))) : 365;
+
   return (
     <div className="w-72 bg-white shadow-lg flex-shrink-0 border-r border-gray-200 h-full flex flex-col">
       {/* Header */}
@@ -65,32 +88,6 @@ export default function MapSidebar({
       
       {/* Layer Controls - Scrollable */}
       <div className="flex-1 overflow-y-auto p-3 space-y-4">
-        {/* Data Controls */}
-        <div>
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Data Controls</h3>
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2 p-2 bg-blue-50 rounded border border-blue-200">
-              <input 
-                type="radio" 
-                id="monitoring-data" 
-                name="data-type"
-                className="text-blue-600"
-                defaultChecked
-              />
-              <label htmlFor="monitoring-data" className="text-xs text-gray-700 font-medium">Monitoring Data</label>
-            </div>
-            <div className="flex items-center space-x-2 p-2 bg-gray-50 rounded border border-gray-200">
-              <input 
-                type="radio" 
-                id="forecast-data" 
-                name="data-type"
-                className="text-blue-600"
-              />
-              <label htmlFor="forecast-data" className="text-xs text-gray-700">Forecast Data</label>
-            </div>
-          </div>
-        </div>
-
         {/* Model Output Layers */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Model Output Layers</h3>
@@ -176,6 +173,56 @@ export default function MapSidebar({
           </div>
         </div>
 
+        {/* Animation Controls */}
+        <div className="mt-6 pt-4 border-t border-gray-200">
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Animation Controls</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-center space-x-2">
+              <Button
+                onClick={onPlay}
+                disabled={isPlaying}
+                size="sm"
+                variant="outline"
+                className="text-xs px-3 py-1"
+              >
+                Play
+              </Button>
+              <Button
+                onClick={onPause}
+                disabled={!isPlaying}
+                size="sm"
+                variant="outline"
+                className="text-xs px-3 py-1"
+              >
+                Pause
+              </Button>
+              <Button
+                onClick={onReset}
+                size="sm"
+                variant="outline"
+                className="text-xs px-3 py-1"
+              >
+                Reset
+              </Button>
+            </div>
+            
+            <div>
+              <label className="text-xs text-gray-600 mb-1 block">Animation Speed</label>
+              <Slider
+                value={[animationSpeed]}
+                onValueChange={(value) => onSpeedChange(value[0])}
+                max={1000}
+                min={50}
+                step={50}
+                className="w-full"
+              />
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <span>Slow</span>
+                <span>Fast</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>

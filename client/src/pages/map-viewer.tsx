@@ -69,6 +69,15 @@ export default function MapViewer() {
             onCountryChange={setSelectedCountry}
             activeDataType={activeDataType}
             onDataTypeChange={setActiveDataType}
+            isPlaying={isPlaying}
+            onPlay={playAnimation}
+            onPause={pauseAnimation}
+            onReset={resetAnimation}
+            currentTimeIndex={currentTimeIndex}
+            onTimeIndexChange={setCurrentTimeIndex}
+            animationSpeed={animationSpeed}
+            onSpeedChange={setAnimationSpeed}
+            trajectoryData={trajectoryData}
             showBreedingSuitability={showBreedingSuitability}
             onToggleBreedingSuitability={setShowBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
@@ -134,19 +143,7 @@ export default function MapViewer() {
             onToggleAdminBoundaries={setShowAdminBoundaries}
           />
 
-          {/* Map Animation Control */}
-          <MapAnimationControl
-            isPlaying={isPlaying}
-            onPlay={playAnimation}
-            onPause={pauseAnimation}
-            onReset={resetAnimation}
-            currentTimeIndex={currentTimeIndex}
-            onTimeIndexChange={setCurrentTimeIndex}
-            animationSpeed={animationSpeed}
-            onSpeedChange={setAnimationSpeed}
-            trajectoryData={trajectoryData}
-            visible={showTrajectory}
-          />
+
 
           {/* Footer - Fixed at bottom */}
           <Footer />
