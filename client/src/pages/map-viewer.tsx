@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
 import MapLegend from "@/components/map/map-legend";
-import LayerControl from "@/components/map/layer-control";
+import CompactLayerControl from "@/components/map/compact-layer-control";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { loadTrajectoryData } from "@/lib/trajectory-data";

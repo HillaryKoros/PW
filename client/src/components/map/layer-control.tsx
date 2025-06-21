@@ -17,17 +17,21 @@ export default function LayerControl({
   onToggleAdminBoundaries,
 }: LayerControlProps) {
   return (
-    <div className="absolute bottom-4 right-4 z-[1000]">
-      <Card className="bg-white border-2 border-gray-300 shadow-lg w-8 h-8 flex items-center justify-center group hover:w-72 hover:h-auto transition-all duration-200">
-        <Layers size={16} className="text-gray-600 group-hover:hidden" />
-        
-        <CardContent className="hidden group-hover:block p-3 w-full">
-          <div className="space-y-3">
+    <div className="absolute bottom-4 right-4 z-[1000] max-h-96 overflow-y-auto">
+      <Card className="bg-white border border-gray-300 shadow-lg w-48">
+        <CardContent className="p-2">
+          <div className="space-y-2">
+            {/* Header */}
+            <div className="flex items-center gap-1 pb-1 border-b border-gray-200">
+              <Layers size={12} className="text-gray-600" />
+              <span className="text-xs font-medium text-gray-700">Layers</span>
+            </div>
+            
             {/* Basemap Selection */}
             <div>
-              <h4 className="text-xs font-medium text-gray-700 mb-2">Basemap</h4>
+              <h4 className="text-xs font-medium text-gray-700 mb-1">Basemap</h4>
               <Select value={selectedBasemap} onValueChange={onBasemapChange}>
-                <SelectTrigger className="w-full h-8 text-xs">
+                <SelectTrigger className="w-full h-6 text-xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -35,23 +39,21 @@ export default function LayerControl({
                   <SelectItem value="esri-satellite">ESRI Satellite</SelectItem>
                   <SelectItem value="google-satellite">Google Satellite</SelectItem>
                   <SelectItem value="esri-terrain">ESRI Terrain</SelectItem>
-                  <SelectItem value="terrain">OpenTopo Terrain</SelectItem>
-                  <SelectItem value="cartodb">CartoDB Positron</SelectItem>
-                  <SelectItem value="hybrid">Hybrid</SelectItem>
+                  <SelectItem value="terrain">Terrain</SelectItem>
+                  <SelectItem value="cartodb">Light</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Administrative Boundaries */}
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="admin-boundaries" className="text-xs text-gray-600">Country Boundaries</label>
-                <Switch
-                  id="admin-boundaries"
-                  checked={showAdminBoundaries}
-                  onCheckedChange={onToggleAdminBoundaries}
-                />
-              </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="admin-boundaries" className="text-xs text-gray-600">Boundaries</label>
+              <Switch
+                id="admin-boundaries"
+                checked={showAdminBoundaries}
+                onCheckedChange={onToggleAdminBoundaries}
+                className="scale-75"
+              />
             </div>
           </div>
         </CardContent>

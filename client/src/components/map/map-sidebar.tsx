@@ -84,26 +84,14 @@ export default function MapSidebar({
   const maxTimeIndex = 365; // One year of data
 
   return (
-    <div className="w-80 bg-white shadow-lg flex-shrink-0 border-r border-gray-200 slide-in h-full">
-      {/* Country Filter */}
-      <div className="p-6 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Filter by Country</h2>
-        <Select value={selectedCountry} onValueChange={onCountryChange}>
-          <SelectTrigger className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {countries.map((country) => (
-              <SelectItem key={country} value={country}>
-                {country}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="w-72 bg-white shadow-lg flex-shrink-0 border-r border-gray-200 h-full flex flex-col">
+      {/* Header */}
+      <div className="p-3 border-b border-gray-200">
+        <h2 className="text-sm font-semibold text-gray-800">Layers</h2>
       </div>
       
-      {/* Sidebar Controls */}
-      <div className="p-6 space-y-6 overflow-y-auto">
+      {/* Layer Controls - Scrollable */}
+      <div className="flex-1 overflow-y-auto p-3 space-y-3">
         {/* Data Type Controls */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Data Controls</h3>
