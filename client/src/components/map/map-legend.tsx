@@ -40,40 +40,19 @@ export default function MapLegend({
           {/* Outbreak Stages */}
           {showOutbreakStages && (
             <div>
-              <h4 className="text-xs font-medium text-gray-600 mb-2">Outbreak Stages & Locust Phases</h4>
+              <h4 className="text-xs font-medium text-gray-600 mb-2">Locust Phases</h4>
               <div className="space-y-1.5">
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 rounded-full border border-white" style={{ backgroundColor: '#FF0000' }}></div>
-                  <span className="text-xs text-gray-700">Crisis Stage</span>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF0000' }}></div>
+                  <span className="text-xs text-gray-700">Gregarious (Swarming)</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full border border-white" style={{ backgroundColor: '#FF8C00' }}></div>
-                  <span className="text-xs text-gray-700">Alert Stage</span>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF8C00' }}></div>
+                  <span className="text-xs text-gray-700">Transiens (Transitional)</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 rounded-full border border-white" style={{ backgroundColor: '#FFD700' }}></div>
-                  <span className="text-xs text-gray-700">Alarm Stage</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 rounded-full border border-white" style={{ backgroundColor: '#90EE90' }}></div>
-                  <span className="text-xs text-gray-700">Calm Stage</span>
-                </div>
-              </div>
-              <div className="mt-3 pt-2 border-t border-gray-200">
-                <h5 className="text-xs font-medium text-gray-500 mb-1">Locust Phases</h5>
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#333', opacity: 1.0 }}></div>
-                    <span className="text-xs text-gray-600">Gregarious (Swarming)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#333', opacity: 0.7 }}></div>
-                    <span className="text-xs text-gray-600">Transiens (Transitional)</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#333', opacity: 0.4 }}></div>
-                    <span className="text-xs text-gray-600">Solitary (Individual)</span>
-                  </div>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#32CD32' }}></div>
+                  <span className="text-xs text-gray-700">Solitary (Individual)</span>
                 </div>
               </div>
             </div>
