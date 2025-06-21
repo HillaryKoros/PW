@@ -145,26 +145,12 @@ export default function MapViewer() {
 
 
 
-          {/* Compact Layer Control - Bottom Right */}
+          {/* Compact Layer Control - Only Admin and Basemap */}
           <CompactLayerControl
             selectedBasemap={selectedBasemap}
             onBasemapChange={setSelectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
             onToggleAdminBoundaries={setShowAdminBoundaries}
-            showBreedingSuitability={showBreedingSuitability}
-            onToggleBreedingSuitability={setShowBreedingSuitability}
-            showFeedingSusceptibility={showFeedingSusceptibility}
-            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
-            showGregarization={showGregarization}
-            onToggleGregarization={setShowGregarization}
-            showLocustCoverage={showLocustCoverage}
-            onToggleLocustCoverage={setShowLocustCoverage}
-            showTemporalBreeding={showTemporalBreeding}
-            onToggleTemporalBreeding={setShowTemporalBreeding}
-            showTrajectory={showTrajectory}
-            onToggleTrajectory={setShowTrajectory}
-            selectedBreedingMonth={selectedBreedingMonth}
-            onBreedingMonthChange={setSelectedBreedingMonth}
           />
         </div>
       </div>

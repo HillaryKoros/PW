@@ -9,20 +9,6 @@ interface CompactLayerControlProps {
   onBasemapChange: (basemap: string) => void;
   showAdminBoundaries: boolean;
   onToggleAdminBoundaries: (show: boolean) => void;
-  showBreedingSuitability?: boolean;
-  onToggleBreedingSuitability?: (show: boolean) => void;
-  showFeedingSusceptibility?: boolean;
-  onToggleFeedingSusceptibility?: (show: boolean) => void;
-  showGregarization?: boolean;
-  onToggleGregarization?: (show: boolean) => void;
-  showLocustCoverage?: boolean;
-  onToggleLocustCoverage?: (show: boolean) => void;
-  showTemporalBreeding?: boolean;
-  onToggleTemporalBreeding?: (show: boolean) => void;
-  showTrajectory?: boolean;
-  onToggleTrajectory?: (show: boolean) => void;
-  selectedBreedingMonth?: string;
-  onBreedingMonthChange?: (month: string) => void;
 }
 
 export default function CompactLayerControl({
@@ -30,20 +16,6 @@ export default function CompactLayerControl({
   onBasemapChange,
   showAdminBoundaries,
   onToggleAdminBoundaries,
-  showBreedingSuitability = false,
-  onToggleBreedingSuitability,
-  showFeedingSusceptibility = false,
-  onToggleFeedingSusceptibility,
-  showGregarization = false,
-  onToggleGregarization,
-  showLocustCoverage = false,
-  onToggleLocustCoverage,
-  showTemporalBreeding = false,
-  onToggleTemporalBreeding,
-  showTrajectory = false,
-  onToggleTrajectory,
-  selectedBreedingMonth = "jan",
-  onBreedingMonthChange,
 }: CompactLayerControlProps) {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['raster', 'vector']));
 
