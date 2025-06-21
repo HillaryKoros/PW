@@ -52,7 +52,7 @@ export default function TrajectoryMap({
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());
   const [particleTrajectories, setParticleTrajectories] = useState<any[]>([]);
   const [breedingSuitabilityData, setBreedingSuitabilityData] = useState<any>(null);
-  const [outbreakStagesData, setOutbreakStagesData] = useState<any>(null);
+
 
   // Process trajectory data
   useEffect(() => {
@@ -175,30 +175,7 @@ export default function TrajectoryMap({
           />
         )}
 
-        {/* Outbreak Stages Layer */}
-        {showOutbreakStages && outbreakStagesData && (
-          <GeoJSON
-            data={outbreakStagesData}
-            style={(feature) => ({
-              fillColor: OUTBREAK_STAGE_COLORS[feature?.properties?.outbreak_stage as keyof typeof OUTBREAK_STAGE_COLORS] || "#000000",
-              weight: 2,
-              opacity: 1,
-              color: 'white',
-              fillOpacity: 0.4
-            })}
-            onEachFeature={(feature, layer) => {
-              if (feature.properties) {
-                layer.bindPopup(`
-                  <div>
-                    <h4>${feature.properties.outbreak_stage} Stage</h4>
-                    <p><strong>Region:</strong> ${feature.properties.region}</p>
-                    <p><strong>Date:</strong> ${feature.properties.date}</p>
-                  </div>
-                `);
-              }
-            }}
-          />
-        )}
+
 
         {/* Breeding Suitability Layer */}
         {showBreedingSuitability && breedingSuitabilityData && (
