@@ -22,6 +22,10 @@ export default function MapViewer() {
   const [selectedBasemap, setSelectedBasemap] = useState("osm");
   const [showAdminBoundaries, setShowAdminBoundaries] = useState(false);
   const [showFeedingSusceptibility, setShowFeedingSusceptibility] = useState(false);
+  const [showGregarization, setShowGregarization] = useState(false);
+  const [showLocustCoverage, setShowLocustCoverage] = useState(false);
+  const [showTemporalBreeding, setShowTemporalBreeding] = useState(false);
+  const [selectedBreedingMonth, setSelectedBreedingMonth] = useState("jan");
 
   useEffect(() => {
     const loadData = async () => {
