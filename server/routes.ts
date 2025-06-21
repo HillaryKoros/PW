@@ -34,59 +34,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const requestParam = REQUEST || request;
       
       if (serviceParam === 'WMS' && requestParam === 'GetMap') {
-        // Serve the TIFF file as a tile image for the requested bbox
-        const tiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
+        const layerParam = LAYERS || layers || 'feeding_susceptibility';
         
-        if (fs.existsSync(tiffPath)) {
-          // Set appropriate headers for SVG response
-          res.setHeader('Content-Type', 'image/svg+xml');
-          res.setHeader('Cache-Control', 'public, max-age=3600');
+        // Set appropriate headers for SVG response
+        res.setHeader('Content-Type', 'image/svg+xml');
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        
+        let svgContent = '';
+        
+        if (layerParam === 'feeding_susceptibility') {
+          // Check if feeding susceptibility TIFF exists
+          const feedingTiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
           
-          // Generate a visible SVG representation of feeding susceptibility data
-          const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+          if (fs.existsSync(feedingTiffPath)) {
+            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-  <!-- Feeding susceptibility patterns for East Africa -->
   <defs>
     <pattern id="feedingHigh" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="#FF4444" opacity="0.8"/>
+      <rect width="20" height="20" fill="#FF0000" opacity="0.8"/>
     </pattern>
     <pattern id="feedingMed" patternUnits="userSpaceOnUse" width="15" height="15">
-      <rect width="15" height="15" fill="#FFA500" opacity="0.7"/>
+      <rect width="15" height="15" fill="#C500FF" opacity="0.7"/>
     </pattern>
     <pattern id="feedingLow" patternUnits="userSpaceOnUse" width="10" height="10">
-      <rect width="10" height="10" fill="#FFFF00" opacity="0.6"/>
+      <rect width="10" height="10" fill="#0070FF" opacity="0.6"/>
+    </pattern>
+    <pattern id="feedingMin" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#FFFF00" opacity="0.6"/>
     </pattern>
   </defs>
-  
-  <!-- Background -->
   <rect width="256" height="256" fill="transparent"/>
-  
-  <!-- High susceptibility areas (8+ days) -->
   <circle cx="80" cy="120" r="40" fill="url(#feedingHigh)"/>
-  <ellipse cx="180" cy="80" rx="35" ry="25" fill="url(#feedingHigh)"/>
-  
-  <!-- Medium susceptibility areas (5-7 days) -->
-  <rect x="50" y="180" width="60" height="40" fill="url(#feedingMed)" rx="10"/>
-  <circle cx="200" cy="200" r="30" fill="url(#feedingMed)"/>
-  
-  <!-- Low susceptibility areas (2-4 days) -->
-  <rect x="140" y="140" width="80" height="50" fill="url(#feedingLow)" rx="15"/>
-  <circle cx="40" cy="60" r="25" fill="url(#feedingLow)"/>
-  
-  <!-- Legend -->
-  <text x="10" y="20" font-family="Arial" font-size="8" fill="#333">Feeding Days</text>
-  <rect x="10" y="25" width="15" height="8" fill="#FF4444"/>
-  <text x="30" y="32" font-family="Arial" font-size="6" fill="#333">8+</text>
-  <rect x="50" y="25" width="15" height="8" fill="#FFA500"/>
-  <text x="70" y="32" font-family="Arial" font-size="6" fill="#333">5-7</text>
-  <rect x="90" y="25" width="15" height="8" fill="#FFFF00"/>
-  <text x="110" y="32" font-family="Arial" font-size="6" fill="#333">2-4</text>
+  <ellipse cx="180" cy="80" rx="35" ry="25" fill="url(#feedingMed)"/>
+  <rect x="50" y="180" width="60" height="40" fill="url(#feedingLow)" rx="10"/>
+  <circle cx="40" cy="60" r="25" fill="url(#feedingMin)"/>
 </svg>`;
+          }
+        } else if (layerParam === 'breeding_suitability') {
+          // Check if breeding suitability TIFF exists
+          const breedingTiffPath = path.join(process.cwd(), "attached_assets", "Breeding_Suitability_GENERAL_raster_1750530724131.tif");
           
-          res.setHeader('Content-Type', 'image/svg+xml');
+          if (fs.existsSync(breedingTiffPath)) {
+            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="breedingHigh" patternUnits="userSpaceOnUse" width="16" height="16">
+      <rect width="16" height="16" fill="#FF2B18" opacity="0.8"/>
+    </pattern>
+    <pattern id="breedingMod" patternUnits="userSpaceOnUse" width="12" height="12">
+      <rect width="12" height="12" fill="#267300" opacity="0.7"/>
+    </pattern>
+    <pattern id="breedingLow" patternUnits="userSpaceOnUse" width="10" height="10">
+      <rect width="10" height="10" fill="#0070FF" opacity="0.6"/>
+    </pattern>
+    <pattern id="breedingUn" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#BDBEBE" opacity="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="256" height="256" fill="transparent"/>
+  <ellipse cx="120" cy="100" rx="60" ry="40" fill="url(#breedingHigh)"/>
+  <circle cx="60" cy="160" r="35" fill="url(#breedingMod)"/>
+  <rect x="160" y="140" width="80" height="60" fill="url(#breedingLow)" rx="8"/>
+  <circle cx="200" cy="60" r="30" fill="url(#breedingUn)"/>
+</svg>`;
+          }
+        } else if (layerParam === 'locust_coverage') {
+          // Check if locust coverage shapefile exists
+          const coverageShpPath = path.join(process.cwd(), "attached_assets", "locust_swarm_coverage_2024_1750530695098.shp");
+          
+          if (fs.existsSync(coverageShpPath)) {
+            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" fill="transparent"/>
+  <polygon points="60,80 120,80 120,120 60,120" fill="#FF0000" opacity="0.7" stroke="#800000" stroke-width="2"/>
+  <polygon points="140,60 200,60 200,100 140,100" fill="#C500FF" opacity="0.6" stroke="#800080" stroke-width="2"/>
+  <polygon points="80,160 140,160 140,200 80,200" fill="#0070FF" opacity="0.6" stroke="#004080" stroke-width="2"/>
+  <text x="10" y="20" font-family="Arial" font-size="8" fill="#333">Swarm Coverage</text>
+</svg>`;
+          }
+        }
+        
+        if (svgContent) {
           res.send(svgContent);
         } else {
-          res.status(404).json({ error: "TIFF file not found" });
+          res.status(404).json({ error: `Layer ${layerParam} not found or TIFF/shapefile missing` });
         }
       } else {
         // Return capabilities or metadata
