@@ -70,31 +70,16 @@ export default function MapLegend({
               </div>
             )}
 
-            {/* Movement Predictions Group */}
+            {/* Trajectory Particles */}
             {showTrajectory && (
               <div>
-                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Movement Predictions</h4>
+                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Particle Trajectories</h4>
                 <div className="space-y-1.5">
-                  <div className="text-xs text-gray-600 font-medium">155 Particle Trajectories</div>
-                  <div className="grid grid-cols-2 gap-1">
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(137.5, 65%, 45%)' }}></div>
-                      <span className="text-xs text-gray-700">ID 1</span>
-                    </div>
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(275, 80%, 55%)' }}></div>
-                      <span className="text-xs text-gray-700">ID 2</span>
-                    </div>
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(52.5, 95%, 65%)' }}></div>
-                      <span className="text-xs text-gray-700">ID 3</span>
-                    </div>
-                    <div className="flex items-center space-x-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'hsl(190, 65%, 75%)' }}></div>
-                      <span className="text-xs text-gray-700">ID 4</span>
-                    </div>
+                  <div className="text-xs text-gray-600">Each particle has unique color</div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-1 bg-gradient-to-r from-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-500 border border-gray-300"></div>
+                    <span className="text-xs text-gray-700">155 Particles</span>
                   </div>
-                  <div className="text-xs text-gray-500 italic">+ 151 more unique colors</div>
                 </div>
               </div>
             )}
