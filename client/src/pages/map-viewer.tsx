@@ -65,7 +65,7 @@ export default function MapViewer() {
     <div className="h-screen w-screen flex flex-col bg-gray-50 overflow-hidden">
       <div className="flex flex-1 relative">
         {/* Sidebar */}
-        <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-0'} overflow-hidden flex-shrink-0`}>
+        <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-0'} overflow-hidden flex-shrink-0 z-30`}>
           <MapSidebar
             selectedCountry={selectedCountry}
             onCountryChange={setSelectedCountry}
@@ -111,29 +111,31 @@ export default function MapViewer() {
             </div>
           )}
 
-          {/* Map */}
-          <TrajectoryMap
-            trajectoryData={trajectoryData}
-            isPlaying={isPlaying}
-            currentTimeIndex={currentTimeIndex}
-            onTimeIndexChange={setCurrentTimeIndex}
-            animationSpeed={animationSpeed}
-            onPlay={playAnimation}
-            onPause={pauseAnimation}
-            onReset={resetAnimation}
-            onSpeedChange={setAnimationSpeed}
-            selectedCountry={selectedCountry}
-            showBreedingSuitability={showBreedingSuitability}
-            showOutbreakStages={showOutbreakStages}
-            selectedBasemap={selectedBasemap}
-            showAdminBoundaries={showAdminBoundaries}
-            showFeedingSusceptibility={showFeedingSusceptibility}
-            showGregarization={showGregarization}
-            showLocustCoverage={showLocustCoverage}
-            showTemporalBreeding={showTemporalBreeding}
-            selectedBreedingMonth={selectedBreedingMonth}
-            showTrajectory={showTrajectory}
-          />
+          {/* Map with bottom padding for footer */}
+          <div className="h-full w-full relative" style={{ paddingBottom: '40px' }}>
+            <TrajectoryMap
+              trajectoryData={trajectoryData}
+              isPlaying={isPlaying}
+              currentTimeIndex={currentTimeIndex}
+              onTimeIndexChange={setCurrentTimeIndex}
+              animationSpeed={animationSpeed}
+              onPlay={playAnimation}
+              onPause={pauseAnimation}
+              onReset={resetAnimation}
+              onSpeedChange={setAnimationSpeed}
+              selectedCountry={selectedCountry}
+              showBreedingSuitability={showBreedingSuitability}
+              showOutbreakStages={showOutbreakStages}
+              selectedBasemap={selectedBasemap}
+              showAdminBoundaries={showAdminBoundaries}
+              showFeedingSusceptibility={showFeedingSusceptibility}
+              showGregarization={showGregarization}
+              showLocustCoverage={showLocustCoverage}
+              showTemporalBreeding={showTemporalBreeding}
+              selectedBreedingMonth={selectedBreedingMonth}
+              showTrajectory={showTrajectory}
+            />
+          </div>
 
           {/* Sidebar Toggle Button */}
           <Button
@@ -143,8 +145,6 @@ export default function MapViewer() {
           >
             <Menu size={16} />
           </Button>
-
-
 
           {/* Compact Layer Control - Only Admin and Basemap */}
           <CompactLayerControl
