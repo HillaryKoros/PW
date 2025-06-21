@@ -1,6 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import { Play, Pause, RotateCcw } from "lucide-react";
 import { getUniqueParticleCount, getDateFromTimeIndex } from "@/lib/map-utils";
 
@@ -37,7 +38,11 @@ export default function MapSidebar({
   onTimeIndexChange,
   animationSpeed,
   onSpeedChange,
-  trajectoryData
+  trajectoryData,
+  showBreedingSuitability = false,
+  onToggleBreedingSuitability,
+  showOutbreakStages = true,
+  onToggleOutbreakStages
 }: MapSidebarProps) {
 
   const countries = [
@@ -155,6 +160,29 @@ export default function MapSidebar({
           </div>
         </div>
         
+        {/* Spatial Data Layers */}
+        <div>
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Spatial Data Layers</h3>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label htmlFor="outbreak-stages" className="text-xs text-gray-600">Outbreak Stages</label>
+              <Switch
+                id="outbreak-stages"
+                checked={showOutbreakStages}
+                onCheckedChange={onToggleOutbreakStages}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="breeding-suitability" className="text-xs text-gray-600">Breeding Suitability</label>
+              <Switch
+                id="breeding-suitability"
+                checked={showBreedingSuitability}
+                onCheckedChange={onToggleBreedingSuitability}
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Particle Count */}
         <Card className="bg-blue-50">
           <CardContent className="p-4">

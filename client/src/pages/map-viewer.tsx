@@ -10,12 +10,14 @@ import { loadTrajectoryData } from "@/lib/trajectory-data";
 export default function MapViewer() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const [trajectoryData, setTrajectoryData] = useState(null);
+  const [trajectoryData, setTrajectoryData] = useState<any>(null);
   const [selectedCountry, setSelectedCountry] = useState("All Countries");
   const [activeDataType, setActiveDataType] = useState("monitoring");
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTimeIndex, setCurrentTimeIndex] = useState(0);
   const [animationSpeed, setAnimationSpeed] = useState(200);
+  const [showBreedingSuitability, setShowBreedingSuitability] = useState(false);
+  const [showOutbreakStages, setShowOutbreakStages] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -71,6 +73,10 @@ export default function MapViewer() {
             animationSpeed={animationSpeed}
             onSpeedChange={setAnimationSpeed}
             trajectoryData={trajectoryData}
+            showBreedingSuitability={showBreedingSuitability}
+            onToggleBreedingSuitability={setShowBreedingSuitability}
+            showOutbreakStages={showOutbreakStages}
+            onToggleOutbreakStages={setShowOutbreakStages}
           />
         </div>
 
@@ -94,6 +100,8 @@ export default function MapViewer() {
             onTimeIndexChange={setCurrentTimeIndex}
             animationSpeed={animationSpeed}
             selectedCountry={selectedCountry}
+            showBreedingSuitability={showBreedingSuitability}
+            showOutbreakStages={showOutbreakStages}
           />
 
           {/* Sidebar Toggle Button */}

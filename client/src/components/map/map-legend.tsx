@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Expand, Minimize2 } from "lucide-react";
 import { useState } from "react";
+import { BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatial-data";
 
 export default function MapLegend() {
   const [isExpanded, setIsExpanded] = useState(true);

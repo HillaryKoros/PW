@@ -12,6 +12,8 @@ interface TrajectoryMapProps {
   onTimeIndexChange: (index: number) => void;
   animationSpeed: number;
   selectedCountry: string;
+  showBreedingSuitability?: boolean;
+  showOutbreakStages?: boolean;
 }
 
 export default function TrajectoryMap({
@@ -20,14 +22,14 @@ export default function TrajectoryMap({
   currentTimeIndex,
   onTimeIndexChange,
   animationSpeed,
-  selectedCountry
+  selectedCountry,
+  showBreedingSuitability = false,
+  showOutbreakStages = true
 }: TrajectoryMapProps) {
   const [particleTrajectories, setParticleTrajectories] = useState<any[]>([]);
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());
   const [breedingSuitabilityData, setBreedingSuitabilityData] = useState<any>(null);
   const [outbreakStagesData, setOutbreakStagesData] = useState<any>(null);
-  const [showBreedingSuitability, setShowBreedingSuitability] = useState(false);
-  const [showOutbreakStages, setShowOutbreakStages] = useState(true);
   const animationRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
