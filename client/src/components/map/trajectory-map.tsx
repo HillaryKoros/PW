@@ -330,10 +330,11 @@ export default function TrajectoryMap({
       <MapLegend 
         showBreedingSuitability={showBreedingSuitability}
         showTrajectory={showTrajectory}
-        showSwarmCoverage={showSwarmCoverage}
+        showSwarmCoverage={showLocustCoverage}
         showFeedingSusceptibility={showFeedingSusceptibility}
         showGregarization={showGregarization}
         showTemporalBreeding={showTemporalBreeding}
+        showOutbreakStages={showOutbreakStages}
       />
     </div>
   );

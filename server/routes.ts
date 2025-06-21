@@ -254,6 +254,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Swarm coverage endpoint - convert shapefile to GeoJSON
+  app.get("/api/swarm-coverage", async (req, res) => {
+    try {
+      const shapefilePath = path.join(process.cwd(), "attached_assets", "locust_swarm_coverage_2024_1750530695098.shp");
+      
+      if (!fs.existsSync(shapefilePath)) {
+        return res.status(404).json({ error: "Swarm coverage shapefile not found" });
+      }
+
+      // Convert shapefile to GeoJSON
+      const features: any[] = [];
+      
+      await shapefile.read(shapefilePath)
+        .then(collection => {
+          res.json({
+            type: "FeatureCollection",
+            name: "locust_swarm_coverage_2024",
+            features: collection.features
+          });
+        })
+        .catch(error => {
+          console.error("Error reading shapefile:", error);
+          res.status(500).json({ error: "Failed to read shapefile data" });
+        });
+    } catch (error) {
+      console.error("Error serving swarm coverage data:", error);
+      res.status(500).json({ error: "Failed to load swarm coverage data" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

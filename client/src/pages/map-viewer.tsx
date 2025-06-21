@@ -3,6 +3,7 @@ import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
 import MapLegend from "@/components/map/map-legend";
 import CompactLayerControl from "@/components/map/compact-layer-control";
+import Footer from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { loadTrajectoryData } from "@/lib/trajectory-data";
@@ -152,6 +153,9 @@ export default function MapViewer() {
             showAdminBoundaries={showAdminBoundaries}
             onToggleAdminBoundaries={setShowAdminBoundaries}
           />
+
+          {/* Footer */}
+          <Footer />
         </div>
       </div>
     </div>
