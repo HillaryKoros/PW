@@ -114,10 +114,19 @@ export default function TrajectoryMap({
   // Get basemap tile layer URL
   const getBasemapUrl = () => {
     switch (selectedBasemap) {
-      case "satellite":
+      case "esri-satellite":
         return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+      case "google-satellite":
+        return "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}";
+      case "esri-terrain":
+        return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}";
       case "terrain":
         return "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png";
+      case "cartodb":
+        return "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+      case "hybrid":
+        return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+      case "osm":
       default:
         return "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
     }

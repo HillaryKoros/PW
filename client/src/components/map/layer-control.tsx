@@ -29,7 +29,7 @@ export default function LayerControl({
   onToggleFeedingSusceptibility
 }: LayerControlProps) {
   return (
-    <Card className="absolute bottom-4 right-4 min-w-72 z-40 bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg">
+    <Card className="absolute bottom-4 right-4 min-w-72 z-[1000] bg-white border-2 border-gray-400 shadow-xl">
       <CardContent className="p-4">
         <div className="space-y-4">
           {/* Basemap Selection */}
