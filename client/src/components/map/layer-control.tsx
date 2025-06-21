@@ -44,8 +44,11 @@ export default function LayerControl({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="osm">OpenStreetMap</SelectItem>
-                <SelectItem value="satellite">Satellite</SelectItem>
-                <SelectItem value="terrain">Terrain</SelectItem>
+                <SelectItem value="esri-satellite">ESRI Satellite</SelectItem>
+                <SelectItem value="google-satellite">Google Satellite</SelectItem>
+                <SelectItem value="esri-terrain">ESRI Terrain</SelectItem>
+                <SelectItem value="terrain">OpenTopo Terrain</SelectItem>
+                <SelectItem value="cartodb">CartoDB Positron</SelectItem>
                 <SelectItem value="hybrid">Hybrid</SelectItem>
               </SelectContent>
             </Select>
