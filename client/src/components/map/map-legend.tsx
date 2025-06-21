@@ -45,26 +45,43 @@ export default function MapLegend({
         
         {isExpanded && (
           <CardContent className="pt-0 pb-3 space-y-3">
-            {/* Current Observations Group */}
+            {/* Outbreak Stages */}
             {showOutbreakStages && (
               <div>
                 <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Outbreak Stages</h4>
                 <div className="space-y-1.5">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#8B0000' }}></div>
-                    <span className="text-xs text-gray-700">Crisis</span>
+                    <span className="text-xs text-gray-700">Crisis Stage</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF0000' }}></div>
-                    <span className="text-xs text-gray-700">Alert</span>
+                    <span className="text-xs text-gray-700">Alert Stage</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF8C00' }}></div>
-                    <span className="text-xs text-gray-700">Alarm</span>
+                    <span className="text-xs text-gray-700">Alarm Stage</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#32CD32' }}></div>
-                    <span className="text-xs text-gray-700">Calm</span>
+                    <span className="text-xs text-gray-700">Calm Stage</span>
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <h5 className="text-xs font-medium text-gray-700 mb-1">Locust Phase</h5>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#CC0000' }}></div>
+                      <span className="text-xs text-gray-600">Gregarious</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#FF8800' }}></div>
+                      <span className="text-xs text-gray-600">Transiens</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#66BB6A' }}></div>
+                      <span className="text-xs text-gray-600">Solitary</span>
+                    </div>
                   </div>
                 </div>
               </div>

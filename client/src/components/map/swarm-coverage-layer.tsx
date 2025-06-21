@@ -61,50 +61,26 @@ export default function SwarmCoverageLayer({
   };
 
   const getSwarmStyle = (feature?: any) => {
-    // Style based on swarm properties
-    const intensity = feature?.properties?.intensity || 0.5;
-    const swarmType = feature?.properties?.type || 'unknown';
-    
-    let color = '#ff4444'; // Default red
-    let fillOpacity = 0.6;
-    
-    // Different colors for different swarm types/intensities
-    if (swarmType === 'breeding') {
-      color = '#ffaa00';
-    } else if (swarmType === 'feeding') {
-      color = '#44ff44';
-    } else if (swarmType === 'migration') {
-      color = '#4444ff';
-    }
-    
-    // Adjust opacity based on intensity
-    fillOpacity = Math.max(0.3, intensity * 0.8);
-    
+    // Style based on actual shapefile geometry
+    // Since the shapefile appears to be polygon coverage areas
     return {
-      color: color,
-      fillColor: color,
+      color: '#ff4444',
+      fillColor: '#ff4444',
       weight: 2,
       opacity: opacity,
-      fillOpacity: fillOpacity * (opacity || 1),
-      dashArray: swarmType === 'predicted' ? '5, 5' : undefined
+      fillOpacity: 0.6 * (opacity || 1),
+      dashArray: undefined
     };
   };
 
   const onEachFeature = (feature: any, layer: any) => {
-    if (feature.properties) {
-      const props = feature.properties;
-      const popupContent = `
-        <div class="p-2">
-          <h3 class="font-bold text-sm mb-1">Swarm Coverage</h3>
-          ${props.type ? `<p><strong>Type:</strong> ${props.type}</p>` : ''}
-          ${props.intensity ? `<p><strong>Intensity:</strong> ${(props.intensity * 100).toFixed(1)}%</p>` : ''}
-          ${props.area ? `<p><strong>Area:</strong> ${props.area} km²</p>` : ''}
-          ${props.date ? `<p><strong>Date:</strong> ${props.date}</p>` : ''}
-          ${props.density ? `<p><strong>Density:</strong> ${props.density}</p>` : ''}
-        </div>
-      `;
-      layer.bindPopup(popupContent);
-    }
+    const popupContent = `
+      <div class="p-2">
+        <h3 class="font-bold text-sm mb-1">Locust Swarm Coverage 2024</h3>
+        <p class="text-sm">Historical swarm coverage area</p>
+      </div>
+    `;
+    layer.bindPopup(popupContent);
   };
 
   if (!visible) return null;

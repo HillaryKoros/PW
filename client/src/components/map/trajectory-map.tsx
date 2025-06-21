@@ -38,6 +38,7 @@ interface TrajectoryMapProps {
   showTemporalBreeding?: boolean;
   selectedBreedingMonth?: string;
   showTrajectory?: boolean;
+  showSwarmCoverage?: boolean;
 }
 
 export default function TrajectoryMap({
