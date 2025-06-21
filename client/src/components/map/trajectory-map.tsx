@@ -9,6 +9,7 @@ import GregarizationLayer from "./gregarization-layer";
 import LocustCoverageLayer from "./locust-coverage-layer";
 import TemporalBreedingLayer from "./temporal-breeding-layer";
 import OutbreakStagesLayer from "./outbreak-stages-layer";
+import TrajectoryAnimationControl from "./trajectory-animation-control";
 import LocustIcon from "@/components/locust-icon";
 import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -19,6 +20,10 @@ interface TrajectoryMapProps {
   currentTimeIndex: number;
   onTimeIndexChange: (index: number) => void;
   animationSpeed: number;
+  onPlay: () => void;
+  onPause: () => void;
+  onReset: () => void;
+  onSpeedChange: (speed: number) => void;
   selectedCountry: string;
   showBreedingSuitability?: boolean;
   showOutbreakStages?: boolean;
@@ -38,6 +43,10 @@ export default function TrajectoryMap({
   currentTimeIndex,
   onTimeIndexChange,
   animationSpeed,
+  onPlay,
+  onPause,
+  onReset,
+  onSpeedChange,
   selectedCountry,
   showBreedingSuitability = false,
   showOutbreakStages = false,

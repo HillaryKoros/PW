@@ -133,58 +133,6 @@ export default function MapSidebar({
           </div>
         </div>
         
-        {/* Animation Controls */}
-        <Card className="bg-gray-50">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Trajectory Animation</h3>
-            <div className="flex items-center space-x-3 mb-4">
-              <Button
-                onClick={isPlaying ? onPause : onPlay}
-                className="w-12 h-12 p-0 pest-green-600 text-white rounded-full hover:bg-pest-green-700"
-              >
-                {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-              </Button>
-              <Button
-                onClick={onReset}
-                className="w-12 h-12 p-0 bg-gray-300 text-gray-600 rounded-full hover:bg-gray-400"
-                variant="secondary"
-              >
-                <RotateCcw size={18} />
-              </Button>
-              <div className="flex-1">
-                <input
-                  type="range"
-                  min="0"
-                  max={maxTimeIndex}
-                  value={currentTimeIndex}
-                  onChange={(e) => onTimeIndexChange(parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                />
-              </div>
-            </div>
-            <div className="text-xs text-gray-600">
-              <span>{currentDate}</span> - <span>{maxTimeIndex} days</span>
-            </div>
-          </CardContent>
-        </Card>
-        
-        {/* Speed Control */}
-        <div>
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Animation Speed</h3>
-          <div className="flex items-center space-x-2">
-            <span className="text-xs text-gray-500">Slow</span>
-            <input
-              type="range"
-              min="50"
-              max="500"
-              value={animationSpeed}
-              onChange={(e) => onSpeedChange(parseInt(e.target.value))}
-              className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-            />
-            <span className="text-xs text-gray-500">Fast</span>
-          </div>
-        </div>
-        
         {/* Spatial Data Layers */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Model Output Layers</h3>
