@@ -104,8 +104,8 @@ export default function TrajectoryMap({
   return (
     <div className="h-full w-full">
       <MapContainer
-        center={[45.0, 10.0]}
-        zoom={6}
+        center={[5.0, 40.0]}
+        zoom={5}
         className="h-full w-full"
         zoomControl={true}
       >
