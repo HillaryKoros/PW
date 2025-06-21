@@ -110,7 +110,7 @@ export default function MapViewer() {
           )}
 
           {/* Map Container - Fixed with footer space */}
-          <div className="absolute inset-0 bottom-10">
+          <div className="absolute inset-0 bottom-0">
             <TrajectoryMap
               trajectoryData={trajectoryData}
               isPlaying={isPlaying}
