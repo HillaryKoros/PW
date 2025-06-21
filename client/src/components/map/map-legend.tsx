@@ -11,6 +11,7 @@ interface MapLegendProps {
   showFeedingSusceptibility?: boolean;
   showGregarization?: boolean;
   showTemporalBreeding?: boolean;
+  showOutbreakStages?: boolean;
 }
 
 export default function MapLegend({ 
@@ -19,12 +20,13 @@ export default function MapLegend({
   showSwarmCoverage = false,
   showFeedingSusceptibility = false,
   showGregarization = false,
-  showTemporalBreeding = false
+  showTemporalBreeding = false,
+  showOutbreakStages = false
 }: MapLegendProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Don't render if no layers are visible
-  if (!showBreedingSuitability && !showTrajectory && !showSwarmCoverage && !showFeedingSusceptibility && !showGregarization && !showTemporalBreeding) {
+  if (!showBreedingSuitability && !showTrajectory && !showSwarmCoverage && !showFeedingSusceptibility && !showGregarization && !showTemporalBreeding && !showOutbreakStages) {
     return null;
   }
 
@@ -58,10 +60,9 @@ export default function MapLegend({
               <div>
                 <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Particle Trajectories</h4>
                 <div className="space-y-1.5">
-                  <div className="text-xs text-gray-600">Each particle has unique color</div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-1 bg-gradient-to-r from-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-500 border border-gray-300"></div>
-                    <span className="text-xs text-gray-700">155 Particles</span>
+                    <span className="text-xs text-gray-700">Particle Movement Paths</span>
                   </div>
                 </div>
               </div>
@@ -87,6 +88,27 @@ export default function MapLegend({
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFCC00' }}></div>
                     <span className="text-xs text-gray-700">Low</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Outbreak Stages */}
+            {showOutbreakStages && (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Outbreak Stages</h4>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full border border-gray-300" style={{ backgroundColor: '#FF0000' }}></div>
+                    <span className="text-xs text-gray-700">Gregarious (Swarming)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full border border-gray-300" style={{ backgroundColor: '#FF8C00' }}></div>
+                    <span className="text-xs text-gray-700">Transiens (Transitional)</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 rounded-full border border-gray-300" style={{ backgroundColor: '#32CD32' }}></div>
+                    <span className="text-xs text-gray-700">Solitary (Individual)</span>
                   </div>
                 </div>
               </div>

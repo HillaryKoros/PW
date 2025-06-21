@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Layers, ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -17,7 +16,7 @@ export default function CompactLayerControl({
   showAdminBoundaries,
   onToggleAdminBoundaries,
 }: CompactLayerControlProps) {
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['raster', 'vector']));
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['basemaps', 'reference']));
 
   const toggleSection = (section: string) => {
     const newExpanded = new Set(expandedSections);
@@ -30,134 +29,73 @@ export default function CompactLayerControl({
   };
 
   return (
-    <div className="absolute bottom-4 right-4 z-[1000] max-h-80 overflow-y-auto">
-      <Card className="bg-white border border-gray-300 shadow-lg w-56">
+    <div className="absolute bottom-4 right-4 z-[1000]">
+      <Card className="bg-white border border-gray-300 shadow-lg w-48">
         <CardContent className="p-2">
           <div className="space-y-2">
             {/* Header */}
-            <div className="flex items-center gap-1 pb-1 border-b border-gray-200">
-              <Layers size={12} className="text-gray-600" />
-              <span className="text-xs font-medium text-gray-700">Layers</span>
-            </div>
-            
-            {/* Basemap */}
-            <div>
-              <h4 className="text-xs font-medium text-gray-700 mb-1">Basemap</h4>
-              <Select value={selectedBasemap} onValueChange={onBasemapChange}>
-                <SelectTrigger className="w-full h-6 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="osm">OpenStreetMap</SelectItem>
-                  <SelectItem value="esri-satellite">Satellite</SelectItem>
-                  <SelectItem value="terrain">Terrain</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex items-center space-x-1 pb-2 border-b border-gray-200">
+              <Layers size={14} />
+              <span className="text-xs font-medium text-gray-700">Map Controls</span>
             </div>
 
-            {/* Raster Layers */}
+            {/* Basemaps Section */}
             <div>
-              <div 
-                className="flex items-center justify-between cursor-pointer py-1"
-                onClick={() => toggleSection('raster')}
+              <button
+                onClick={() => toggleSection('basemaps')}
+                className="flex items-center justify-between w-full py-1 text-xs font-medium text-gray-700 hover:text-gray-900"
               >
-                <span className="text-xs font-medium text-gray-700">Raster Layers</span>
-                {expandedSections.has('raster') ? 
-                  <ChevronDown size={12} className="text-gray-500" /> :
-                  <ChevronRight size={12} className="text-gray-500" />
-                }
-              </div>
-              {expandedSections.has('raster') && (
-                <div className="ml-2 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Breeding Suitability</label>
-                    <Switch
-                      checked={showBreedingSuitability}
-                      onCheckedChange={onToggleBreedingSuitability}
-                      className="scale-75"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Feeding Susceptibility</label>
-                    <Switch
-                      checked={showFeedingSusceptibility}
-                      onCheckedChange={onToggleFeedingSusceptibility}
-                      className="scale-75"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Gregarization</label>
-                    <Switch
-                      checked={showGregarization}
-                      onCheckedChange={onToggleGregarization}
-                      className="scale-75"
-                    />
-                  </div>
-                  {showTemporalBreeding && (
-                    <div className="ml-2 mt-1">
-                      <Select value={selectedBreedingMonth} onValueChange={onBreedingMonthChange}>
-                        <SelectTrigger className="w-full h-5 text-xs">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="jan">January</SelectItem>
-                          <SelectItem value="feb">February</SelectItem>
-                          <SelectItem value="mar">March</SelectItem>
-                          <SelectItem value="apr">April</SelectItem>
-                          <SelectItem value="may">May</SelectItem>
-                          <SelectItem value="jun">June</SelectItem>
-                          <SelectItem value="jul">July</SelectItem>
-                          <SelectItem value="aug">August</SelectItem>
-                          <SelectItem value="sep">September</SelectItem>
-                          <SelectItem value="oct">October</SelectItem>
-                          <SelectItem value="nov">November</SelectItem>
-                          <SelectItem value="dec">December</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
+                <span>Basemaps</span>
+                {expandedSections.has('basemaps') ? (
+                  <ChevronDown size={12} />
+                ) : (
+                  <ChevronRight size={12} />
+                )}
+              </button>
+              
+              {expandedSections.has('basemaps') && (
+                <div className="ml-2 mt-1 space-y-1">
+                  <Select value={selectedBasemap} onValueChange={onBasemapChange}>
+                    <SelectTrigger className="h-6 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="osm">OpenStreetMap</SelectItem>
+                      <SelectItem value="satellite">Satellite</SelectItem>
+                      <SelectItem value="terrain">Terrain</SelectItem>
+                      <SelectItem value="cartodb">CartoDB Light</SelectItem>
+                      <SelectItem value="hybrid">Hybrid</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             </div>
 
-            {/* Vector Layers */}
+            {/* Reference Layers Section */}
             <div>
-              <div 
-                className="flex items-center justify-between cursor-pointer py-1"
-                onClick={() => toggleSection('vector')}
+              <button
+                onClick={() => toggleSection('reference')}
+                className="flex items-center justify-between w-full py-1 text-xs font-medium text-gray-700 hover:text-gray-900"
               >
-                <span className="text-xs font-medium text-gray-700">Vector Layers</span>
-                {expandedSections.has('vector') ? 
-                  <ChevronDown size={12} className="text-gray-500" /> :
-                  <ChevronRight size={12} className="text-gray-500" />
-                }
-              </div>
-              {expandedSections.has('vector') && (
-                <div className="ml-2 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Swarm Coverage</label>
-                    <Switch
-                      checked={showLocustCoverage}
-                      onCheckedChange={onToggleLocustCoverage}
-                      className="scale-75"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Particle Trajectories</label>
-                    <Switch
-                      checked={showTrajectory}
-                      onCheckedChange={onToggleTrajectory}
-                      className="scale-75"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs text-gray-600">Boundaries</label>
-                    <Switch
+                <span>Reference</span>
+                {expandedSections.has('reference') ? (
+                  <ChevronDown size={12} />
+                ) : (
+                  <ChevronRight size={12} />
+                )}
+              </button>
+              
+              {expandedSections.has('reference') && (
+                <div className="ml-2 mt-1">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
                       checked={showAdminBoundaries}
-                      onCheckedChange={onToggleAdminBoundaries}
-                      className="scale-75"
+                      onChange={(e) => onToggleAdminBoundaries(e.target.checked)}
+                      className="w-3 h-3 rounded"
                     />
-                  </div>
+                    <span className="text-xs text-gray-600">Admin Boundaries</span>
+                  </label>
                 </div>
               )}
             </div>
