@@ -1,0 +1,54 @@
+import { useEffect, useRef } from "react";
+import { useMap } from "react-leaflet";
+import L from "leaflet";
+
+interface GregarizationLayerProps {
+  visible: boolean;
+  opacity?: number;
+}
+
+export default function GregarizationLayer({ 
+  visible, 
+  opacity = 0.7
+}: GregarizationLayerProps) {
+  const map = useMap();
+  const layerRef = useRef<L.TileLayer | null>(null);
+
+  useEffect(() => {
+    if (!map) return;
+
+    if (visible && !layerRef.current) {
+      // Create WMS layer for Maxent prediction TIFF data through MapServer
+      const wmsLayer = L.tileLayer.wms('/api/mapserver', {
+        layers: 'maxent_prediction',
+        format: 'image/svg+xml',
+        transparent: true,
+        opacity: opacity,
+        attribution: 'Maxent Prediction 2021 - Gregarization & Swarming'
+      } as any);
+
+      wmsLayer.addTo(map);
+      layerRef.current = wmsLayer;
+      
+      console.log('Gregarization/swarming layer added to map');
+    } else if (!visible && layerRef.current) {
+      map.removeLayer(layerRef.current);
+      layerRef.current = null;
+    }
+
+    return () => {
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
+    };
+  }, [map, visible, opacity]);
+
+  useEffect(() => {
+    if (layerRef.current && visible) {
+      layerRef.current.setOpacity(opacity);
+    }
+  }, [opacity, visible]);
+
+  return null;
+}

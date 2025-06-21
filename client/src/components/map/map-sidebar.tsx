@@ -25,6 +25,14 @@ interface MapSidebarProps {
   onToggleOutbreakStages?: (show: boolean) => void;
   showFeedingSusceptibility?: boolean;
   onToggleFeedingSusceptibility?: (show: boolean) => void;
+  showGregarization?: boolean;
+  onToggleGregarization?: (show: boolean) => void;
+  showLocustCoverage?: boolean;
+  onToggleLocustCoverage?: (show: boolean) => void;
+  showTemporalBreeding?: boolean;
+  onToggleTemporalBreeding?: (show: boolean) => void;
+  selectedBreedingMonth?: string;
+  onBreedingMonthChange?: (month: string) => void;
 }
 
 export default function MapSidebar({

@@ -34,7 +34,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const requestParam = REQUEST || request;
       
       if (serviceParam === 'WMS' && requestParam === 'GetMap') {
-        const layerParam = LAYERS || layers || 'feeding_susceptibility';
+        const layerParam = String(LAYERS || layers || 'feeding_susceptibility');
         
         // Set appropriate headers for SVG response
         res.setHeader('Content-Type', 'image/svg+xml');
@@ -111,6 +111,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
   <polygon points="80,160 140,160 140,200 80,200" fill="#0070FF" opacity="0.6" stroke="#004080" stroke-width="2"/>
   <text x="10" y="20" font-family="Arial" font-size="8" fill="#333">Swarm Coverage</text>
 </svg>`;
+          }
+        } else if (layerParam === 'maxent_prediction') {
+          // Check if Maxent prediction TIFF exists
+          const maxentTiffPath = path.join(process.cwd(), "attached_assets", "Maxent Prediction 2021_1750530749377.tif");
+          
+          if (fs.existsSync(maxentTiffPath)) {
+            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="gregarizationGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.9"/>
+      <stop offset="50%" style="stop-color:#F7931E;stop-opacity:0.7"/>
+      <stop offset="100%" style="stop-color:#FFD23F;stop-opacity:0.5"/>
+    </radialGradient>
+    <pattern id="swarmPattern" patternUnits="userSpaceOnUse" width="30" height="30">
+      <circle cx="15" cy="15" r="12" fill="url(#gregarizationGrad)"/>
+    </pattern>
+  </defs>
+  <rect width="256" height="256" fill="transparent"/>
+  <ellipse cx="100" cy="90" rx="70" ry="50" fill="url(#swarmPattern)"/>
+  <circle cx="180" cy="160" r="45" fill="url(#gregarizationGrad)" opacity="0.8"/>
+  <ellipse cx="60" cy="180" rx="40" ry="30" fill="url(#swarmPattern)" opacity="0.6"/>
+</svg>`;
+          }
+        } else if (layerParam.startsWith('temporal_breeding_')) {
+          // Handle temporal breeding suitability for different months
+          const month = layerParam.split('_')[2]; // Extract month from layer name
+          const monthFiles = {
+            'jan': 'Breeding_Suitability_raster_JAN_2025_NORMALIZED_1750530792021.tif',
+            'feb': 'Breeding_Suitability_raster_FEB_2025_NORMALIZED_1750530792021.tif',
+            'apr': 'Breeding_Suitability_raster_APR_2024_NORMALIZED_1750530792002.tif',
+            'jul': 'Breeding_Suitability_raster_JUL_2024_NORMALIZED_1750530792022.tif',
+            'nov': 'Breeding_Suitability_raster_NOV_2024_NORMALIZED_1750530792022.tif',
+            'dec': 'Breeding_Suitability_raster_DEC_2024_NORMALIZED_1750530792020.tif'
+          };
+          
+          const fileName = monthFiles[month as keyof typeof monthFiles];
+          if (fileName) {
+            const temporalTiffPath = path.join(process.cwd(), "attached_assets", fileName);
+            
+            if (fs.existsSync(temporalTiffPath)) {
+              svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="temporalHigh" patternUnits="userSpaceOnUse" width="18" height="18">
+      <rect width="18" height="18" fill="#FF2B18" opacity="0.8"/>
+    </pattern>
+    <pattern id="temporalMod" patternUnits="userSpaceOnUse" width="14" height="14">
+      <rect width="14" height="14" fill="#33B3FD" opacity="0.7"/>
+    </pattern>
+    <pattern id="temporalLow" patternUnits="userSpaceOnUse" width="12" height="12">
+      <rect width="12" height="12" fill="#F2FE2A" opacity="0.6"/>
+    </pattern>
+    <pattern id="temporalUn" patternUnits="userSpaceOnUse" width="10" height="10">
+      <rect width="10" height="10" fill="#BDBEBE" opacity="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="256" height="256" fill="transparent"/>
+  <ellipse cx="130" cy="110" rx="65" ry="45" fill="url(#temporalHigh)"/>
+  <circle cx="70" cy="170" r="30" fill="url(#temporalMod)"/>
+  <rect x="170" y="150" width="70" height="50" fill="url(#temporalLow)" rx="8"/>
+  <circle cx="190" cy="70" r="25" fill="url(#temporalUn)"/>
+  <text x="10" y="20" font-family="Arial" font-size="8" fill="#333">${month.toUpperCase()} 2024/2025</text>
+</svg>`;
+            }
           }
         }
         
