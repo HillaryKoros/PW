@@ -18,6 +18,10 @@ interface MapSidebarProps {
   animationSpeed: number;
   onSpeedChange: (speed: number) => void;
   trajectoryData: any;
+  showBreedingSuitability?: boolean;
+  onToggleBreedingSuitability?: (show: boolean) => void;
+  showOutbreakStages?: boolean;
+  onToggleOutbreakStages?: (show: boolean) => void;
 }
 
 export default function MapSidebar({
