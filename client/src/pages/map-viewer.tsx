@@ -143,12 +143,7 @@ export default function MapViewer() {
             <Menu size={16} />
           </Button>
 
-          {/* Legend */}
-          <MapLegend 
-            showBreedingSuitability={showBreedingSuitability}
-            showOutbreakStages={showOutbreakStages}
-            showTrajectory={showTrajectory}
-          />
+
 
           {/* Layer Control - Bottom Left */}
           <div className="absolute bottom-4 left-4 z-40">

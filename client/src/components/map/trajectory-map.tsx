@@ -11,6 +11,7 @@ import TemporalBreedingLayer from "./temporal-breeding-layer";
 import OutbreakStagesLayer from "./outbreak-stages-layer";
 import TrajectoryAnimationControl from "./trajectory-animation-control";
 import TrajectoryDateDisplay from "./trajectory-date-display";
+import MapLegend from "./map-legend";
 import LocustIcon from "@/components/locust-icon";
 import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -319,6 +320,13 @@ export default function TrajectoryMap({
         onSpeedChange={onSpeedChange}
         trajectoryData={trajectoryData}
         visible={showTrajectory}
+      />
+
+      {/* Map Legend */}
+      <MapLegend 
+        showBreedingSuitability={showBreedingSuitability}
+        showOutbreakStages={showOutbreakStages}
+        showTrajectory={showTrajectory}
       />
     </div>
   );

@@ -116,24 +116,7 @@ export default function MapLegend({
             </div>
           )}
 
-          {/* Trajectory Risk Levels */}
-          <div>
-            <h4 className="text-xs font-medium text-gray-600 mb-2">Outbreak Probability</h4>
-            <div className="space-y-1.5">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full border border-gray-300"></div>
-                <span className="text-xs text-gray-700">High Risk &gt;6</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-orange-400 rounded-full border border-gray-300"></div>
-                <span className="text-xs text-gray-700">Moderate 3-6</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-400 rounded-full border border-gray-300"></div>
-                <span className="text-xs text-gray-700">Low Risk &lt;3</span>
-              </div>
-            </div>
-          </div>
+
         </CardContent>
       )}
     </Card>
