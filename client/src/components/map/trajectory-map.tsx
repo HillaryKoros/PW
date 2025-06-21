@@ -299,6 +299,20 @@ export default function TrajectoryMap({
           );
         })}
       </MapContainer>
+
+      {/* Trajectory Animation Control */}
+      <TrajectoryAnimationControl
+        isPlaying={isPlaying}
+        onPlay={onPlay}
+        onPause={onPause}
+        onReset={onReset}
+        currentTimeIndex={currentTimeIndex}
+        onTimeIndexChange={onTimeIndexChange}
+        animationSpeed={animationSpeed}
+        onSpeedChange={onSpeedChange}
+        trajectoryData={trajectoryData}
+        visible={showTrajectory}
+      />
     </div>
   );
 }

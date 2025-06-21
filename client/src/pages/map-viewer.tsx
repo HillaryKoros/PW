@@ -117,6 +117,10 @@ export default function MapViewer() {
             currentTimeIndex={currentTimeIndex}
             onTimeIndexChange={setCurrentTimeIndex}
             animationSpeed={animationSpeed}
+            onPlay={playAnimation}
+            onPause={pauseAnimation}
+            onReset={resetAnimation}
+            onSpeedChange={setAnimationSpeed}
             selectedCountry={selectedCountry}
             showBreedingSuitability={showBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
