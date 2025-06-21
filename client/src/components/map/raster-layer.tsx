@@ -27,14 +27,20 @@ export default function RasterLayer({
       // Create WMS layer for TIFF raster data through MapServer
       const wmsLayer = L.tileLayer.wms('/api/mapserver', {
         layers: 'feeding_susceptibility',
-        format: 'image/png',
+        format: 'image/svg+xml',
         transparent: true,
         opacity: opacity,
+        service: 'WMS',
+        request: 'GetMap',
+        version: '1.3.0',
+        crs: 'EPSG:4326',
         attribution: 'Feeding Susceptibility Data - MapServer WMS'
-      });
+      } as any);
 
       wmsLayer.addTo(map);
       layerRef.current = wmsLayer as any;
+      
+      console.log('Feeding susceptibility raster layer added to map');
     } else if (!visible && layerRef.current) {
       map.removeLayer(layerRef.current);
       layerRef.current = null;

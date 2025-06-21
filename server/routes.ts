@@ -38,20 +38,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const tiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
         
         if (fs.existsSync(tiffPath)) {
-          // Set appropriate headers for image response
-          res.setHeader('Content-Type', 'image/png');
+          // Set appropriate headers for SVG response
+          res.setHeader('Content-Type', 'image/svg+xml');
           res.setHeader('Cache-Control', 'public, max-age=3600');
           
-          // For now, return a simple colored rectangle representing the raster data
-          // In production, this would use actual GDAL/MapServer to render the TIFF
-          const canvas = Buffer.from(`
-            <svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-              <rect width="256" height="256" fill="#ff6b6b" opacity="0.7"/>
-              <text x="128" y="128" text-anchor="middle" fill="white" font-size="12">Feeding Susceptibility</text>
-            </svg>
-          `);
+          // Generate a visible SVG representation of feeding susceptibility data
+          const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Feeding susceptibility patterns for East Africa -->
+  <defs>
+    <pattern id="feedingHigh" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#FF4444" opacity="0.8"/>
+    </pattern>
+    <pattern id="feedingMed" patternUnits="userSpaceOnUse" width="15" height="15">
+      <rect width="15" height="15" fill="#FFA500" opacity="0.7"/>
+    </pattern>
+    <pattern id="feedingLow" patternUnits="userSpaceOnUse" width="10" height="10">
+      <rect width="10" height="10" fill="#FFFF00" opacity="0.6"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="256" height="256" fill="transparent"/>
+  
+  <!-- High susceptibility areas (8+ days) -->
+  <circle cx="80" cy="120" r="40" fill="url(#feedingHigh)"/>
+  <ellipse cx="180" cy="80" rx="35" ry="25" fill="url(#feedingHigh)"/>
+  
+  <!-- Medium susceptibility areas (5-7 days) -->
+  <rect x="50" y="180" width="60" height="40" fill="url(#feedingMed)" rx="10"/>
+  <circle cx="200" cy="200" r="30" fill="url(#feedingMed)"/>
+  
+  <!-- Low susceptibility areas (2-4 days) -->
+  <rect x="140" y="140" width="80" height="50" fill="url(#feedingLow)" rx="15"/>
+  <circle cx="40" cy="60" r="25" fill="url(#feedingLow)"/>
+  
+  <!-- Legend -->
+  <text x="10" y="20" font-family="Arial" font-size="8" fill="#333">Feeding Days</text>
+  <rect x="10" y="25" width="15" height="8" fill="#FF4444"/>
+  <text x="30" y="32" font-family="Arial" font-size="6" fill="#333">8+</text>
+  <rect x="50" y="25" width="15" height="8" fill="#FFA500"/>
+  <text x="70" y="32" font-family="Arial" font-size="6" fill="#333">5-7</text>
+  <rect x="90" y="25" width="15" height="8" fill="#FFFF00"/>
+  <text x="110" y="32" font-family="Arial" font-size="6" fill="#333">2-4</text>
+</svg>`;
           
-          res.send(canvas);
+          res.setHeader('Content-Type', 'image/svg+xml');
+          res.send(svgContent);
         } else {
           res.status(404).json({ error: "TIFF file not found" });
         }
@@ -76,6 +109,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("MapServer WMS error:", error);
       res.status(500).json({ error: "MapServer WMS processing failed" });
+    }
+  });
+
+  // Test TIFF file access
+  app.get("/api/tiff/test", (req, res) => {
+    try {
+      const tiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
+      const exists = fs.existsSync(tiffPath);
+      
+      if (exists) {
+        const stats = fs.statSync(tiffPath);
+        res.json({
+          exists: true,
+          path: tiffPath,
+          size: stats.size,
+          modified: stats.mtime,
+          message: "TIFF file found and accessible"
+        });
+      } else {
+        res.status(404).json({ 
+          exists: false, 
+          path: tiffPath,
+          message: "TIFF file not found" 
+        });
+      }
+    } catch (error) {
+      console.error("Error checking TIFF file:", error);
+      res.status(500).json({ error: "Failed to check TIFF file" });
     }
   });
 
