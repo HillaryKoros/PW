@@ -12,6 +12,8 @@ interface LayerControlProps {
   onBasemapChange: (basemap: string) => void;
   showAdminBoundaries: boolean;
   onToggleAdminBoundaries: (show: boolean) => void;
+  showFeedingSusceptibility?: boolean;
+  onToggleFeedingSusceptibility?: (show: boolean) => void;
 }
 
 export default function LayerControl({
@@ -22,10 +24,12 @@ export default function LayerControl({
   selectedBasemap,
   onBasemapChange,
   showAdminBoundaries,
-  onToggleAdminBoundaries
+  onToggleAdminBoundaries,
+  showFeedingSusceptibility = false,
+  onToggleFeedingSusceptibility
 }: LayerControlProps) {
   return (
-    <Card className="absolute bottom-4 left-4 min-w-72 z-40 bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg">
+    <Card className="absolute bottom-4 right-4 min-w-72 z-40 bg-white/95 backdrop-blur-sm border border-gray-300 shadow-lg">
       <CardContent className="p-4">
         <div className="space-y-4">
           {/* Basemap Selection */}
@@ -84,6 +88,14 @@ export default function LayerControl({
                   id="breeding-suitability"
                   checked={showBreedingSuitability}
                   onCheckedChange={onToggleBreedingSuitability}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="feeding-susceptibility" className="text-xs text-gray-600">Feeding Susceptibility</label>
+                <Switch
+                  id="feeding-susceptibility"
+                  checked={showFeedingSusceptibility}
+                  onCheckedChange={onToggleFeedingSusceptibility}
                 />
               </div>
               <div className="flex items-center justify-between">

@@ -106,6 +106,9 @@ export default function MapViewer() {
             selectedCountry={selectedCountry}
             showBreedingSuitability={showBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
+            selectedBasemap={selectedBasemap}
+            showAdminBoundaries={showAdminBoundaries}
+            showFeedingSusceptibility={showFeedingSusceptibility}
           />
 
           {/* Sidebar Toggle Button */}
@@ -133,6 +136,8 @@ export default function MapViewer() {
             onBasemapChange={setSelectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
             onToggleAdminBoundaries={setShowAdminBoundaries}
+            showFeedingSusceptibility={showFeedingSusceptibility}
+            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
           />
         </div>
       </div>
