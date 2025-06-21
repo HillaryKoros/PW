@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
-import MapLegend from "@/components/map/map-legend";
-import CompactLayerControl from "@/components/map/compact-layer-control";
+import IconLayerControl from "@/components/map/icon-layer-control";
 import Footer from "@/components/layout/footer";
-import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
 import { loadTrajectoryData } from "@/lib/trajectory-data";
 
 export default function MapViewer() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [trajectoryData, setTrajectoryData] = useState<any>(null);
   const [selectedCountry, setSelectedCountry] = useState("All Countries");
@@ -44,10 +40,6 @@ export default function MapViewer() {
     loadData();
   }, []);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   const playAnimation = () => {
     setIsPlaying(true);
   };
@@ -62,101 +54,90 @@ export default function MapViewer() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-gray-50 overflow-hidden">
-      <div className="flex flex-1 relative">
-        {/* Sidebar */}
-        <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-0'} overflow-hidden flex-shrink-0 z-30`}>
-          <MapSidebar
-            selectedCountry={selectedCountry}
-            onCountryChange={setSelectedCountry}
-            activeDataType={activeDataType}
-            onDataTypeChange={setActiveDataType}
+    <div className="h-screen w-screen flex bg-gray-50 overflow-hidden fixed inset-0">
+      {/* Sidebar - Permanently Pinned */}
+      <div className="w-80 flex-shrink-0 z-30 bg-white border-r border-gray-200 overflow-y-auto">
+        <MapSidebar
+          selectedCountry={selectedCountry}
+          onCountryChange={setSelectedCountry}
+          activeDataType={activeDataType}
+          onDataTypeChange={setActiveDataType}
+          isPlaying={isPlaying}
+          onPlay={playAnimation}
+          onPause={pauseAnimation}
+          onReset={resetAnimation}
+          currentTimeIndex={currentTimeIndex}
+          onTimeIndexChange={setCurrentTimeIndex}
+          animationSpeed={animationSpeed}
+          onSpeedChange={setAnimationSpeed}
+          trajectoryData={trajectoryData}
+          showBreedingSuitability={showBreedingSuitability}
+          onToggleBreedingSuitability={setShowBreedingSuitability}
+          showOutbreakStages={showOutbreakStages}
+          onToggleOutbreakStages={setShowOutbreakStages}
+          showFeedingSusceptibility={showFeedingSusceptibility}
+          onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
+          showGregarization={showGregarization}
+          onToggleGregarization={setShowGregarization}
+          showLocustCoverage={showLocustCoverage}
+          onToggleLocustCoverage={setShowLocustCoverage}
+          showTemporalBreeding={showTemporalBreeding}
+          onToggleTemporalBreeding={setShowTemporalBreeding}
+          selectedBreedingMonth={selectedBreedingMonth}
+          onBreedingMonthChange={setSelectedBreedingMonth}
+          showTrajectory={showTrajectory}
+          onToggleTrajectory={setShowTrajectory}
+        />
+      </div>
+
+      {/* Main Map Content - Fixed to remaining space */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Loading Overlay */}
+        {isLoading && (
+          <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pest-green-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading trajectory data...</p>
+            </div>
+          </div>
+        )}
+
+        {/* Map Container - Fixed with footer space */}
+        <div className="absolute inset-0 bottom-10">
+          <TrajectoryMap
+            trajectoryData={trajectoryData}
             isPlaying={isPlaying}
-            onPlay={playAnimation}
-            onPause={pauseAnimation}
-            onReset={resetAnimation}
             currentTimeIndex={currentTimeIndex}
             onTimeIndexChange={setCurrentTimeIndex}
             animationSpeed={animationSpeed}
+            onPlay={playAnimation}
+            onPause={pauseAnimation}
+            onReset={resetAnimation}
             onSpeedChange={setAnimationSpeed}
-            trajectoryData={trajectoryData}
+            selectedCountry={selectedCountry}
             showBreedingSuitability={showBreedingSuitability}
-            onToggleBreedingSuitability={setShowBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
-            onToggleOutbreakStages={setShowOutbreakStages}
-            showFeedingSusceptibility={showFeedingSusceptibility}
-            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
-            showGregarization={showGregarization}
-            onToggleGregarization={setShowGregarization}
-            showLocustCoverage={showLocustCoverage}
-            onToggleLocustCoverage={setShowLocustCoverage}
-            showTemporalBreeding={showTemporalBreeding}
-            onToggleTemporalBreeding={setShowTemporalBreeding}
-            selectedBreedingMonth={selectedBreedingMonth}
-            onBreedingMonthChange={setSelectedBreedingMonth}
-            showTrajectory={showTrajectory}
-            onToggleTrajectory={setShowTrajectory}
-          />
-        </div>
-
-        {/* Main Map Content */}
-        <div className="flex-1 relative overflow-hidden">
-          {/* Loading Overlay */}
-          {isLoading && (
-            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
-              <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pest-green-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading trajectory data...</p>
-              </div>
-            </div>
-          )}
-
-          {/* Map with bottom padding for footer */}
-          <div className="h-full w-full relative" style={{ paddingBottom: '40px' }}>
-            <TrajectoryMap
-              trajectoryData={trajectoryData}
-              isPlaying={isPlaying}
-              currentTimeIndex={currentTimeIndex}
-              onTimeIndexChange={setCurrentTimeIndex}
-              animationSpeed={animationSpeed}
-              onPlay={playAnimation}
-              onPause={pauseAnimation}
-              onReset={resetAnimation}
-              onSpeedChange={setAnimationSpeed}
-              selectedCountry={selectedCountry}
-              showBreedingSuitability={showBreedingSuitability}
-              showOutbreakStages={showOutbreakStages}
-              selectedBasemap={selectedBasemap}
-              showAdminBoundaries={showAdminBoundaries}
-              showFeedingSusceptibility={showFeedingSusceptibility}
-              showGregarization={showGregarization}
-              showLocustCoverage={showLocustCoverage}
-              showTemporalBreeding={showTemporalBreeding}
-              selectedBreedingMonth={selectedBreedingMonth}
-              showTrajectory={showTrajectory}
-            />
-          </div>
-
-          {/* Sidebar Toggle Button */}
-          <Button
-            onClick={toggleSidebar}
-            className="absolute top-4 left-4 z-[9999] w-10 h-10 p-0 bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 shadow-lg"
-            variant="outline"
-          >
-            <Menu size={16} />
-          </Button>
-
-          {/* Compact Layer Control - Only Admin and Basemap */}
-          <CompactLayerControl
             selectedBasemap={selectedBasemap}
-            onBasemapChange={setSelectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
-            onToggleAdminBoundaries={setShowAdminBoundaries}
+            showFeedingSusceptibility={showFeedingSusceptibility}
+            showGregarization={showGregarization}
+            showLocustCoverage={showLocustCoverage}
+            showTemporalBreeding={showTemporalBreeding}
+            selectedBreedingMonth={selectedBreedingMonth}
+            showTrajectory={showTrajectory}
           />
-
-          {/* Footer */}
-          <Footer />
         </div>
+
+        {/* Icon-based Layer Control */}
+        <IconLayerControl
+          selectedBasemap={selectedBasemap}
+          onBasemapChange={setSelectedBasemap}
+          showAdminBoundaries={showAdminBoundaries}
+          onToggleAdminBoundaries={setShowAdminBoundaries}
+        />
+
+        {/* Footer - Fixed at bottom */}
+        <Footer />
       </div>
     </div>
   );
