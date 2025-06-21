@@ -1,0 +1,106 @@
+MAP
+  NAME "outbreak_stages"
+  STATUS ON
+  SIZE 400 300
+  EXTENT -180 -90 180 90
+  UNITS DD
+  IMAGECOLOR 255 255 255
+  IMAGETYPE PNG
+
+  OUTPUTFORMAT
+    NAME "png"
+    DRIVER "AGG/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGBA
+    EXTENSION "png"
+    TRANSPARENT ON
+  END
+
+  PROJECTION
+    "proj=longlat"
+    "ellps=WGS84"
+    "datum=WGS84"
+    "no_defs"
+  END
+
+  WEB
+    METADATA
+      "wms_title" "ELRP Locust Outbreak Stages"
+      "wms_onlineresource" "http://localhost:8080/cgi-bin/mapserv"
+      "wms_srs" "EPSG:4326"
+      "wms_enable_request" "*"
+      "wms_format" "image/png"
+    END
+  END
+
+  LAYER
+    NAME "locust_outbreak_stages"
+    TYPE POINT
+    STATUS ON
+    DATA "../data/locust_outbreak_stages.geojson"
+    
+    PROJECTION
+      "proj=longlat"
+      "ellps=WGS84"
+      "datum=WGS84"
+      "no_defs"
+    END
+
+    METADATA
+      "wms_title" "Locust Outbreak Stages"
+      "wms_srs" "EPSG:4326"
+      "wms_format" "image/png"
+    END
+
+    CLASSITEM "outbreak_stage"
+
+    CLASS
+      NAME "Crisis"
+      EXPRESSION "Crisis"
+      STYLE
+        SYMBOL "circle"
+        SIZE 8
+        COLOR 220 20 60
+        OUTLINECOLOR 139 0 0
+        OUTLINEWIDTH 2
+      END
+    END
+
+    CLASS
+      NAME "Alert"
+      EXPRESSION "Alert"
+      STYLE
+        SYMBOL "circle"
+        SIZE 6
+        COLOR 255 69 0
+        OUTLINECOLOR 178 34 34
+        OUTLINEWIDTH 1
+      END
+    END
+
+    CLASS
+      NAME "Alarm"
+      EXPRESSION "Alarm"
+      STYLE
+        SYMBOL "circle"
+        SIZE 5
+        COLOR 255 165 0
+        OUTLINECOLOR 205 133 63
+        OUTLINEWIDTH 1
+      END
+    END
+
+    CLASS
+      NAME "Calm"
+      EXPRESSION "Calm"
+      STYLE
+        SYMBOL "circle"
+        SIZE 4
+        COLOR 50 205 50
+        OUTLINECOLOR 34 139 34
+        OUTLINEWIDTH 1
+      END
+    END
+  END
+
+END
