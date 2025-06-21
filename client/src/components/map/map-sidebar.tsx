@@ -92,32 +92,49 @@ export default function MapSidebar({
       
       {/* Layer Controls - Scrollable */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* Data Type Controls */}
+        {/* Data and Animation Controls Combined */}
         <div>
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Data Controls</h3>
-          <div className="flex space-x-2">
-            <Button
-              onClick={() => onDataTypeChange("monitoring")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg ${
-                activeDataType === "monitoring"
-                  ? "pest-green-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
-              variant={activeDataType === "monitoring" ? "default" : "secondary"}
-            >
-              Monitoring Data
-            </Button>
-            <Button
-              onClick={() => onDataTypeChange("forecast")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg ${
-                activeDataType === "forecast"
-                  ? "pest-green-600 text-white"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
-              variant={activeDataType === "forecast" ? "default" : "secondary"}
-            >
-              Forecast Data
-            </Button>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-medium text-gray-700">Data: {currentDate}</h3>
+            <div className="flex space-x-1">
+              <Button
+                onClick={isPlaying ? onPause : onPlay}
+                size="sm"
+                variant="outline"
+                className="text-xs px-2 py-1"
+              >
+                {isPlaying ? <Pause size={12} /> : <Play size={12} />}
+              </Button>
+              <Button
+                onClick={onReset}
+                size="sm"
+                variant="outline"
+                className="text-xs px-2 py-1"
+              >
+                <RotateCcw size={12} />
+              </Button>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Slider
+              value={[currentTimeIndex]}
+              onValueChange={(value) => onTimeIndexChange(value[0])}
+              max={maxTimeIndex}
+              min={0}
+              step={1}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-gray-500">
+              <span>Speed</span>
+              <Slider
+                value={[animationSpeed]}
+                onValueChange={(value) => onSpeedChange(value[0])}
+                max={1000}
+                min={50}
+                step={50}
+                className="w-16"
+              />
+            </div>
           </div>
         </div>
         
@@ -181,54 +198,7 @@ export default function MapSidebar({
                 onCheckedChange={onToggleTrajectory}
               />
             </div>
-            {showTrajectory && (
-              <div className="ml-4 mt-2 p-3 bg-gray-50 rounded border">
-                <h4 className="text-xs font-medium text-gray-700 mb-2">Animation Controls</h4>
-                <div className="flex items-center justify-between mb-2">
-                  <Button
-                    onClick={onPlay}
-                    disabled={isPlaying}
-                    size="sm"
-                    variant="outline"
-                    className="text-xs"
-                  >
-                    Play
-                  </Button>
-                  <Button
-                    onClick={onPause}
-                    disabled={!isPlaying}
-                    size="sm"
-                    variant="outline"
-                    className="text-xs"
-                  >
-                    Pause
-                  </Button>
-                  <Button
-                    onClick={onReset}
-                    size="sm"
-                    variant="outline"
-                    className="text-xs"
-                  >
-                    Reset
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs text-gray-600">Animation Speed</label>
-                  <Slider
-                    value={[animationSpeed]}
-                    onValueChange={(value) => onSpeedChange(value[0])}
-                    max={1000}
-                    min={50}
-                    step={50}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500">
-                    <span>Fast</span>
-                    <span>Slow</span>
-                  </div>
-                </div>
-              </div>
-            )}
+
             {showTemporalBreeding && (
               <div className="ml-4 mt-2">
                 <label className="text-xs text-gray-600 mb-1 block">Select Month:</label>

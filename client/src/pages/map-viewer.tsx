@@ -62,7 +62,7 @@ export default function MapViewer() {
       {/* Main Content Area */}
       <div className="flex flex-1">
         {/* Sidebar - Permanently Pinned */}
-        <div className="w-80 flex-shrink-0 z-30 bg-white border-r border-gray-200 overflow-y-auto">
+        <div className="w-72 flex-shrink-0 z-30 bg-white border-r border-gray-200 overflow-y-auto">
           <MapSidebar
             selectedCountry={selectedCountry}
             onCountryChange={setSelectedCountry}

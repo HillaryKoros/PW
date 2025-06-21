@@ -19,7 +19,7 @@ export default function IconLayerControl({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="absolute top-4 right-4 z-[1000]">
+    <div className="absolute bottom-16 right-4 z-[1000]">
       {!isExpanded ? (
         /* Collapsed Icon State */
         <button
