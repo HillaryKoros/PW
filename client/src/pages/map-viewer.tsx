@@ -114,7 +114,10 @@ export default function MapViewer() {
           </Button>
 
           {/* Legend */}
-          <MapLegend />
+          <MapLegend 
+            showBreedingSuitability={showBreedingSuitability}
+            showOutbreakStages={showOutbreakStages}
+          />
         </div>
       </div>
     </div>

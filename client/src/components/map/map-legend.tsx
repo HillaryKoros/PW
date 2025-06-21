@@ -4,7 +4,15 @@ import { Expand, Minimize2 } from "lucide-react";
 import { useState } from "react";
 import { BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatial-data";
 
-export default function MapLegend() {
+interface MapLegendProps {
+  showBreedingSuitability?: boolean;
+  showOutbreakStages?: boolean;
+}
+
+export default function MapLegend({ 
+  showBreedingSuitability = false, 
+  showOutbreakStages = true 
+}: MapLegendProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -28,7 +36,58 @@ export default function MapLegend() {
       </CardHeader>
       
       {isExpanded && (
-        <CardContent className="pt-0 pb-3">
+        <CardContent className="pt-0 pb-3 space-y-4">
+          {/* Outbreak Stages */}
+          {showOutbreakStages && (
+            <div>
+              <h4 className="text-xs font-medium text-gray-600 mb-2">Outbreak Stages</h4>
+              <div className="space-y-1.5">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: OUTBREAK_STAGE_COLORS.Crisis }}></div>
+                  <span className="text-xs text-gray-700">Crisis Stage</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: OUTBREAK_STAGE_COLORS.Alert }}></div>
+                  <span className="text-xs text-gray-700">Alert Stage</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: OUTBREAK_STAGE_COLORS.Alarm }}></div>
+                  <span className="text-xs text-gray-700">Alarm Stage</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: OUTBREAK_STAGE_COLORS.Calm }}></div>
+                  <span className="text-xs text-gray-700">Calm Stage</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Breeding Suitability */}
+          {showBreedingSuitability && (
+            <div>
+              <h4 className="text-xs font-medium text-gray-600 mb-2">Breeding Suitability</h4>
+              <div className="space-y-1.5">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[4] }}></div>
+                  <span className="text-xs text-gray-700">High Suitability</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[3] }}></div>
+                  <span className="text-xs text-gray-700">Moderate</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[2] }}></div>
+                  <span className="text-xs text-gray-700">Low</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: BREEDING_SUITABILITY_COLORS[1] }}></div>
+                  <span className="text-xs text-gray-700">Unsuitable</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Trajectory Risk Levels */}
           <div>
             <h4 className="text-xs font-medium text-gray-600 mb-2">Outbreak Probability</h4>
             <div className="space-y-1.5">
