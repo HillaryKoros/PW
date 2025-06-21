@@ -203,20 +203,7 @@ export default function TrajectoryMap({
           />
         )}
         
-        {/* Trajectory Lines */}
-        {particleTrajectories.map((trajectory) => {
-          const visiblePath = trajectory.coordinates.slice(0, currentTimeIndex + 1);
-          
-          return (
-            <Polyline
-              key={`trajectory-${trajectory.particleId}`}
-              positions={visiblePath}
-              color={getTrajectoryColor(trajectory.particleId)}
-              weight={2}
-              opacity={0.6}
-            />
-          );
-        })}
+
 
         {/* Current Position Markers with Static Locust Symbols */}
         {Array.from(currentPositions.entries()).map(([particleId, position]) => {
