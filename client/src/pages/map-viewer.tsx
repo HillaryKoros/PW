@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
 import IconLayerControl from "@/components/map/icon-layer-control";
+import MapAnimationControl from "@/components/map/map-animation-control";
 import Footer from "@/components/layout/footer";
 import Navigation from "@/components/layout/navigation";
 import { loadTrajectoryData } from "@/lib/trajectory-data";
@@ -68,15 +69,6 @@ export default function MapViewer() {
             onCountryChange={setSelectedCountry}
             activeDataType={activeDataType}
             onDataTypeChange={setActiveDataType}
-            isPlaying={isPlaying}
-            onPlay={playAnimation}
-            onPause={pauseAnimation}
-            onReset={resetAnimation}
-            currentTimeIndex={currentTimeIndex}
-            onTimeIndexChange={setCurrentTimeIndex}
-            animationSpeed={animationSpeed}
-            onSpeedChange={setAnimationSpeed}
-            trajectoryData={trajectoryData}
             showBreedingSuitability={showBreedingSuitability}
             onToggleBreedingSuitability={setShowBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
@@ -140,6 +132,20 @@ export default function MapViewer() {
             onBasemapChange={setSelectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
             onToggleAdminBoundaries={setShowAdminBoundaries}
+          />
+
+          {/* Map Animation Control */}
+          <MapAnimationControl
+            isPlaying={isPlaying}
+            onPlay={playAnimation}
+            onPause={pauseAnimation}
+            onReset={resetAnimation}
+            currentTimeIndex={currentTimeIndex}
+            onTimeIndexChange={setCurrentTimeIndex}
+            animationSpeed={animationSpeed}
+            onSpeedChange={setAnimationSpeed}
+            trajectoryData={trajectoryData}
+            visible={showTrajectory}
           />
 
           {/* Footer - Fixed at bottom */}

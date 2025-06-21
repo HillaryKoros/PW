@@ -11,15 +11,6 @@ interface MapSidebarProps {
   onCountryChange: (country: string) => void;
   activeDataType: string;
   onDataTypeChange: (type: string) => void;
-  isPlaying: boolean;
-  onPlay: () => void;
-  onPause: () => void;
-  onReset: () => void;
-  currentTimeIndex: number;
-  onTimeIndexChange: (index: number) => void;
-  animationSpeed: number;
-  onSpeedChange: (speed: number) => void;
-  trajectoryData: any;
   showBreedingSuitability?: boolean;
   onToggleBreedingSuitability?: (show: boolean) => void;
   showOutbreakStages?: boolean;
@@ -91,8 +82,34 @@ export default function MapSidebar({
       </div>
       
       {/* Layer Controls - Scrollable */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
-        {/* Spatial Data Layers */}
+      <div className="flex-1 overflow-y-auto p-3 space-y-4">
+        {/* Data Controls */}
+        <div>
+          <h3 className="text-sm font-medium text-gray-700 mb-3">Data Controls</h3>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 p-2 bg-blue-50 rounded border border-blue-200">
+              <input 
+                type="radio" 
+                id="monitoring-data" 
+                name="data-type"
+                className="text-blue-600"
+                defaultChecked
+              />
+              <label htmlFor="monitoring-data" className="text-xs text-gray-700 font-medium">Monitoring Data</label>
+            </div>
+            <div className="flex items-center space-x-2 p-2 bg-gray-50 rounded border border-gray-200">
+              <input 
+                type="radio" 
+                id="forecast-data" 
+                name="data-type"
+                className="text-blue-600"
+              />
+              <label htmlFor="forecast-data" className="text-xs text-gray-700">Forecast Data</label>
+            </div>
+          </div>
+        </div>
+
+        {/* Model Output Layers */}
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Model Output Layers</h3>
           <div className="space-y-3">
