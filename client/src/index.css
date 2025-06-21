@@ -2,18 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure full viewport coverage without scrollbars but allow footer */
+/* Ensure proper layout with footer visibility */
 html, body, #root {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
   margin: 0;
   padding: 0;
-}
-
-/* Adjust for footer visibility */
-.map-container {
-  height: calc(100vh - 60px);
+  overflow-x: hidden;
 }
 
 /* Leaflet map container fixes */

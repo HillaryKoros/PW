@@ -46,7 +46,6 @@ export default function TrajectoryDateDisplay({
       <CardContent className="p-3">
         <div className="text-center">
           <div className="text-lg font-bold text-gray-800">{currentDate}</div>
-          <div className="text-sm text-gray-600">Animation Day {dayCount}</div>
         </div>
       </CardContent>
     </Card>
