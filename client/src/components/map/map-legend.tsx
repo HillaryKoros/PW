@@ -6,19 +6,25 @@ import { BREEDING_SUITABILITY_COLORS } from '@/lib/spatial-data';
 
 interface MapLegendProps {
   showBreedingSuitability?: boolean;
-  showOutbreakStages?: boolean;
   showTrajectory?: boolean;
+  showSwarmCoverage?: boolean;
+  showFeedingSusceptibility?: boolean;
+  showGregarization?: boolean;
+  showTemporalBreeding?: boolean;
 }
 
 export default function MapLegend({ 
   showBreedingSuitability = false,
-  showOutbreakStages = false,
-  showTrajectory = false
+  showTrajectory = false,
+  showSwarmCoverage = false,
+  showFeedingSusceptibility = false,
+  showGregarization = false,
+  showTemporalBreeding = false
 }: MapLegendProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Don't render if no layers are visible
-  if (!showBreedingSuitability && !showOutbreakStages && !showTrajectory) {
+  if (!showBreedingSuitability && !showTrajectory && !showSwarmCoverage && !showFeedingSusceptibility && !showGregarization && !showTemporalBreeding) {
     return null;
   }
 
@@ -45,47 +51,7 @@ export default function MapLegend({
         
         {isExpanded && (
           <CardContent className="pt-0 pb-3 space-y-3">
-            {/* Outbreak Stages */}
-            {showOutbreakStages && (
-              <div>
-                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Outbreak Stages</h4>
-                <div className="space-y-1.5">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#8B0000' }}></div>
-                    <span className="text-xs text-gray-700">Crisis Stage</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF0000' }}></div>
-                    <span className="text-xs text-gray-700">Alert Stage</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF8C00' }}></div>
-                    <span className="text-xs text-gray-700">Alarm Stage</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#32CD32' }}></div>
-                    <span className="text-xs text-gray-700">Calm Stage</span>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <h5 className="text-xs font-medium text-gray-700 mb-1">Locust Phase</h5>
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#CC0000' }}></div>
-                      <span className="text-xs text-gray-600">Gregarious</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#FF8800' }}></div>
-                      <span className="text-xs text-gray-600">Transiens</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#66BB6A' }}></div>
-                      <span className="text-xs text-gray-600">Solitary</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+
 
             {/* Trajectory Particles */}
             {showTrajectory && (
@@ -107,28 +73,58 @@ export default function MapLegend({
                 <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Breeding Suitability</h4>
                 <div className="space-y-1.5">
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#8B0000' }}></div>
-                    <span className="text-xs text-gray-700">Very High (Class 5)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#800000' }}></div>
+                    <span className="text-xs text-gray-700">Very High</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF0000' }}></div>
-                    <span className="text-xs text-gray-700">High (Class 4)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF4444' }}></div>
+                    <span className="text-xs text-gray-700">High</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF6600' }}></div>
-                    <span className="text-xs text-gray-700">Moderate (Class 3)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF8800' }}></div>
+                    <span className="text-xs text-gray-700">Moderate</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFAA00' }}></div>
-                    <span className="text-xs text-gray-700">Low (Class 2)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFCC00' }}></div>
+                    <span className="text-xs text-gray-700">Low</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Swarm Coverage */}
+            {showSwarmCoverage && (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Swarm Coverage 2024</h4>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ff4444' }}></div>
+                    <span className="text-xs text-gray-700">Historical Coverage Areas</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Feeding Susceptibility */}
+            {showFeedingSusceptibility && (
+              <div>
+                <h4 className="text-xs font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Feeding Periods</h4>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#800000' }}></div>
+                    <span className="text-xs text-gray-700">8+ days</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFFF99' }}></div>
-                    <span className="text-xs text-gray-700">Very Low (Class 1)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF4444' }}></div>
+                    <span className="text-xs text-gray-700">5-7 days</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#E0E0E0' }}></div>
-                    <span className="text-xs text-gray-700">Unsuitable (Class 0)</span>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF8800' }}></div>
+                    <span className="text-xs text-gray-700">2-4 days</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFCC00' }}></div>
+                    <span className="text-xs text-gray-700">1-2 days</span>
                   </div>
                 </div>
               </div>

@@ -54,6 +54,7 @@ export default function TrajectoryMap({
   selectedCountry,
   showBreedingSuitability = false,
   showOutbreakStages = false,
+  showSwarmCoverage = false,
   selectedBasemap = "openstreetmap",
   showAdminBoundaries = false,
   showFeedingSusceptibility = false,
@@ -328,8 +329,11 @@ export default function TrajectoryMap({
       {/* Map Legend */}
       <MapLegend 
         showBreedingSuitability={showBreedingSuitability}
-        showOutbreakStages={showOutbreakStages}
         showTrajectory={showTrajectory}
+        showSwarmCoverage={showSwarmCoverage}
+        showFeedingSusceptibility={showFeedingSusceptibility}
+        showGregarization={showGregarization}
+        showTemporalBreeding={showTemporalBreeding}
       />
     </div>
   );
