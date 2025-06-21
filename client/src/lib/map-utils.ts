@@ -71,17 +71,13 @@ export function getParticleTrajectories(processedData: ProcessedTrajectoryData):
 }
 
 export function getTrajectoryColor(particleId: number): string {
-  // Generate unique colors for each particle using a wide color palette
-  const colors = [
-    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F',
-    '#BB8FCE', '#85C1E9', '#F8C471', '#82E0AA', '#F1948A', '#85C1E9', '#D2B4DE', '#A9DFBF',
-    '#F9E79F', '#D5A6BD', '#AED6F1', '#A3E4D7', '#F4D03F', '#E8DAEF', '#D6EAF8', '#D1F2EB',
-    '#FCF3CF', '#FADBD8', '#EBF5FB', '#E8F6F3', '#FEF9E7', '#FDF2E9', '#EAEDED', '#F8F9F9',
-    '#FF5733', '#33FF57', '#3357FF', '#FF33F5', '#F5FF33', '#33FFF5', '#5733FF', '#FF3357',
-    '#57FF33', '#3357FF', '#F533FF', '#33F5FF', '#FF5733', '#5733FF', '#33FF57', '#FF33F5'
-  ];
+  // Generate unique colors using HSL color space for 155+ particles
+  // Use hue rotation with varying saturation and lightness for distinctiveness
+  const hue = (particleId * 137.5) % 360; // Golden angle for good distribution
+  const saturation = 65 + (particleId % 3) * 15; // 65%, 80%, 95%
+  const lightness = 45 + (particleId % 4) * 10; // 45%, 55%, 65%, 75%
   
-  return colors[particleId % colors.length];
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
 export function getUniqueParticleCount(data: TrajectoryData): number {

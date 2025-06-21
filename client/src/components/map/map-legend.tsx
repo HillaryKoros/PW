@@ -69,25 +69,25 @@ export default function MapLegend({
           {/* Trajectory Points */}
           {showTrajectory && (
             <div>
-              <h4 className="text-xs font-medium text-gray-600 mb-2">Swarm Trajectories</h4>
+              <h4 className="text-xs font-medium text-gray-600 mb-2">Swarm Trajectories (155 Particles)</h4>
               <div className="space-y-1.5">
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF6B6B' }}></div>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(137.5, 65%, 45%)' }}></div>
                   <span className="text-xs text-gray-700">Particle 1</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#4ECDC4' }}></div>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(275, 80%, 55%)' }}></div>
                   <span className="text-xs text-gray-700">Particle 2</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#45B7D1' }}></div>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(52.5, 95%, 65%)' }}></div>
                   <span className="text-xs text-gray-700">Particle 3</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#96CEB4' }}></div>
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'hsl(190, 65%, 75%)' }}></div>
                   <span className="text-xs text-gray-700">Particle 4</span>
                 </div>
-                <div className="text-xs text-gray-500 italic">+ Additional particles with unique colors</div>
+                <div className="text-xs text-gray-500 italic">Each particle (1-155) has unique color</div>
               </div>
             </div>
           )}
