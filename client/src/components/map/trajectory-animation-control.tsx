@@ -57,7 +57,7 @@ export default function TrajectoryAnimationControl({
       times.sort();
       
       if (currentTimeIndex < times.length) {
-        const isoDate = times[currentTimeIndex];
+        const isoDate = times[currentTimeIndex] as string;
         const date = new Date(isoDate);
         setCurrentDate(date.toLocaleDateString('en-US', { 
           year: 'numeric', 
