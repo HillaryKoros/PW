@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Polyline, CircleMarker, GeoJSON } from "react-leaflet";
-import { LatLngTuple } from "leaflet";
+import { MapContainer, TileLayer, Polyline, CircleMarker, GeoJSON, Marker } from "react-leaflet";
+import { LatLngTuple, DivIcon } from "leaflet";
 import { processTrajectoryData, getParticleTrajectories, getTrajectoryColor, getRiskLevel, getRiskColor } from "@/lib/map-utils";
 import { generateBreedingSuitabilityData, generateOutbreakStagesData, BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatial-data";
+import RasterLayer from "./raster-layer";
+import LocustIcon from "@/components/locust-icon";
+import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
 
 interface TrajectoryMapProps {
@@ -14,6 +17,9 @@ interface TrajectoryMapProps {
   selectedCountry: string;
   showBreedingSuitability?: boolean;
   showOutbreakStages?: boolean;
+  selectedBasemap?: string;
+  showAdminBoundaries?: boolean;
+  showFeedingSusceptibility?: boolean;
 }
 
 export default function TrajectoryMap({

@@ -3,6 +3,7 @@ import Navigation from "@/components/layout/navigation";
 import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
 import MapLegend from "@/components/map/map-legend";
+import LayerControl from "@/components/map/layer-control";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { loadTrajectoryData } from "@/lib/trajectory-data";
@@ -18,6 +19,9 @@ export default function MapViewer() {
   const [animationSpeed, setAnimationSpeed] = useState(200);
   const [showBreedingSuitability, setShowBreedingSuitability] = useState(false);
   const [showOutbreakStages, setShowOutbreakStages] = useState(true);
+  const [selectedBasemap, setSelectedBasemap] = useState("osm");
+  const [showAdminBoundaries, setShowAdminBoundaries] = useState(false);
+  const [showFeedingSusceptibility, setShowFeedingSusceptibility] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -117,6 +121,18 @@ export default function MapViewer() {
           <MapLegend 
             showBreedingSuitability={showBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
+          />
+
+          {/* Layer Control */}
+          <LayerControl
+            showBreedingSuitability={showBreedingSuitability}
+            onToggleBreedingSuitability={setShowBreedingSuitability}
+            showOutbreakStages={showOutbreakStages}
+            onToggleOutbreakStages={setShowOutbreakStages}
+            selectedBasemap={selectedBasemap}
+            onBasemapChange={setSelectedBasemap}
+            showAdminBoundaries={showAdminBoundaries}
+            onToggleAdminBoundaries={setShowAdminBoundaries}
           />
         </div>
       </div>
