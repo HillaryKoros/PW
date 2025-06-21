@@ -8,6 +8,7 @@ import BreedingSuitabilityLayer from "./breeding-suitability-layer";
 import GregarizationLayer from "./gregarization-layer";
 import LocustCoverageLayer from "./locust-coverage-layer";
 import TemporalBreedingLayer from "./temporal-breeding-layer";
+import OutbreakStagesLayer from "./outbreak-stages-layer";
 import LocustIcon from "@/components/locust-icon";
 import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -223,7 +224,41 @@ export default function TrajectoryMap({
             }}
           />
         )}
-        
+
+        {/* All ELRP Model Output WMS Layers */}
+        <RasterLayer
+          url="/api/mapserver"
+          visible={showFeedingSusceptibility}
+          opacity={0.7}
+          bounds={[[-5, 29], [20, 52]]}
+          colorMap="feeding_susceptibility"
+        />
+
+        <BreedingSuitabilityLayer
+          visible={showBreedingSuitability}
+          opacity={0.7}
+        />
+
+        <GregarizationLayer
+          visible={showGregarization}
+          opacity={0.7}
+        />
+
+        <LocustCoverageLayer
+          visible={showLocustCoverage}
+          opacity={0.7}
+        />
+
+        <TemporalBreedingLayer
+          visible={showTemporalBreeding}
+          selectedMonth={selectedBreedingMonth}
+          opacity={0.7}
+        />
+
+        <OutbreakStagesLayer
+          visible={showOutbreakStages}
+          opacity={0.8}
+        />
 
 
         {/* Current Position Markers with Static Locust Symbols */}

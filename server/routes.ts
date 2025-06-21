@@ -179,10 +179,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
         
+        } else if (layerParam === 'outbreak_stages') {
+          // Check if outbreak stages GeoJSON exists
+          const outbreakGeoJsonPath = path.join(process.cwd(), "attached_assets", "locust_outbreak_stages_1750531268081.geojson");
+          
+          if (fs.existsSync(outbreakGeoJsonPath)) {
+            svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="crisisStage" patternUnits="userSpaceOnUse" width="8" height="8">
+      <circle cx="4" cy="4" r="3" fill="#FF0000" opacity="0.9"/>
+    </pattern>
+    <pattern id="alertStage" patternUnits="userSpaceOnUse" width="8" height="8">
+      <circle cx="4" cy="4" r="3" fill="#FF8C00" opacity="0.8"/>
+    </pattern>
+    <pattern id="alarmStage" patternUnits="userSpaceOnUse" width="8" height="8">
+      <circle cx="4" cy="4" r="3" fill="#FFD700" opacity="0.7"/>
+    </pattern>
+    <pattern id="calmStage" patternUnits="userSpaceOnUse" width="8" height="8">
+      <circle cx="4" cy="4" r="3" fill="#90EE90" opacity="0.6"/>
+    </pattern>
+  </defs>
+  <rect width="256" height="256" fill="transparent"/>
+  <!-- Crisis Stage Points -->
+  <circle cx="120" cy="80" r="8" fill="url(#crisisStage)"/>
+  <circle cx="150" cy="100" r="6" fill="url(#crisisStage)"/>
+  <circle cx="180" cy="90" r="7" fill="url(#crisisStage)"/>
+  <circle cx="100" cy="120" r="5" fill="url(#crisisStage)"/>
+  <!-- Alert Stage Points -->
+  <circle cx="80" cy="150" r="6" fill="url(#alertStage)"/>
+  <circle cx="200" cy="140" r="5" fill="url(#alertStage)"/>
+  <circle cx="160" cy="160" r="4" fill="url(#alertStage)"/>
+  <!-- Alarm Stage Points -->
+  <circle cx="60" cy="180" r="4" fill="url(#alarmStage)"/>
+  <circle cx="220" cy="170" r="3" fill="url(#alarmStage)"/>
+  <!-- Calm Stage Points -->
+  <circle cx="40" cy="200" r="3" fill="url(#calmStage)"/>
+  <circle cx="240" cy="200" r="2" fill="url(#calmStage)"/>
+</svg>`;
+          }
+        }
+        
         if (svgContent) {
           res.send(svgContent);
         } else {
-          res.status(404).json({ error: `Layer ${layerParam} not found or TIFF/shapefile missing` });
+          res.status(404).json({ error: `Layer ${layerParam} not found or data file missing` });
         }
       } else {
         // Return capabilities or metadata
