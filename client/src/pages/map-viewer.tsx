@@ -8,7 +8,7 @@ import { Menu } from "lucide-react";
 import { loadTrajectoryData } from "@/lib/trajectory-data";
 
 export default function MapViewer() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [trajectoryData, setTrajectoryData] = useState<any>(null);
   const [selectedCountry, setSelectedCountry] = useState("All Countries");
@@ -145,15 +145,27 @@ export default function MapViewer() {
 
 
 
-          {/* Layer Control - Bottom Right */}
-          <div className="absolute bottom-4 right-4 z-40">
-            <LayerControl
-              selectedBasemap={selectedBasemap}
-              onBasemapChange={setSelectedBasemap}
-              showAdminBoundaries={showAdminBoundaries}
-              onToggleAdminBoundaries={setShowAdminBoundaries}
-            />
-          </div>
+          {/* Compact Layer Control - Bottom Right */}
+          <CompactLayerControl
+            selectedBasemap={selectedBasemap}
+            onBasemapChange={setSelectedBasemap}
+            showAdminBoundaries={showAdminBoundaries}
+            onToggleAdminBoundaries={setShowAdminBoundaries}
+            showBreedingSuitability={showBreedingSuitability}
+            onToggleBreedingSuitability={setShowBreedingSuitability}
+            showFeedingSusceptibility={showFeedingSusceptibility}
+            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
+            showGregarization={showGregarization}
+            onToggleGregarization={setShowGregarization}
+            showLocustCoverage={showLocustCoverage}
+            onToggleLocustCoverage={setShowLocustCoverage}
+            showTemporalBreeding={showTemporalBreeding}
+            onToggleTemporalBreeding={setShowTemporalBreeding}
+            showTrajectory={showTrajectory}
+            onToggleTrajectory={setShowTrajectory}
+            selectedBreedingMonth={selectedBreedingMonth}
+            onBreedingMonthChange={setSelectedBreedingMonth}
+          />
         </div>
       </div>
     </div>
