@@ -54,7 +54,15 @@ export default function MapSidebar({
   showOutbreakStages = true,
   onToggleOutbreakStages,
   showFeedingSusceptibility = false,
-  onToggleFeedingSusceptibility
+  onToggleFeedingSusceptibility,
+  showGregarization = false,
+  onToggleGregarization,
+  showLocustCoverage = false,
+  onToggleLocustCoverage,
+  showTemporalBreeding = false,
+  onToggleTemporalBreeding,
+  selectedBreedingMonth = "jan",
+  onBreedingMonthChange
 }: MapSidebarProps) {
 
   const countries = [
@@ -201,32 +209,47 @@ export default function MapSidebar({
               />
             </div>
             <div className="flex items-center justify-between">
-              <label htmlFor="temporal-breeding" className="text-xs text-gray-600">Temporal Breeding</label>
-              <Switch
-                id="temporal-breeding"
-                checked={false}
-                disabled
-                onCheckedChange={() => {}}
-              />
-            </div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="gregarization" className="text-xs text-gray-600">Gregarization & Swarming</label>
+              <label htmlFor="gregarization" className="text-xs text-gray-600">Gregarization & Swarming (Maxent)</label>
               <Switch
                 id="gregarization"
-                checked={false}
-                disabled
-                onCheckedChange={() => {}}
+                checked={showGregarization}
+                onCheckedChange={onToggleGregarization}
               />
             </div>
             <div className="flex items-center justify-between">
-              <label htmlFor="feeding-susceptibility" className="text-xs text-gray-600">Feeding Susceptibility</label>
+              <label htmlFor="locust-coverage" className="text-xs text-gray-600">Locust Swarm Coverage</label>
               <Switch
-                id="feeding-susceptibility"
-                checked={false}
-                disabled
-                onCheckedChange={() => {}}
+                id="locust-coverage"
+                checked={showLocustCoverage}
+                onCheckedChange={onToggleLocustCoverage}
               />
             </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="temporal-breeding" className="text-xs text-gray-600">Temporal Breeding Suitability</label>
+              <Switch
+                id="temporal-breeding"
+                checked={showTemporalBreeding}
+                onCheckedChange={onToggleTemporalBreeding}
+              />
+            </div>
+            {showTemporalBreeding && (
+              <div className="ml-4 mt-2">
+                <label className="text-xs text-gray-600 mb-1 block">Select Month:</label>
+                <Select value={selectedBreedingMonth} onValueChange={onBreedingMonthChange}>
+                  <SelectTrigger className="w-full h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="jan">January 2025</SelectItem>
+                    <SelectItem value="feb">February 2025</SelectItem>
+                    <SelectItem value="apr">April 2024</SelectItem>
+                    <SelectItem value="jul">July 2024</SelectItem>
+                    <SelectItem value="nov">November 2024</SelectItem>
+                    <SelectItem value="dec">December 2024</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
           <div className="mt-2">
             <span className="text-xs text-gray-500">Note: Additional layers available via MapCache/MapServer endpoints</span>

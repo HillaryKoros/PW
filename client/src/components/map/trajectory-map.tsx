@@ -4,6 +4,10 @@ import { LatLngTuple, DivIcon } from "leaflet";
 import { processTrajectoryData, getParticleTrajectories, getTrajectoryColor, getRiskLevel, getRiskColor } from "@/lib/map-utils";
 import { generateBreedingSuitabilityData, generateOutbreakStagesData, BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatial-data";
 import RasterLayer from "./raster-layer";
+import BreedingSuitabilityLayer from "./breeding-suitability-layer";
+import GregarizationLayer from "./gregarization-layer";
+import LocustCoverageLayer from "./locust-coverage-layer";
+import TemporalBreedingLayer from "./temporal-breeding-layer";
 import LocustIcon from "@/components/locust-icon";
 import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -20,6 +24,10 @@ interface TrajectoryMapProps {
   selectedBasemap?: string;
   showAdminBoundaries?: boolean;
   showFeedingSusceptibility?: boolean;
+  showGregarization?: boolean;
+  showLocustCoverage?: boolean;
+  showTemporalBreeding?: boolean;
+  selectedBreedingMonth?: string;
 }
 
 export default function TrajectoryMap({
@@ -34,6 +42,10 @@ export default function TrajectoryMap({
   selectedBasemap = "openstreetmap",
   showAdminBoundaries = false,
   showFeedingSusceptibility = false,
+  showGregarization = false,
+  showLocustCoverage = false,
+  showTemporalBreeding = false,
+  selectedBreedingMonth = "jan",
 }: TrajectoryMapProps) {
   const animationRef = useRef<NodeJS.Timeout | null>(null);
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());

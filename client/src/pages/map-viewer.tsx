@@ -87,6 +87,14 @@ export default function MapViewer() {
             onToggleOutbreakStages={setShowOutbreakStages}
             showFeedingSusceptibility={showFeedingSusceptibility}
             onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
+            showGregarization={showGregarization}
+            onToggleGregarization={setShowGregarization}
+            showLocustCoverage={showLocustCoverage}
+            onToggleLocustCoverage={setShowLocustCoverage}
+            showTemporalBreeding={showTemporalBreeding}
+            onToggleTemporalBreeding={setShowTemporalBreeding}
+            selectedBreedingMonth={selectedBreedingMonth}
+            onBreedingMonthChange={setSelectedBreedingMonth}
           />
         </div>
 
@@ -115,6 +123,10 @@ export default function MapViewer() {
             selectedBasemap={selectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
             showFeedingSusceptibility={showFeedingSusceptibility}
+            showGregarization={showGregarization}
+            showLocustCoverage={showLocustCoverage}
+            showTemporalBreeding={showTemporalBreeding}
+            selectedBreedingMonth={selectedBreedingMonth}
           />
 
           {/* Sidebar Toggle Button */}
