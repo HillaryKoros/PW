@@ -25,6 +25,7 @@ export default function MapViewer() {
   const [showLocustCoverage, setShowLocustCoverage] = useState(false);
   const [showTemporalBreeding, setShowTemporalBreeding] = useState(false);
   const [selectedBreedingMonth, setSelectedBreedingMonth] = useState("jan");
+  const [showTrajectory, setShowTrajectory] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -92,6 +93,8 @@ export default function MapViewer() {
             onToggleTemporalBreeding={setShowTemporalBreeding}
             selectedBreedingMonth={selectedBreedingMonth}
             onBreedingMonthChange={setSelectedBreedingMonth}
+            showTrajectory={showTrajectory}
+            onToggleTrajectory={setShowTrajectory}
           />
         </div>
 
@@ -124,6 +127,7 @@ export default function MapViewer() {
             showLocustCoverage={showLocustCoverage}
             showTemporalBreeding={showTemporalBreeding}
             selectedBreedingMonth={selectedBreedingMonth}
+            showTrajectory={showTrajectory}
           />
 
           {/* Sidebar Toggle Button */}

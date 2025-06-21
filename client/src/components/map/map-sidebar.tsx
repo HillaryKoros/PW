@@ -33,6 +33,8 @@ interface MapSidebarProps {
   onToggleTemporalBreeding?: (show: boolean) => void;
   selectedBreedingMonth?: string;
   onBreedingMonthChange?: (month: string) => void;
+  showTrajectory?: boolean;
+  onToggleTrajectory?: (show: boolean) => void;
 }
 
 export default function MapSidebar({
@@ -62,7 +64,9 @@ export default function MapSidebar({
   showTemporalBreeding = false,
   onToggleTemporalBreeding,
   selectedBreedingMonth = "jan",
-  onBreedingMonthChange
+  onBreedingMonthChange,
+  showTrajectory = false,
+  onToggleTrajectory
 }: MapSidebarProps) {
 
   const countries = [
@@ -230,6 +234,14 @@ export default function MapSidebar({
                 id="temporal-breeding"
                 checked={showTemporalBreeding}
                 onCheckedChange={onToggleTemporalBreeding}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="trajectory" className="text-xs text-gray-600">Swarm Trajectory</label>
+              <Switch
+                id="trajectory"
+                checked={showTrajectory}
+                onCheckedChange={onToggleTrajectory}
               />
             </div>
             {showTemporalBreeding && (

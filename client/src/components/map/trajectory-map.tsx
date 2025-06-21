@@ -29,6 +29,7 @@ interface TrajectoryMapProps {
   showLocustCoverage?: boolean;
   showTemporalBreeding?: boolean;
   selectedBreedingMonth?: string;
+  showTrajectory?: boolean;
 }
 
 export default function TrajectoryMap({
@@ -47,6 +48,7 @@ export default function TrajectoryMap({
   showLocustCoverage = false,
   showTemporalBreeding = false,
   selectedBreedingMonth = "jan",
+  showTrajectory = false,
 }: TrajectoryMapProps) {
   const animationRef = useRef<NodeJS.Timeout | null>(null);
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());
