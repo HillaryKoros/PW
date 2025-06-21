@@ -1,10 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { Slider } from "@/components/ui/slider";
-import { Play, Pause, RotateCcw } from "lucide-react";
-import { getUniqueParticleCount, getDateFromTimeIndex } from "@/lib/map-utils";
 
 interface MapSidebarProps {
   selectedCountry: string;
@@ -34,15 +29,6 @@ export default function MapSidebar({
   onCountryChange,
   activeDataType,
   onDataTypeChange,
-  isPlaying,
-  onPlay,
-  onPause,
-  onReset,
-  currentTimeIndex,
-  onTimeIndexChange,
-  animationSpeed,
-  onSpeedChange,
-  trajectoryData,
   showBreedingSuitability = false,
   onToggleBreedingSuitability,
   showOutbreakStages = true,
@@ -69,10 +55,6 @@ export default function MapSidebar({
     "Uganda",
     "Sudan"
   ];
-
-  const particleCount = trajectoryData ? getUniqueParticleCount(trajectoryData) : 0;
-  const currentDate = getDateFromTimeIndex(currentTimeIndex);
-  const maxTimeIndex = 365; // One year of data
 
   return (
     <div className="w-72 bg-white shadow-lg flex-shrink-0 border-r border-gray-200 h-full flex flex-col">
