@@ -81,6 +81,8 @@ export default function MapViewer() {
             onToggleBreedingSuitability={setShowBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
             onToggleOutbreakStages={setShowOutbreakStages}
+            showFeedingSusceptibility={showFeedingSusceptibility}
+            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
           />
         </div>
 
