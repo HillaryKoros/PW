@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Navigation from "@/components/layout/navigation";
 import TrajectoryMap from "@/components/map/trajectory-map";
 import MapSidebar from "@/components/map/map-sidebar";
 import MapLegend from "@/components/map/map-legend";
@@ -62,8 +61,6 @@ export default function MapViewer() {
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
-      <Navigation />
-      
       <div className="flex flex-1 relative">
         {/* Sidebar */}
         <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-80' : 'w-0'} overflow-hidden`}>
