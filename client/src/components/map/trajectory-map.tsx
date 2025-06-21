@@ -227,7 +227,7 @@ export default function TrajectoryMap({
                   fillOpacity={0.4}
                 />
               )}
-              {/* Current position with pulsing animation */}
+              {/* Current position with enhanced flow animation */}
               <CircleMarker
                 key={`marker-${particleId}`}
                 center={position}
@@ -236,7 +236,7 @@ export default function TrajectoryMap({
                 color="white"
                 weight={3}
                 fillOpacity={1}
-                className="animate-pulse-slow"
+                className="swarm-flow"
               />
               {/* Direction indicator (small arrow effect) */}
               {previousPosition && (
@@ -248,6 +248,7 @@ export default function TrajectoryMap({
                   color={riskColor}
                   weight={2}
                   fillOpacity={1}
+                  className="direction-indicator"
                 />
               )}
             </div>
