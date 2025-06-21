@@ -7,16 +7,23 @@ import { BREEDING_SUITABILITY_COLORS, OUTBREAK_STAGE_COLORS } from "@/lib/spatia
 interface MapLegendProps {
   showBreedingSuitability?: boolean;
   showOutbreakStages?: boolean;
+  showTrajectory?: boolean;
 }
 
 export default function MapLegend({ 
   showBreedingSuitability = false, 
-  showOutbreakStages = true 
+  showOutbreakStages = true,
+  showTrajectory = false
 }: MapLegendProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
+  // Don't show legend if no layers are active
+  if (!showBreedingSuitability && !showOutbreakStages && !showTrajectory) {
+    return null;
+  }
+
   return (
-    <div className="fixed top-20 right-4 z-[9999] pointer-events-none">
+    <div className="fixed bottom-4 left-4 z-[9999] pointer-events-none">
       <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
         <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
@@ -60,23 +67,29 @@ export default function MapLegend({
           )}
 
           {/* Trajectory Points */}
-          <div>
-            <h4 className="text-xs font-medium text-gray-600 mb-2">Trajectory Data</h4>
-            <div className="space-y-1.5">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF6B6B' }}></div>
-                <span className="text-xs text-gray-700">High Risk Swarm</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FFA500' }}></div>
-                <span className="text-xs text-gray-700">Moderate Risk</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#90EE90' }}></div>
-                <span className="text-xs text-gray-700">Low Risk</span>
+          {showTrajectory && (
+            <div>
+              <h4 className="text-xs font-medium text-gray-600 mb-2">Swarm Trajectories</h4>
+              <div className="space-y-1.5">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#FF6B6B' }}></div>
+                  <span className="text-xs text-gray-700">Particle 1-10</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#4ECDC4' }}></div>
+                  <span className="text-xs text-gray-700">Particle 11-20</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#45B7D1' }}></div>
+                  <span className="text-xs text-gray-700">Particle 21-30</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#96CEB4' }}></div>
+                  <span className="text-xs text-gray-700">Particle 31+</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Breeding Suitability */}
           {showBreedingSuitability && (

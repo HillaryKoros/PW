@@ -147,6 +147,7 @@ export default function MapViewer() {
           <MapLegend 
             showBreedingSuitability={showBreedingSuitability}
             showOutbreakStages={showOutbreakStages}
+            showTrajectory={showTrajectory}
           />
 
           {/* Layer Control - Bottom Left */}
