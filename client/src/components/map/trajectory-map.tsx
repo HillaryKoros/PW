@@ -10,6 +10,7 @@ import LocustCoverageLayer from "./locust-coverage-layer";
 import TemporalBreedingLayer from "./temporal-breeding-layer";
 import OutbreakStagesLayer from "./outbreak-stages-layer";
 import TrajectoryAnimationControl from "./trajectory-animation-control";
+import TrajectoryDateDisplay from "./trajectory-date-display";
 import LocustIcon from "@/components/locust-icon";
 import { renderToString } from "react-dom/server";
 import "leaflet/dist/leaflet.css";
@@ -298,6 +299,13 @@ export default function TrajectoryMap({
           );
         })}
       </MapContainer>
+
+      {/* Trajectory Date Display */}
+      <TrajectoryDateDisplay
+        currentTimeIndex={currentTimeIndex}
+        trajectoryData={trajectoryData}
+        visible={showTrajectory}
+      />
 
       {/* Trajectory Animation Control */}
       <TrajectoryAnimationControl

@@ -71,19 +71,16 @@ export function getParticleTrajectories(processedData: ProcessedTrajectoryData):
 }
 
 export function getTrajectoryColor(particleId: number): string {
-  const colors = [
-    '#2196F3', // Blue
-    '#FF9800', // Orange
-    '#4CAF50', // Green
-    '#E91E63', // Pink
-    '#9C27B0', // Purple
-    '#00BCD4', // Cyan
-    '#FF5722', // Deep Orange
-    '#795548', // Brown
-    '#607D8B', // Blue Grey
-    '#FFC107'  // Amber
-  ];
-  return colors[particleId % colors.length];
+  // Match colors from legend - particle ID-based ranges
+  if (particleId <= 10) {
+    return '#FF6B6B'; // Red range for particles 1-10
+  } else if (particleId <= 20) {
+    return '#4ECDC4'; // Teal range for particles 11-20
+  } else if (particleId <= 30) {
+    return '#45B7D1'; // Blue range for particles 21-30
+  } else {
+    return '#96CEB4'; // Green range for particles 31+
+  }
 }
 
 export function getUniqueParticleCount(data: TrajectoryData): number {
