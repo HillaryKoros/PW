@@ -27,29 +27,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // MapServer WMS endpoint
   app.get("/api/mapserver", (req, res) => {
     try {
-      const { SERVICE, REQUEST, LAYERS, BBOX, WIDTH, HEIGHT, FORMAT, SRS } = req.query;
+      const { SERVICE, REQUEST, LAYERS, BBOX, WIDTH, HEIGHT, FORMAT, SRS, service, request, layers, bbox, width, height, format, srs } = req.query;
       
-      if (SERVICE !== 'WMS' || REQUEST !== 'GetMap') {
-        return res.status(400).json({ error: "Invalid WMS request" });
+      // Handle both uppercase and lowercase parameter names
+      const serviceParam = SERVICE || service;
+      const requestParam = REQUEST || request;
+      
+      if (serviceParam === 'WMS' && requestParam === 'GetMap') {
+        // Serve the TIFF file as a tile image for the requested bbox
+        const tiffPath = path.join(process.cwd(), "attached_assets", "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif");
+        
+        if (fs.existsSync(tiffPath)) {
+          // Set appropriate headers for image response
+          res.setHeader('Content-Type', 'image/png');
+          res.setHeader('Cache-Control', 'public, max-age=3600');
+          
+          // For now, return a simple colored rectangle representing the raster data
+          // In production, this would use actual GDAL/MapServer to render the TIFF
+          const canvas = Buffer.from(`
+            <svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
+              <rect width="256" height="256" fill="#ff6b6b" opacity="0.7"/>
+              <text x="128" y="128" text-anchor="middle" fill="white" font-size="12">Feeding Susceptibility</text>
+            </svg>
+          `);
+          
+          res.send(canvas);
+        } else {
+          res.status(404).json({ error: "TIFF file not found" });
+        }
+      } else {
+        // Return capabilities or metadata
+        res.json({
+          service: "WMS",
+          version: "1.3.0",
+          capabilities: "GetCapabilities,GetMap",
+          layers: ["feeding_susceptibility"],
+          formats: ["image/png"],
+          crs: ["EPSG:4326"],
+          bounds: {
+            minx: 29,
+            miny: -5,
+            maxx: 52,
+            maxy: 20
+          },
+          tiff_file: "FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif"
+        });
       }
-
-      // Mock WMS response for feeding susceptibility
-      // In production, this would proxy to actual MapServer CGI
-      const wmsResponse = {
-        service: "WMS",
-        version: "1.3.0",
-        request: REQUEST,
-        layers: LAYERS,
-        bbox: BBOX,
-        width: WIDTH,
-        height: HEIGHT,
-        format: FORMAT || "image/png",
-        srs: SRS || "EPSG:4326",
-        mapfile: "server/mapserver.map",
-        data_source: "FEEDING_PERIODS_2024_LULC_BASED.tif"
-      };
-
-      res.json(wmsResponse);
     } catch (error) {
       console.error("MapServer WMS error:", error);
       res.status(500).json({ error: "MapServer WMS processing failed" });

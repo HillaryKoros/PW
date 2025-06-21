@@ -23,6 +23,8 @@ interface MapSidebarProps {
   onToggleBreedingSuitability?: (show: boolean) => void;
   showOutbreakStages?: boolean;
   onToggleOutbreakStages?: (show: boolean) => void;
+  showFeedingSusceptibility?: boolean;
+  onToggleFeedingSusceptibility?: (show: boolean) => void;
 }
 
 export default function MapSidebar({
@@ -42,7 +44,9 @@ export default function MapSidebar({
   showBreedingSuitability = false,
   onToggleBreedingSuitability,
   showOutbreakStages = true,
-  onToggleOutbreakStages
+  onToggleOutbreakStages,
+  showFeedingSusceptibility = false,
+  onToggleFeedingSusceptibility
 }: MapSidebarProps) {
 
   const countries = [
@@ -178,6 +182,14 @@ export default function MapSidebar({
                 id="breeding-suitability"
                 checked={showBreedingSuitability}
                 onCheckedChange={onToggleBreedingSuitability}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="feeding-susceptibility" className="text-xs text-gray-600">Feeding Susceptibility (TIFF)</label>
+              <Switch
+                id="feeding-susceptibility"
+                checked={showFeedingSusceptibility}
+                onCheckedChange={onToggleFeedingSusceptibility}
               />
             </div>
             <div className="flex items-center justify-between">

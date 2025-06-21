@@ -128,16 +128,10 @@ export default function MapViewer() {
 
           {/* Layer Control */}
           <LayerControl
-            showBreedingSuitability={showBreedingSuitability}
-            onToggleBreedingSuitability={setShowBreedingSuitability}
-            showOutbreakStages={showOutbreakStages}
-            onToggleOutbreakStages={setShowOutbreakStages}
             selectedBasemap={selectedBasemap}
             onBasemapChange={setSelectedBasemap}
             showAdminBoundaries={showAdminBoundaries}
             onToggleAdminBoundaries={setShowAdminBoundaries}
-            showFeedingSusceptibility={showFeedingSusceptibility}
-            onToggleFeedingSusceptibility={setShowFeedingSusceptibility}
           />
         </div>
       </div>
