@@ -173,56 +173,7 @@ export default function MapSidebar({
           </div>
         </div>
 
-        {/* Animation Controls */}
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Animation Controls</h3>
-          <div className="space-y-3">
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                onClick={onPlay}
-                disabled={isPlaying}
-                size="sm"
-                variant="outline"
-                className="text-xs px-3 py-1"
-              >
-                Play
-              </Button>
-              <Button
-                onClick={onPause}
-                disabled={!isPlaying}
-                size="sm"
-                variant="outline"
-                className="text-xs px-3 py-1"
-              >
-                Pause
-              </Button>
-              <Button
-                onClick={onReset}
-                size="sm"
-                variant="outline"
-                className="text-xs px-3 py-1"
-              >
-                Reset
-              </Button>
-            </div>
-            
-            <div>
-              <label className="text-xs text-gray-600 mb-1 block">Animation Speed</label>
-              <Slider
-                value={[animationSpeed]}
-                onValueChange={(value) => onSpeedChange(value[0])}
-                max={1000}
-                min={50}
-                step={50}
-                className="w-full"
-              />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>Slow</span>
-                <span>Fast</span>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
       </div>
     </div>

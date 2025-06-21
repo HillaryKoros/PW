@@ -118,6 +118,24 @@ html, body, #root {
 .text-pest-green-900 { color: var(--pest-green-900); }
 
 /* Leaflet map styles */
+.leaflet-control-attribution {
+  bottom: 32px !important;
+  right: 4px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+  font-size: 10px !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-bottom.leaflet-right {
+  bottom: 32px !important;
+}
+
+.leaflet-container {
+  background: #f8f9fa !important;
+}
 .leaflet-container {
   font-family: inherit;
 }
