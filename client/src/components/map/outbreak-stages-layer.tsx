@@ -51,47 +51,24 @@ export default function OutbreakStagesLayer({
     }
   }, [visible, outbreakData]);
 
-  const getStageColor = (stage: string, phase: string): string => {
-    const stageColors = {
-      'Crisis Stage': '#FF0000',
-      'Alert Stage': '#FF8C00', 
-      'Alarm Stage': '#FFD700',
-      'Calm Stage': '#90EE90'
+  const getPhaseColor = (phase: string): string => {
+    const phaseColors = {
+      'gregarious': '#FF0000',    // Red for swarming phase
+      'transiens': '#FF8C00',     // Orange for transitional phase
+      'solitary': '#32CD32'       // Green for individual phase
     };
     
-    // Slightly modify color based on phase
-    let baseColor = stageColors[stage as keyof typeof stageColors] || '#CCCCCC';
-    
-    if (phase === 'gregarious') {
-      // Gregarious phase - more intense color
-      return baseColor;
-    } else if (phase === 'transiens') {
-      // Transiens phase - intermediate color
-      return baseColor + 'CC'; // Add transparency
-    } else {
-      // Solitary phase - lighter color
-      return baseColor + '88'; // More transparency
-    }
+    return phaseColors[phase as keyof typeof phaseColors] || '#CCCCCC';
   };
 
-  const getStageRadius = (stage: string, phase: string): number => {
-    const baseRadii = {
-      'Crisis Stage': 8,
-      'Alert Stage': 6,
-      'Alarm Stage': 4,
-      'Calm Stage': 3
+  const getPhaseRadius = (phase: string): number => {
+    const phaseRadii = {
+      'gregarious': 4,    // Larger for swarming phase
+      'transiens': 3,     // Medium for transitional phase
+      'solitary': 2       // Smaller for individual phase
     };
     
-    let baseRadius = baseRadii[stage as keyof typeof baseRadii] || 3;
-    
-    // Adjust radius based on phase
-    if (phase === 'gregarious') {
-      return baseRadius + 2; // Larger for gregarious
-    } else if (phase === 'transiens') {
-      return baseRadius + 1; // Medium for transiens
-    } else {
-      return baseRadius; // Normal for solitary
-    }
+    return phaseRadii[phase as keyof typeof phaseRadii] || 2;
   };
 
   const getPhaseLabel = (phase: string): string => {
@@ -111,10 +88,9 @@ export default function OutbreakStagesLayer({
     <GeoJSON
       data={outbreakData}
       pointToLayer={(feature, latlng) => {
-        const stage = feature.properties.outbreak_stage;
         const phase = feature.properties.locust_phase;
-        const color = getStageColor(stage, phase);
-        const radius = getStageRadius(stage, phase);
+        const color = getPhaseColor(phase);
+        const radius = getPhaseRadius(phase);
         
         return L.circleMarker(latlng, {
           radius: radius,
@@ -132,7 +108,7 @@ export default function OutbreakStagesLayer({
         layer.bindPopup(`
           <div style="min-width: 200px;">
             <h4 style="margin: 0 0 8px 0; color: #333; font-size: 14px;">
-              <span style="color: ${getStageColor(props.outbreak_stage, props.locust_phase).replace(/[0-9A-F]{2}$/i, '')};">●</span>
+              <span style="color: ${getPhaseColor(props.locust_phase)};">●</span>
               ${props.outbreak_stage}
             </h4>
             <div style="background: #f5f5f5; padding: 8px; border-radius: 4px; margin-bottom: 8px;">
