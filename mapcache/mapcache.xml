@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapcache>
+  <cache name="disk" type="disk">
+    <base>/var/cache/mapcache</base>
+    <symlink_blank/>
+    <creation_retry>3</creation_retry>
+    <detect_blank/>
+  </cache>
+  
+  <source name="locust_mapserver" type="wms">
+    <getmap>
+      <params>
+        <FORMAT>image/png</FORMAT>
+        <LAYERS>%s</LAYERS>
+        <MAP>/var/www/html/locust.map</MAP>
+      </params>
+    </getmap>
+    <http>
+      <url>http://mapserver:80/cgi-bin/mapserv</url>
+    </http>
+  </source>
+
+  <!-- Admin boundaries tileset -->
+  <tileset name="admin0">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>86400</expires>
+    <auto_expire>86400</auto_expire>
+  </tileset>
+
+  <tileset name="admin1">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>86400</expires>
+    <auto_expire>86400</auto_expire>
+  </tileset>
+
+  <!-- Monitoring layers tilesets -->
+  <tileset name="outbreak_stages_current">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="swarm_coverage_2024">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="locust_trajectory">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <!-- Breeding suitability tilesets -->
+  <tileset name="breeding_suitability">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_january_2025">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_february_2025">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_april_2024">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_july_2024">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_november_2024">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="breeding_december_2024">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="vegetation_onset">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="feeding_periods_2024_lulc">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="maxent_prediction_2021">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="swarm_coverage">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="outbreak_stages">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <tileset name="trajectory">
+    <source>locust_mapserver</source>
+    <cache>disk</cache>
+    <grid>WGS84</grid>
+    <format>PNG</format>
+    <metatile>8 8</metatile>
+    <metabuffer>64</metabuffer>
+    <expires>21600</expires>
+    <auto_expire>21600</auto_expire>
+  </tileset>
+
+  <service type="wms" enabled="true">
+    <full_wms>assemble</full_wms>
+    <resample_mode>nearest</resample_mode>
+    <format allow_client_override="true">PNG</format>
+    <maxsize>4096</maxsize>
+    <forwarded_params>TIME</forwarded_params>
+  </service>
+
+  <service type="wmts" enabled="true"/>
+  <service type="tms" enabled="true"/>
+
+  <default_format>PNG</default_format>
+  <errors>report</errors>
+  <lock_dir>/tmp</lock_dir>
+  
+  <!-- Threading and performance -->
+  <threaded_fetching>true</threaded_fetching>
+  <log_level>warn</log_level>
+  
+  <!-- Compression -->
+  <image_compression>
+    <png>
+      <compression>fast</compression>
+      <colors>256</colors>
+    </png>
+  </image_compression>
+</mapcache>

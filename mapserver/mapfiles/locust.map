@@ -1,0 +1,924 @@
+MAP
+  NAME "locust_layers"
+  STATUS ON
+  SIZE 800 600
+  MAXSIZE 4096
+  # East Africa extent in EPSG:4326 (Geographic coordinates)
+  EXTENT 21.838949 -11.745695 51.415695 23.145147
+  UNITS DD
+  IMAGECOLOR 255 255 255
+  IMAGETYPE PNG
+  
+  # Performance optimizations
+  CONFIG "MS_ERRORFILE" "/tmp/mapserver.log"
+  CONFIG "CPL_DEBUG" "OFF"
+  CONFIG "PROJ_DEBUG" "OFF"
+  CONFIG "ON_MISSING_DATA" "IGNORE"
+  
+  # Memory and processing limits
+  CONFIG "MS_OPENLAYERS_JS_URL" ""
+  
+  # Define output projection (Geographic for web mapping compatibility)
+  PROJECTION
+    "init=epsg:4326"
+  END
+  
+  WEB
+    METADATA
+      "wms_title" "East Africa Pest Watch - Essential Layers"
+      "wms_onlineresource" "http://localhost:8080/cgi-bin/mapserv"
+      "wms_srs" "EPSG:4326 EPSG:3857 EPSG:4269 EPSG:3413"
+      "wms_enable_request" "*"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_feature_info_mime_type" "text/html"
+      "wms_contactorganization" "IGAD-ICPAC"
+      "wms_abstract" "WMS server for East Africa Pest Watch essential monitoring layers"
+      "wms_encoding" "UTF-8"
+      "wms_bbox_extended" "true"
+      "wms_exceptions_format" "application/vnd.ogc.se_xml"
+      "wms_getcapabilities_version" "1.3.0"
+      "wms_getmap_version" "1.3.0"
+    END
+  END
+  
+  # Configure output formats
+  OUTPUTFORMAT
+    NAME "png"
+    DRIVER "AGG/PNG"
+    MIMETYPE "image/png"
+    IMAGEMODE RGBA
+    EXTENSION "png"
+    FORMATOPTION "INTERLACE=OFF"
+    TRANSPARENT ON
+  END
+  
+  
+  # Swarm Susceptibility (MaxEnt Prediction 2021)
+  LAYER
+    NAME "maxent_prediction_2021"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Maxent Prediction 2021_1750530749377.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Swarming Susceptibility (MaxEnt 2021)"
+      "wms_abstract" "MaxEnt Species Distribution Model Prediction for Desert Locust Swarming Susceptibility 2021"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "300"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8080/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=maxent_prediction_2021&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-3.39999999999999996e+38"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "No Data"
+      EXPRESSION ([pixel] >= 0.0 AND [pixel] < 0.05)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+    CLASS
+      NAME "Very Low (0.05-0.2)"
+      EXPRESSION ([pixel] >= 0.05 AND [pixel] < 0.2)
+      STYLE
+        COLOR 255 235 235
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low (0.2-0.3)"
+      EXPRESSION ([pixel] >= 0.2 AND [pixel] < 0.3)
+      STYLE
+        COLOR 255 220 210
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Medium-Low (0.3-0.4)"
+      EXPRESSION ([pixel] >= 0.3 AND [pixel] < 0.4)
+      STYLE
+        COLOR 255 200 180
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Medium (0.4-0.5)"
+      EXPRESSION ([pixel] >= 0.4 AND [pixel] < 0.5)
+      STYLE
+        COLOR 255 220 100
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Medium-High (0.5-0.6)"
+      EXPRESSION ([pixel] >= 0.5 AND [pixel] < 0.6)
+      STYLE
+        COLOR 240 230 100
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "High (0.6-0.8)"
+      EXPRESSION ([pixel] >= 0.6 AND [pixel] < 0.8)
+      STYLE
+        COLOR 180 220 100
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High (>0.8)"
+      EXPRESSION ([pixel] >= 0.8)
+      STYLE
+        COLOR 0 100 0
+        OPACITY 95
+      END
+    END
+  END
+
+
+  # Monthly Breeding Suitability Layers - Using correct color scheme
+  LAYER
+    NAME "breeding_april_2024"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_APR_2024_NORMALIZED_1750530792002.tif"
+    EXTENT 21.850455835483476 -4.6164063 51.3961558 22.200893700034126
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - April 2024"
+      "wms_abstract" "Normalized Breeding Suitability for April 2024"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_april_2024&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190 # #BDBEBE - Gray for unsuitable
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42  # #F2FE2A - Yellow
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253  # #33B3FD - Blue
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24   # #FF2B18 - Red
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "NoData"
+      EXPRESSION ([pixel] = 255)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+  END
+
+  LAYER
+    NAME "breeding_july_2024"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_JUL_2024_NORMALIZED_1750530792022.tif"
+    EXTENT 21.850455835483476 -4.6164063 51.3961558 22.200893700034126
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - July 2024"
+      "wms_abstract" "Normalized Breeding Suitability for July 2024"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_july_2024&FORMAT=image/png&SLD_VERSION=1.1.0"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190 # #BDBEBE - Gray for unsuitable
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42  # #F2FE2A - Yellow
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253  # #33B3FD - Blue
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24   # #FF2B18 - Red
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "NoData"
+      EXPRESSION ([pixel] = 255)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+  END
+
+  LAYER
+    NAME "breeding_november_2024"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_NOV_2024_NORMALIZED_1750530792022.tif"
+    EXTENT 21.850455835483476 -4.6164063 51.3961558 22.200893700034126
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - November 2024"
+      "wms_abstract" "Normalized Breeding Suitability for November 2024"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_november_2024&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190 # #BDBEBE
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42  # #F2FE2A
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253  # #33B3FD
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24   # #FF2B18
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "NoData"
+      EXPRESSION ([pixel] = 255)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+  END
+
+  LAYER
+    NAME "breeding_december_2024"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_DEC_2024_NORMALIZED_1750530792020.tif"
+    EXTENT 21.850455835483476 -4.6164063 51.3961558 22.200893700034126
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - December 2024"
+      "wms_abstract" "Normalized Breeding Suitability for December 2024"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_december_2024&FORMAT=image/png&SLD_VERSION=1.1.0"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190 # #BDBEBE
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42  # #F2FE2A
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253  # #33B3FD
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24   # #FF2B18
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "NoData"
+      EXPRESSION ([pixel] = 255)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+  END
+
+  LAYER
+    NAME "breeding_january_2025"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_JAN_2025_NORMALIZED_1750530792021.tif"
+    EXTENT 21.8504558 -4.6164063 51.3961558 22.2008937
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - January 2025"
+      "wms_abstract" "Normalized Breeding Suitability for January 2025"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_january_2025&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190 # #BDBEBE
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42  # #F2FE2A
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253  # #33B3FD
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24   # #FF2B18
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "NoData"
+      EXPRESSION ([pixel] = 255)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+  END
+
+  LAYER
+    NAME "breeding_february_2025"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/Breeding_Suitability_raster_FEB_2025_NORMALIZED_1750530792021.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Breeding Suitability - February 2025"
+      "wms_abstract" "Normalized Breeding Suitability for February 2025"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.850455835483476 -4.6164063 51.3961558 22.200893700034126"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "300"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8080/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=breeding_february_2025&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=255"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Unsuitable"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 189 190 190
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low Suitability"
+      EXPRESSION ([pixel] = 2)
+      STYLE
+        COLOR 242 254 42
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Moderate Suitability"
+      EXPRESSION ([pixel] = 3)
+      STYLE
+        COLOR 51 179 253
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High Suitability"
+      EXPRESSION ([pixel] = 4)
+      STYLE
+        COLOR 255 43 24
+        OPACITY 90
+      END
+    END
+  END
+
+  # Outbreak Stages - Vector Layer
+  LAYER
+    NAME "outbreak_stages"
+    TYPE POINT
+    STATUS ON
+    GROUP "locust_layers"
+    CONNECTIONTYPE OGR
+    CONNECTION "/etc/mapserver/attached_assets/locust_outbreak_stages_1750531579460.geojson"
+    EXTENT 22.803985 4.229517 49.562965 22.672735
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+      NAME "Solitary (Low Risk)"
+      EXPRESSION ("[locust_phase]" = "solitary")
+      STYLE
+        COLOR 0 255 0
+        SIZE 4
+        SYMBOL "circle"
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Transiens (Medium Risk)"
+      EXPRESSION ("[locust_phase]" = "transiens")
+      STYLE
+        COLOR 255 165 0
+        SIZE 4
+        SYMBOL "circle"
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Gregarious (High Risk)"
+      EXPRESSION ("[locust_phase]" = "gregarious")
+      STYLE
+        COLOR 255 0 0
+        SIZE 4
+        SYMBOL "circle"
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Low Density"
+      EXPRESSION ("[locust_density]" = "low")
+      STYLE
+        COLOR 144 238 144
+        SIZE 3
+        SYMBOL "circle"
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Medium Density"
+      EXPRESSION ("[locust_density]" = "medium")
+      STYLE
+        COLOR 255 215 0
+        SIZE 4
+        SYMBOL "circle"
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "High Density"
+      EXPRESSION ("[locust_density]" = "high")
+      STYLE
+        COLOR 220 20 60
+        SIZE 5
+        SYMBOL "circle"
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Other/Unknown"
+      STYLE
+        COLOR 169 169 169
+        SIZE 3
+        SYMBOL "circle"
+        OPACITY 70
+      END
+    END
+    METADATA
+      "wms_title" "Locust Outbreak Stages"
+      "wms_abstract" "Desert locust outbreak stages and phases"
+      "wms_include_items" "all"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "gml_include_items" "all"
+      "gml_featureid" "fid"
+    END
+  END
+
+  # Swarm Coverage - Vector Layer (GeoJSON)
+  LAYER
+    NAME "swarm_coverage"
+    TYPE POLYGON
+    STATUS ON
+    GROUP "locust_layers"
+    CONNECTIONTYPE OGR
+    CONNECTION "/etc/mapserver/attached_assets/locust_swarm_coverage.geojson"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    CLASS
+      NAME "Large Swarms"
+      EXPRESSION ("[Swarm Size]" = "Large")
+      STYLE
+        COLOR 255 0 0
+        OUTLINECOLOR 200 0 0
+        WIDTH 5
+        OPACITY 85
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 20
+      END
+    END
+    CLASS
+      NAME "Medium Swarms"
+      EXPRESSION ("[Swarm Size]" = "Medium")
+      STYLE
+        COLOR 255 69 0
+        OUTLINECOLOR 200 50 0
+        WIDTH 4
+        OPACITY 80
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 16
+      END
+    END
+    CLASS
+      NAME "Small Swarms"
+      EXPRESSION ("[Swarm Size]" = "Small")
+      STYLE
+        COLOR 255 165 0
+        OUTLINECOLOR 200 100 0
+        WIDTH 3
+        OPACITY 75
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 12
+      END
+    END
+    CLASS
+      NAME "Very Small Swarms - Gregarious"
+      EXPRESSION ("[Swarm Size]" = "Very Small" AND "[Locust Pha]" = "GREGARIOUS")
+      STYLE
+        COLOR 255 140 0
+        OUTLINECOLOR 200 100 0
+        WIDTH 3
+        OPACITY 70
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 10
+      END
+    END
+    CLASS
+      NAME "Very Small Swarms - Transiens"
+      EXPRESSION ("[Swarm Size]" = "Very Small" AND "[Locust Pha]" = "TRANSIENS")
+      STYLE
+        COLOR 255 215 0
+        OUTLINECOLOR 200 150 0
+        WIDTH 3
+        OPACITY 65
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 10
+      END
+    END
+    CLASS
+      NAME "Very Small Swarms - Solitary"
+      EXPRESSION ("[Swarm Size]" = "Very Small" AND "[Locust Pha]" = "SOLITARY")
+      STYLE
+        COLOR 144 238 144
+        OUTLINECOLOR 100 200 100
+        WIDTH 3
+        OPACITY 60
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 10
+      END
+    END
+    CLASS
+      NAME "Very Small Swarms - Other"
+      EXPRESSION ("[Swarm Size]" = "Very Small")
+      STYLE
+        COLOR 255 200 100
+        OUTLINECOLOR 200 150 50
+        WIDTH 3
+        OPACITY 65
+        ANTIALIAS TRUE
+        SYMBOL "circle"
+        SIZE 10
+      END
+    END
+    CLASS
+      NAME "Unknown/Other"
+      STYLE
+        COLOR 169 169 169
+        OUTLINECOLOR 120 120 120
+        WIDTH 1
+        OPACITY 50
+        ANTIALIAS TRUE
+      END
+    END
+    METADATA
+      "wms_title" "Locust Swarm Coverage"
+      "wms_abstract" "Desert locust swarm coverage areas from GeoJSON data"
+      "wms_include_items" "all"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8080/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=swarm_coverage&FORMAT=image/png"
+      "gml_include_items" "all"
+      "gml_featureid" "fid"
+    END
+  END
+
+  # Admin1 - State/Province Boundaries
+  LAYER
+    NAME "admin1"
+    TYPE POLYGON
+    STATUS ON
+    GROUP "base_layers"
+    CONNECTIONTYPE OGR
+    CONNECTION "/etc/mapserver/attached_assets/Admin1_1750589872545.geojson"
+    DATA "Admin1"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    TRANSFORM TRUE
+    CLASS
+      STYLE
+        OUTLINECOLOR 107 114 128
+        WIDTH 1
+        OPACITY 50
+        ANTIALIAS TRUE
+      END
+    END
+    METADATA
+      "wms_title" "Administrative Level 1 Boundaries"
+      "wms_abstract" "State/Province administrative boundaries for East Africa"
+      "wms_include_items" "all"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "gml_include_items" "all"
+      "gml_featureid" "fid"
+    END
+  END
+
+  # Admin0 - Country Boundaries (LAST = RENDERS ON TOP)
+  LAYER
+    NAME "admin0"
+    TYPE POLYGON
+    STATUS ON
+    GROUP "base_layers"
+    CONNECTIONTYPE OGR
+    CONNECTION "/etc/mapserver/attached_assets/Admin0_1750589872543.geojson"
+    DATA "Admin0"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    TRANSFORM TRUE
+    CLASS
+      STYLE
+        OUTLINECOLOR 107 114 128
+        WIDTH 2
+        OPACITY 70
+        ANTIALIAS TRUE
+      END
+    END
+    METADATA
+      "wms_title" "Administrative Boundaries"
+      "wms_abstract" "Country administrative boundaries for East Africa"
+      "wms_include_items" "all"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_bbox_extended" "true"
+      "wms_layer_limit" "1"
+      "gml_include_items" "all"
+      "gml_featureid" "fid"
+    END
+  END
+
+  # Vegetation Onset Layer (Feeding Periods)
+  LAYER
+    NAME "vegetation_onset"
+    TYPE RASTER
+    STATUS ON
+    DATA "/etc/mapserver/attached_assets/FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif"
+    EXTENT 21.850455835483476 -4.6164063 51.3961558 22.200893700034126
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Vegetation Onset (Feeding Periods)"
+      "wms_abstract" "Feeding periods data for locust monitoring"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.8504558 -4.6164063 51.3961558 22.2008937"
+      "wms_extent" "21.8145558 -4.6999200 51.3961558 22.2250800"
+      "wms_bbox_extended" "true"
+      "wms_enable_request" "*"
+      "ows_extent" "21.8145558 -4.6999200 51.3961558 22.2250800"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "SCALE=1,14"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "No Data"
+      EXPRESSION ([pixel] = -9999)
+      STYLE
+        COLOR 200 200 200  # Light Grey for no data
+        OPACITY 50
+      END
+    END
+    CLASS
+      NAME "1 day"
+      EXPRESSION ([pixel] = 1)
+      STYLE
+        COLOR 255 255 0    # Bright Yellow
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "2-4 days"  
+      EXPRESSION ([pixel] >= 2 AND [pixel] <= 4)
+      STYLE
+        COLOR 255 165 0    # Orange
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "5-9 days"
+      EXPRESSION ([pixel] >= 5 AND [pixel] <= 9)
+      STYLE
+        COLOR 255 69 0     # Red-Orange  
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "10+ days"
+      EXPRESSION ([pixel] >= 10 AND [pixel] <= 14)
+      STYLE
+        COLOR 139 0 0      # Dark Red
+        OPACITY 85
+      END
+    END
+  END
+
+
+  # Symbol definitions
+  SYMBOL
+    NAME "circle"
+    TYPE ELLIPSE
+    POINTS 1 1 END
+    FILLED TRUE
+  END
+
+END

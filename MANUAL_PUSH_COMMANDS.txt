@@ -1,0 +1,31 @@
+# Manual Docker Push Commands for Pest Watch v1.0
+
+## Step 1: Login to Docker Hub
+docker login
+
+## Step 2: Tag Images
+docker tag pest_watch_backend:v1.0 hkoros/pest_watch_backend:v1.0
+docker tag pest_watch_frontend:v1.0 hkoros/pest_watch_frontend:v1.0
+docker tag pest_watch_mapserver:v1.0 hkoros/pest_watch_mapserver:v1.0
+docker tag pest_watch_mapcache:v1.0 hkoros/pest_watch_mapcache:v1.0
+
+## Step 3: Push Each Image (run one at a time)
+docker push hkoros/pest_watch_backend:v1.0
+docker push hkoros/pest_watch_frontend:v1.0
+docker push hkoros/pest_watch_mapserver:v1.0
+docker push hkoros/pest_watch_mapcache:v1.0
+
+## Step 4: Verify on Docker Hub
+# Check these URLs to confirm upload:
+# https://hub.docker.com/r/hkoros/pest_watch_backend/tags
+# https://hub.docker.com/r/hkoros/pest_watch_frontend/tags  
+# https://hub.docker.com/r/hkoros/pest_watch_mapserver/tags
+# https://hub.docker.com/r/hkoros/pest_watch_mapcache/tags
+
+## For Staging Deployment (197.254.1.10):
+# 1. Copy docker-compose.staging.yml to server
+# 2. Run: docker-compose -f docker-compose.staging.yml up -d
+# 3. Access: http://197.254.1.10:8097
+
+## Alternative: Push All At Once (if you have good internet)
+docker push hkoros/pest_watch_backend:v1.0 && docker push hkoros/pest_watch_frontend:v1.0 && docker push hkoros/pest_watch_mapserver:v1.0 && docker push hkoros/pest_watch_mapcache:v1.0

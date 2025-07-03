@@ -1,37 +1,84 @@
-# MapServer Configuration for ELRP Locust Data
+# MapServer Configuration for East Africa Pest Watch
 
-This directory contains MapServer configuration files for serving ELRP (East Africa Pest Watch) geospatial data layers.
+This directory contains MapServer mapfiles and MapCache configuration for serving locust data layers.
 
 ## Directory Structure
 
 ```
 mapserver/
-├── mapfiles/          # MapServer .map configuration files
-├── data/             # Geospatial data files (GeoTIFF, Shapefiles, GeoJSON)
-├── cgi-bin/          # MapServer CGI executable
-└── config/           # Additional configuration files
+├── mapfiles/
+│   └── locust.map          # Main mapfile for all locust layers
+├── mapcache/
+│   └── mapcache.xml        # MapCache configuration for tile caching
+└── README.md               # This file
 ```
 
-## Data Layers
+## Layers Configured
 
-### Raster Layers (GeoTIFF)
-- Breeding Suitability (monthly): breeding_suitability_*.tif
-- Feeding Susceptibility: feeding_periods_2024.tif
+### Raster Layers
+- `breeding_suitability` - General breeding suitability raster
+- `temporal_breeding_jan` - January 2025 breeding suitability
+- `temporal_breeding_feb` - February 2025 breeding suitability
+- `temporal_breeding_apr` - April 2024 breeding suitability
+- `temporal_breeding_jul` - July 2024 breeding suitability
+- `temporal_breeding_nov` - November 2024 breeding suitability
+- `temporal_breeding_dec` - December 2024 breeding suitability
+- `feeding_susceptibility` - Feeding periods 2024 LULC based data
+- `maxent_prediction` - MaxEnt species distribution model prediction 2021
 
 ### Vector Layers
-- Outbreak Stages: locust_outbreak_stages.geojson
-- Swarm Coverage: locust_swarm_coverage_2024.shp
-- Trajectory Data: locust_trajectory_20250402.geojson
+- `swarm_coverage` - 2024 locust swarm coverage polygons (Shapefile)
+- `outbreak_stages` - Locust outbreak stage points with phase information (GeoJSON)
+- `trajectory` - Locust particle trajectory points (GeoJSON)
 
-## MapServer Installation
+## Data Sources
 
-1. Install MapServer with WMS support
-2. Configure web server (Apache/Nginx) to serve CGI
-3. Place mapfiles in this directory
-4. Configure data paths in mapfiles
+All raster data files are located in the `attached_assets/` directory:
+- Breeding suitability TIFF files (normalized)
+- Feeding periods LULC data
+- MaxEnt prediction raster
 
 ## WMS Endpoints
 
-- Base URL: http://localhost:8080/cgi-bin/mapserv
-- GetCapabilities: ?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities
-- GetMap: ?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=layer_name&...
+The layers are served through WMS endpoints accessible via:
+- Base URL: `/api/mapserver`
+- Service: WMS
+- Version: 1.3.0
+- CRS: EPSG:4326
+- Format: image/png
+
+## MapCache Configuration
+
+The MapCache configuration provides:
+- Disk-based tile caching in `/tmp/mapcache`
+- 5x5 metatiling for performance
+- 1-hour cache expiration
+- Multiple service endpoints (WMS, WMTS, TMS, KML)
+
+## Integration with Application
+
+The current application integrates these layers through:
+- React Leaflet components for map visualization
+- WMS tile layer requests to `/api/mapserver`
+- Layer toggles in the sidebar interface
+- Legend components showing layer symbology
+
+## Color Schemes
+
+### Breeding Suitability
+- Transparent: No data (0-63)
+- Yellow: Low suitability (64-127)
+- Orange: Moderate suitability (128-191)
+- Red: High suitability (192-255)
+
+### Feeding Susceptibility
+- Transparent: No data (0-63)
+- Light green: Low susceptibility (64-127)
+- Gold: Moderate susceptibility (128-191)
+- Orange-red: High susceptibility (192-255)
+
+### MaxEnt Prediction
+- Transparent: No prediction (0-63)
+- Light blue: Low probability (64-127)
+- Steel blue: Moderate probability (128-191)
+- Dark blue: High probability (192-255)

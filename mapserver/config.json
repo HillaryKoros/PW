@@ -1,0 +1,126 @@
+{
+  "mapserver": {
+    "mapfile_path": "./mapserver/mapfiles/locust.map",
+    "base_url": "/api/mapserver",
+    "services": {
+      "wms": {
+        "enabled": true,
+        "version": "1.3.0",
+        "formats": ["image/png", "image/jpeg"],
+        "crs": ["EPSG:4326", "EPSG:3857"]
+      },
+      "wmts": {
+        "enabled": true
+      },
+      "tms": {
+        "enabled": true
+      }
+    }
+  },
+  "mapcache": {
+    "config_path": "./mapserver/mapcache/mapcache.xml",
+    "cache_directory": "/tmp/mapcache",
+    "max_age": 3600,
+    "services": {
+      "wms": true,
+      "wmts": true,
+      "tms": true,
+      "kml": true
+    }
+  },
+  "layers": {
+    "breeding_suitability": {
+      "title": "Breeding Suitability",
+      "description": "General breeding suitability analysis",
+      "data_source": "attached_assets/Breeding_Suitability_GENERAL_raster_1750530724131.tif",
+      "type": "raster",
+      "temporal": false
+    },
+    "temporal_breeding": {
+      "title": "Temporal Breeding Suitability",
+      "description": "Monthly breeding suitability analysis",
+      "type": "raster",
+      "temporal": true,
+      "months": {
+        "jan": "attached_assets/Breeding_Suitability_raster_JAN_2025_NORMALIZED_1750530792021.tif",
+        "feb": "attached_assets/Breeding_Suitability_raster_FEB_2025_NORMALIZED_1750530792021.tif",
+        "apr": "attached_assets/Breeding_Suitability_raster_APR_2024_NORMALIZED_1750530792002.tif",
+        "jul": "attached_assets/Breeding_Suitability_raster_JUL_2024_NORMALIZED_1750530792022.tif",
+        "nov": "attached_assets/Breeding_Suitability_raster_NOV_2024_NORMALIZED_1750530792022.tif",
+        "dec": "attached_assets/Breeding_Suitability_raster_DEC_2024_NORMALIZED_1750530792020.tif"
+      }
+    },
+    "feeding_periods_2024_lulc": {
+      "title": "Feeding Periods 2024 Based on LULC",
+      "description": "Feeding periods 2024 Land Use Land Cover based analysis",
+      "data_source": "attached_assets/FEEDING_PERIODS_2024_LULC_BASED_1750529515123.tif",
+      "type": "raster",
+      "temporal": false
+    },
+    "maxent_prediction_2021": {
+      "title": "MaxEnt Prediction 2021",
+      "description": "MaxEnt Species Distribution Model Prediction for Desert Locust 2021",
+      "data_source": "attached_assets/Maxent Prediction 2021_1750530749377.tif",
+      "type": "raster",
+      "temporal": false
+    },
+    "outbreak_stages": {
+      "title": "Outbreak Stages",
+      "description": "Locust outbreak stage points with phase information",
+      "data_source": "attached_assets/locust_outbreak_stages_1750531579460.geojson",
+      "type": "vector",
+      "temporal": false
+    },
+    "swarm_coverage": {
+      "title": "Locust Swarm Coverage",
+      "description": "2024 locust swarm coverage polygons",
+      "data_source": "attached_assets/locust_swarm_coverage_2024_1750530695098.shp",
+      "type": "vector",
+      "temporal": false
+    },
+    "trajectory": {
+      "title": "Swarm Trajectory",
+      "description": "Locust particle trajectory animation data",
+      "data_source": "attached_assets/locust_trajectory_20250402_132735_1750528226751.geojson",
+      "type": "vector",
+      "temporal": true
+    }
+  },
+  "styling": {
+    "breeding_suitability": {
+      "classes": [
+        {"range": [0, 63], "color": [255, 255, 255], "opacity": 0, "label": "No Data"},
+        {"range": [64, 127], "color": [255, 255, 0], "opacity": 70, "label": "Low Suitability"},
+        {"range": [128, 191], "color": [255, 165, 0], "opacity": 70, "label": "Moderate Suitability"},
+        {"range": [192, 255], "color": [255, 0, 0], "opacity": 70, "label": "High Suitability"}
+      ]
+    },
+    "feeding_periods_2024_lulc": {
+      "classes": [
+        {"range": [0, 63], "color": [255, 255, 255], "opacity": 0, "label": "No Data"},
+        {"range": [64, 127], "color": [144, 238, 144], "opacity": 70, "label": "1-2 Days"},
+        {"range": [128, 191], "color": [255, 215, 0], "opacity": 70, "label": "2-4 Days"},
+        {"range": [192, 255], "color": [255, 69, 0], "opacity": 70, "label": "5+ Days"}
+      ]
+    },
+    "maxent_prediction_2021": {
+      "classes": [
+        {"range": [0, 63], "color": [255, 255, 255], "opacity": 0, "label": "No Prediction"},
+        {"range": [64, 127], "color": [173, 216, 230], "opacity": 70, "label": "Low Probability"},
+        {"range": [128, 191], "color": [70, 130, 180], "opacity": 70, "label": "Moderate Probability"},
+        {"range": [192, 255], "color": [25, 25, 112], "opacity": 70, "label": "High Probability"}
+      ]
+    },
+    "outbreak_stages": {
+      "calm": {"color": "#4CAF50", "label": "Calm"},
+      "alarm": {"color": "#FF9800", "label": "Alarm"},
+      "alert": {"color": "#F44336", "label": "Alert"},
+      "crisis": {"color": "#9C27B0", "label": "Crisis"}
+    },
+    "locust_phases": {
+      "gregarious": {"color": "#FF0000", "label": "Gregarious (Swarming)"},
+      "transiens": {"color": "#FFA500", "label": "Transiens (Transitional)"},
+      "solitary": {"color": "#008000", "label": "Solitary (Individual)"}
+    }
+  }
+}
