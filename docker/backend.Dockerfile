@@ -21,8 +21,8 @@ COPY components.json ./
 # Build frontend for production
 RUN npm run build:frontend
 
-# Install tsx for TypeScript execution
-RUN npm install -g tsx
+# Build backend for production
+RUN npm run build
 
 # Expose backend port
 EXPOSE 5000
@@ -31,5 +31,5 @@ EXPOSE 5000
 ENV NODE_ENV=production
 ENV PORT=5000
 
-# Start backend server
-CMD ["tsx", "backend/index.ts"]
+# Start backend server with compiled JavaScript
+CMD ["node", "dist/index.js"]

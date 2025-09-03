@@ -922,3 +922,99 @@ MAP
   END
 
 END
+  # Hopper Probability Layer (Dynamic Dekadal Selection)
+  LAYER
+    NAME "hopper_probability"
+    TYPE RASTER
+    STATUS OFF
+    METADATA
+      "wms_title" "Hopper Probability/Suitability"
+      "wms_abstract" "VITO hopper probability data by dekadal periods"
+      "wms_srs" "EPSG:4326"
+      "wms_enable_request" "*"
+      "wms_format" "image/png"
+      "wms_layer_group" "/Desert Locust"
+      "wms_timeextent" "2017-01-01/2024-05-11/P10D"
+      "wms_timeitem" "TIME"
+      "wms_timedefault" "2024-01-01"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+    END
+    
+    # Use runtime substitution for dynamic dekad selection
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_%year%_dekad_%dekad%.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    
+    # Validation for runtime substitution
+    VALIDATION
+      "dekad" "^[0-9]{8}$"
+      "year" "^[0-9]{4}$"
+    END
+    
+    PROJECTION
+      "init=epsg:4326"
+    END
+    
+    # Processing directives for better performance
+    PROCESSING "BANDS=1"
+    PROCESSING "RESAMPLE=BILINEAR"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    
+    # Color classification for probability values (0-100 represents 0.0-1.0 probability)
+    CLASS
+      NAME "No Data"
+      EXPRESSION ([pixel] = 0)
+      STYLE
+        COLOR 255 255 255
+        OPACITY 0
+      END
+    END
+    
+    CLASS
+      NAME "Very Low (0.0-0.2)"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234  # #eaeaea
+        OPACITY 80
+      END
+    END
+    
+    CLASS
+      NAME "Low (0.2-0.4)"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191  # #ffebbf
+        OPACITY 85
+      END
+    END
+    
+    CLASS
+      NAME "Moderate (0.4-0.6)"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127  # #ffd37f
+        OPACITY 85
+      END
+    END
+    
+    CLASS
+      NAME "High (0.6-0.8)"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0    # #ffaa00
+        OPACITY 90
+      END
+    END
+    
+    CLASS
+      NAME "Very High (0.8-1.0)"
+      EXPRESSION ([pixel] > 80 AND [pixel] <= 100)
+      STYLE
+        COLOR 255 85 0     # #ff5500
+        OPACITY 95
+      END
+    END
+  END
+

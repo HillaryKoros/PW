@@ -2,14 +2,11 @@ import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createServer as createViteServer, createLogger } from "vite";
+import { createServer as createViteServer } from "vite";
 import { type Server } from "http";
 import viteConfig from "../vite.config";
-import { nanoid } from "nanoid";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const viteLogger = createLogger();
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -23,49 +20,46 @@ export function log(message: string, source = "express") {
 }
 
 export async function setupVite(app: Express, server: Server) {
-  const serverOptions = {
-    middlewareMode: true,
-    hmr: { server },
-    allowedHosts: true,
-  };
-
   const vite = await createViteServer({
     ...viteConfig,
     configFile: false,
-    customLogger: {
-      ...viteLogger,
-      error: (msg, options) => {
-        viteLogger.error(msg, options);
-        process.exit(1);
-      },
+    server: {
+      middlewareMode: true,
+      hmr: { server }
     },
-    server: serverOptions,
     appType: "custom",
   });
 
+  // Use Vite's middleware
   app.use(vite.middlewares);
+  
+  // Serve index.html for all non-API routes
   app.use("*", async (req, res, next) => {
+    // Skip API routes
+    if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/health')) {
+      return next();
+    }
+    
     const url = req.originalUrl;
 
     try {
-      const clientTemplate = path.resolve(
-        __dirname,
-        "..",
-        "client",
-        "index.html",
+      // Read the index.html file
+      const template = fs.readFileSync(
+        path.resolve(__dirname, "..", "frontend", "index.html"),
+        "utf-8"
       );
-
-      // always reload the index.html file from disk incase it changes
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
-      );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
-    } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
+      
+      // Apply Vite HTML transforms. This injects the Vite HMR client
+      // and transforms the HTML with the correct module URLs
+      const html = await vite.transformIndexHtml(url, template);
+      
+      // Send the transformed HTML
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    } catch (e: any) {
+      // If there's an error, send it to Vite for proper error display
+      vite.ssrFixStacktrace(e);
+      console.error(e.stack);
+      res.status(500).end(e.stack);
     }
   });
 }

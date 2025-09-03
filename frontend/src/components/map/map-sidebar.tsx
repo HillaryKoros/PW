@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Switch } from "../ui/switch";
 import { Slider } from "../ui/slider";
+import { DekadalSelector } from "../ui/dekadal-selector";
 import { 
   Play, 
   Pause, 
@@ -53,6 +54,14 @@ interface MapSidebarProps {
   onBreedingMonthChange?: (month: string) => void;
   showTrajectory?: boolean;
   onToggleTrajectory?: (show: boolean) => void;
+  showHopperProbability?: boolean;
+  onToggleHopperProbability?: (show: boolean) => void;
+  selectedHopperYear?: number;
+  selectedHopperMonth?: number;
+  selectedHopperDekad?: number;
+  onHopperYearChange?: (year: number) => void;
+  onHopperMonthChange?: (month: number) => void;
+  onHopperDekadChange?: (dekad: number) => void;
 }
 
 export default function MapSidebar({
@@ -83,7 +92,15 @@ export default function MapSidebar({
   selectedBreedingMonth = "jan",
   onBreedingMonthChange,
   showTrajectory = false,
-  onToggleTrajectory
+  onToggleTrajectory,
+  showHopperProbability = false,
+  onToggleHopperProbability,
+  selectedHopperYear = 2024,
+  selectedHopperMonth = 1,
+  selectedHopperDekad = 1,
+  onHopperYearChange,
+  onHopperMonthChange,
+  onHopperDekadChange
 }: MapSidebarProps) {
   // State for collapsible sections
   const [isDesertLocustExpanded, setIsDesertLocustExpanded] = useState(true);
@@ -131,7 +148,7 @@ export default function MapSidebar({
               {/* Swarming Trajectory */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleTrajectory(!showTrajectory)}
+                onClick={() => onToggleTrajectory?.(!showTrajectory)}
               >
                 <div className="flex items-center gap-2">
                   <Navigation className="h-3 w-3 text-blue-600" />
@@ -147,7 +164,7 @@ export default function MapSidebar({
               {/* Outbreak Stages */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleOutbreakStages(!showOutbreakStages)}
+                onClick={() => onToggleOutbreakStages?.(!showOutbreakStages)}
               >
                 <div className="flex items-center gap-2">
                   <Shield className="h-3 w-3 text-red-600" />
@@ -163,7 +180,7 @@ export default function MapSidebar({
               {/* Swarm Coverage */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleLocustCoverage(!showLocustCoverage)}
+                onClick={() => onToggleLocustCoverage?.(!showLocustCoverage)}
               >
                 <div className="flex items-center gap-2">
                   <Eye className="h-3 w-3 text-purple-600" />
@@ -179,7 +196,7 @@ export default function MapSidebar({
               {/* Vegetation Onset */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleFeedingSusceptibility(!showFeedingSusceptibility)}
+                onClick={() => onToggleFeedingSusceptibility?.(!showFeedingSusceptibility)}
               >
                 <div className="flex items-center gap-2">
                   <Leaf className="h-3 w-3 text-green-600" />
@@ -195,7 +212,7 @@ export default function MapSidebar({
               {/* Swarming Susceptibility */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleGregarization(!showGregarization)}
+                onClick={() => onToggleGregarization?.(!showGregarization)}
               >
                 <div className="flex items-center gap-2">
                   <MapPin className="h-3 w-3 text-yellow-600" />
@@ -211,7 +228,7 @@ export default function MapSidebar({
               {/* Breeding */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
-                onClick={() => onToggleTemporalBreeding(!showTemporalBreeding)}
+                onClick={() => onToggleTemporalBreeding?.(!showTemporalBreeding)}
               >
                 <div className="flex items-center gap-2">
                   <Heart className="h-3 w-3 text-pink-600" />
@@ -243,6 +260,36 @@ export default function MapSidebar({
                       <SelectItem value="dec">December 2024</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+              )}
+
+              {/* Hopper Probability/Suitability */}
+              <div 
+                className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => onToggleHopperProbability?.(!showHopperProbability)}
+              >
+                <div className="flex items-center gap-2">
+                  <Bug className="h-3 w-3 text-amber-600" />
+                  <span className="text-xs text-gray-700">Hopper Probability</span>
+                </div>
+                <Switch
+                  checked={showHopperProbability}
+                  onCheckedChange={onToggleHopperProbability}
+                  className="scale-75"
+                />
+              </div>
+
+              {showHopperProbability && (
+                <div className="ml-4 mt-2 p-3 bg-amber-50 rounded border">
+                  <DekadalSelector
+                    selectedYear={selectedHopperYear}
+                    selectedMonth={selectedHopperMonth}
+                    selectedDekad={selectedHopperDekad}
+                    onYearChange={onHopperYearChange || (() => {})}
+                    onMonthChange={onHopperMonthChange || (() => {})}
+                    onDekadChange={onHopperDekadChange || (() => {})}
+                    availableYears={[2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]}
+                  />
                 </div>
               )}
             </CardContent>

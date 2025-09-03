@@ -11,6 +11,7 @@ import OutbreakStagesLayer from "./outbreak-stages-layer";
 import SwarmCoverageLayer from "./swarm-coverage-layer";
 import AdminBoundariesLayer from "./admin-boundaries-layer";
 import VegetationOnsetLayer from "./vegetation-onset-layer";
+import HopperProbabilityLayer from "./hopper-probability-layer";
 import TrajectoryAnimationControl from "./trajectory-animation-control";
 import TrajectoryDateDisplay from "./trajectory-date-display";
 import MapLegend from "./map-legend";
@@ -42,6 +43,8 @@ interface TrajectoryMapProps {
   selectedBreedingMonth?: string;
   showTrajectory?: boolean;
   showSwarmCoverage?: boolean;
+  showHopperProbability?: boolean;
+  selectedHopperDekad?: string;
 }
 
 export default function TrajectoryMap({
@@ -68,6 +71,8 @@ export default function TrajectoryMap({
   showTemporalBreeding = false,
   selectedBreedingMonth = "jan",
   showTrajectory = false,
+  showHopperProbability = false,
+  selectedHopperDekad = "20240101",
 }: TrajectoryMapProps) {
   const animationRef = useRef<NodeJS.Timeout | null>(null);
   const [currentPositions, setCurrentPositions] = useState<Map<number, LatLngTuple>>(new Map());
@@ -236,6 +241,12 @@ export default function TrajectoryMap({
 
         <VegetationOnsetLayer
           visible={showFeedingSusceptibility}
+          opacity={0.7}
+        />
+
+        <HopperProbabilityLayer
+          visible={showHopperProbability}
+          dekad={selectedHopperDekad}
           opacity={0.7}
         />
 

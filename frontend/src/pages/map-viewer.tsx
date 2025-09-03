@@ -4,6 +4,7 @@ import MapSidebar from "../components/map/map-sidebar";
 import IconLayerControl from "../components/map/icon-layer-control";
 import { Layers, X } from "lucide-react";
 import { loadTrajectoryData } from "../lib/trajectory-data";
+import { dekadToDateString } from "../components/ui/dekadal-selector";
 
 export default function MapViewer() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +26,10 @@ export default function MapViewer() {
   const [showTemporalBreeding, setShowTemporalBreeding] = useState(false);
   const [selectedBreedingMonth, setSelectedBreedingMonth] = useState("jan");
   const [showTrajectory, setShowTrajectory] = useState(false);
+  const [showHopperProbability, setShowHopperProbability] = useState(false);
+  const [selectedHopperYear, setSelectedHopperYear] = useState(2024);
+  const [selectedHopperMonth, setSelectedHopperMonth] = useState(5);
+  const [selectedHopperDekad, setSelectedHopperDekad] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -90,6 +95,14 @@ export default function MapViewer() {
             onBreedingMonthChange={setSelectedBreedingMonth}
             showTrajectory={showTrajectory}
             onToggleTrajectory={setShowTrajectory}
+            showHopperProbability={showHopperProbability}
+            onToggleHopperProbability={setShowHopperProbability}
+            selectedHopperYear={selectedHopperYear}
+            selectedHopperMonth={selectedHopperMonth}
+            selectedHopperDekad={selectedHopperDekad}
+            onHopperYearChange={setSelectedHopperYear}
+            onHopperMonthChange={setSelectedHopperMonth}
+            onHopperDekadChange={setSelectedHopperDekad}
           />
         </div>
       </aside>
@@ -174,6 +187,14 @@ export default function MapViewer() {
                   onBreedingMonthChange={setSelectedBreedingMonth}
                   showTrajectory={showTrajectory}
                   onToggleTrajectory={setShowTrajectory}
+                  showHopperProbability={showHopperProbability}
+                  onToggleHopperProbability={setShowHopperProbability}
+                  selectedHopperYear={selectedHopperYear}
+                  selectedHopperMonth={selectedHopperMonth}
+                  selectedHopperDekad={selectedHopperDekad}
+                  onHopperYearChange={setSelectedHopperYear}
+                  onHopperMonthChange={setSelectedHopperMonth}
+                  onHopperDekadChange={setSelectedHopperDekad}
                 />
               </div>
             </div>
@@ -217,6 +238,8 @@ export default function MapViewer() {
               showTemporalBreeding={showTemporalBreeding}
               selectedBreedingMonth={selectedBreedingMonth}
               showTrajectory={showTrajectory}
+              showHopperProbability={showHopperProbability}
+              selectedHopperDekad={dekadToDateString(selectedHopperYear, selectedHopperMonth, selectedHopperDekad)}
             />
           </div>
 
