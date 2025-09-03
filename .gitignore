@@ -5,8 +5,6 @@ backend/public
 vite.config.ts.*
 *.tar.gz
 
-.claude
-
 attached_assets/
 
 # Geospatial datasets
