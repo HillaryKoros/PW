@@ -8,3 +8,23 @@ vite.config.ts.*
 .claude
 
 attached_assets/
+
+# Geospatial datasets
+*.tif
+*.tiff
+*.TIF
+*.TIFF
+hopper_suitability_VITO_tif/
+mapserver/attached_assets/*.tif
+mapserver/attached_assets/*.tiff
+
+# Large raster files
+*.geotiff
+*.GeoTIFF
+*.img
+*.hdf
+*.nc
+
+# Temporary cache files
+/var/cache/mapcache/
+mapcache/cache/
