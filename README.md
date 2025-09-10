@@ -213,12 +213,23 @@ The project uses GitHub Actions for automated Docker image building and pushing:
 #### Continuous Integration
 - **Trigger**: Push to `main` branch or pull request
 - **Process**: Builds all Docker images and pushes to Docker Hub
-- **Tags**: `latest` for main branch, `main` for development
+- **Tags**: Multiple tags are created automatically:
+  - `latest` - Latest stable version
+  - `main` - Development version
+  - `v1.1.X` - Semantic version (auto-incremented)
+  - `YYYYMMDD.X` - Date-based version
 
-#### Release Process
-- **Trigger**: Creating a new release/tag (e.g., `v1.2`)
+#### Automatic Versioning
+Each push to main automatically:
+- Generates version `v1.1.X` (where X is the GitHub Actions run number)
+- Creates and pushes a Git tag
+- Updates staging deployment to use the new version
+- Builds and pushes Docker images with multiple tags
+
+#### Manual Release Process
+- **Trigger**: Creating a new release/tag manually (e.g., `v2.0`)
 - **Process**: Builds and pushes versioned images
-- **Tags**: Version tag (e.g., `v1.2`) and `latest`
+- **Tags**: Version tag (e.g., `v2.0`) and `latest`
 
 #### Manual Docker Operations (if needed)
 

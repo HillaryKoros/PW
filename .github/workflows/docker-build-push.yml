@@ -33,6 +33,17 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: Generate version
+      id: version
+      run: |
+        # Generate semantic version based on date and run number
+        DATE=$(date +%Y%m%d)
+        RUN_NUMBER=${{ github.run_number }}
+        VERSION="v1.1.${RUN_NUMBER}"
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+        echo "DATE_VERSION=${DATE}.${RUN_NUMBER}" >> $GITHUB_OUTPUT
+        echo "Generated version: ${VERSION}"
+
     - name: Extract metadata
       id: meta
       uses: docker/metadata-action@v5
@@ -45,6 +56,8 @@ jobs:
           type=semver,pattern={{major}}.{{minor}}
           type=semver,pattern={{major}}
           type=raw,value=latest,enable={{is_default_branch}}
+          type=raw,value=${{ steps.version.outputs.VERSION }},enable={{is_default_branch}}
+          type=raw,value=${{ steps.version.outputs.DATE_VERSION }},enable={{is_default_branch}}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
@@ -58,7 +71,7 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-  update-staging:
+  create-release-tag:
     needs: build-and-push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -66,25 +79,71 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate version
+      id: version
+      run: |
+        # Generate semantic version based on date and run number
+        DATE=$(date +%Y%m%d)
+        RUN_NUMBER=${{ github.run_number }}
+        VERSION="v1.1.${RUN_NUMBER}"
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+        echo "Generated version: ${VERSION}"
+
+    - name: Create and push git tag
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        VERSION="${{ steps.version.outputs.VERSION }}"
+        
+        # Check if tag already exists
+        if ! git rev-parse "$VERSION" >/dev/null 2>&1; then
+          git tag -a "$VERSION" -m "Automated release $VERSION - $(date)"
+          git push origin "$VERSION"
+          echo "Created and pushed tag: $VERSION"
+        else
+          echo "Tag $VERSION already exists"
+        fi
+
+  update-staging:
+    needs: [build-and-push, create-release-tag]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Generate version
+      id: version
+      run: |
+        RUN_NUMBER=${{ github.run_number }}
+        VERSION="v1.1.${RUN_NUMBER}"
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
     - name: Update staging deployment
       run: |
-        # Get the latest commit SHA for tagging
-        SHORT_SHA=$(git rev-parse --short HEAD)
+        VERSION="${{ steps.version.outputs.VERSION }}"
         
-        # Update docker-compose.staging.yml with new tags
-        sed -i "s/:v[0-9]\+\.[0-9]\+/:main/g" docker-compose.staging.yml
+        # Update docker-compose.staging.yml with new version tags
+        sed -i "s/:v[0-9]\+\.[0-9]\+\.[0-9]\+/:${VERSION}/g" docker-compose.staging.yml
+        sed -i "s/:v[0-9]\+\.[0-9]\+/:${VERSION}/g" docker-compose.staging.yml
         
-        echo "Updated staging deployment to use :main tags"
+        echo "Updated staging deployment to use :${VERSION} tags"
 
     - name: Commit updated staging file
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
+        VERSION="${{ steps.version.outputs.VERSION }}"
+        
         if [ -n "$(git status --porcelain)" ]; then
           git add docker-compose.staging.yml
-          git commit -m "Update staging deployment with latest images"
+          git commit -m "Update staging deployment to ${VERSION}"
           git push
         else
           echo "No changes to commit"
