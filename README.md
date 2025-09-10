@@ -206,7 +206,21 @@ docker compose build
 docker compose build frontend
 ```
 
-### Tagging and Pushing to Docker Hub
+### Automated Docker Build and Push
+
+The project uses GitHub Actions for automated Docker image building and pushing:
+
+#### Continuous Integration
+- **Trigger**: Push to `main` branch or pull request
+- **Process**: Builds all Docker images and pushes to Docker Hub
+- **Tags**: `latest` for main branch, `main` for development
+
+#### Release Process
+- **Trigger**: Creating a new release/tag (e.g., `v1.2`)
+- **Process**: Builds and pushes versioned images
+- **Tags**: Version tag (e.g., `v1.2`) and `latest`
+
+#### Manual Docker Operations (if needed)
 
 ```bash
 # Tag images with version
@@ -348,6 +362,18 @@ docker compose logs -f mapserver
 3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
+
+### GitHub Actions Setup
+
+To enable automated Docker builds, configure these secrets in your GitHub repository:
+
+- `DOCKER_USERNAME`: Your Docker Hub username
+- `DOCKER_PASSWORD`: Your Docker Hub access token
+
+The workflow will automatically:
+- Build and test on pull requests
+- Build and push images on main branch commits
+- Create versioned releases when tags are created
 
 ### Code Standards
 
