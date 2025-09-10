@@ -425,6 +425,8 @@ For support and questions:
 
 ---
 
-**Note**: This system requires geospatial datasets that are not included in the repository due to size constraints. Contact the development team for access to the required data files.
+**Note**: This system requires geospatial datasets that are not included in the repository due to size constraints. The Docker containers will run without these files, but map layers will not display data. Contact the development team for access to the required data files.
+
+**For Development**: Place your geospatial data files in `mapserver/attached_assets/` before building the Docker images locally.
 
 *Developed for East Africa pest monitoring and food security.*

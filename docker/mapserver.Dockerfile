@@ -23,16 +23,15 @@ RUN apt-get update && apt-get install -y \
 # Enable required Apache modules
 RUN a2enmod cgi headers rewrite
 
-# Copy MapServer configuration files and data
+# Copy MapServer configuration files
 COPY mapserver/mapfiles/ /tmp/mapfiles/
-COPY mapserver/attached_assets/ /tmp/attached_assets/
 COPY mapserver/apache.conf /etc/apache2/sites-available/mapserver.conf
 
 # Create directories and move files with proper ownership
 RUN mkdir -p /etc/mapserver/mapfiles /etc/mapserver/attached_assets /var/run/apache2 && \
     mv /tmp/mapfiles/* /etc/mapserver/mapfiles/ && \
-    mv /tmp/attached_assets/* /etc/mapserver/attached_assets/ && \
-    rmdir /tmp/mapfiles /tmp/attached_assets && \
+    rmdir /tmp/mapfiles && \
+    echo "# Placeholder for attached assets - add your geospatial data files here" > /etc/mapserver/attached_assets/README.md && \
     chown -R www-data:www-data /etc/mapserver /var/run/apache2 && \
     chmod -R 755 /etc/mapserver/ && \
     cp /etc/mapserver/mapfiles/locust.map /var/www/html/locust.map && \

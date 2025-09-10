@@ -10,7 +10,8 @@ RUN npm ci
 COPY backend/ ./backend/
 COPY shared/ ./shared/
 COPY frontend/ ./frontend/
-COPY mapserver/attached_assets/ ./mapserver/attached_assets/
+# Create mapserver assets directory (assets excluded from git)
+RUN mkdir -p ./mapserver/attached_assets/
 COPY drizzle.config.ts ./
 COPY tsconfig.json ./
 COPY vite.config.ts ./
