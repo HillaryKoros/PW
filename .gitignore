@@ -1,28 +1,107 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.next/
+.nuxt/
+.vite/
+.turbo/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS files
 .DS_Store
-backend/public
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Docker
+.dockerignore
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Build artifacts
+backend/public/
 vite.config.ts.*
 *.tar.gz
 
-attached_assets/
+# Cache directories
+.cache/
+.parcel-cache/
 
-# Geospatial datasets
+# Geospatial datasets (large files)
+attached_assets/
 *.tif
 *.tiff
 *.TIF
 *.TIFF
-hopper_suitability_VITO_tif/
-mapserver/attached_assets/*.tif
-mapserver/attached_assets/*.tiff
-
-# Large raster files
 *.geotiff
 *.GeoTIFF
 *.img
 *.hdf
 *.nc
+*.shp
+*.dbf
+*.prj
+*.shx
+hopper_suitability_VITO_tif/
+mapserver/attached_assets/*.tif
+mapserver/attached_assets/*.tiff
 
-# Temporary cache files
+# MapCache and MapServer temp files
 /var/cache/mapcache/
 mapcache/cache/
+*.map.bak
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Miscellaneous
+.sass-cache/
+.connect.lock
+.eslintcache

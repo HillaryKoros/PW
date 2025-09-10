@@ -28,11 +28,6 @@ export function DekadalSelector({
 
   return (
     <div className="space-y-3">
-      {/* Header */}
-      <div className="text-sm font-medium text-gray-700 mb-3">
-        Hopper Probability (10-day Prob.)
-      </div>
-      
       {/* Date Info */}
       <div className="text-xs text-gray-500 mb-2">
         {selectedYear} {monthNames[selectedMonth - 1]}, Dekad: {selectedDekad === 1 ? "1st" : selectedDekad === 2 ? "2nd" : "3rd"}

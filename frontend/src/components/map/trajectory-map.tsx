@@ -187,11 +187,11 @@ export default function TrajectoryMap({
         zoom={5}
         className="h-full w-full"
         zoomControl={false}
+        attributionControl={false}
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
           url={getBasemapUrl()}
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
         {/* Breeding Suitability Layer */}
@@ -346,6 +346,7 @@ export default function TrajectoryMap({
         showGregarization={showGregarization}
         showTemporalBreeding={showTemporalBreeding}
         showOutbreakStages={showOutbreakStages}
+        showHopperProbability={showHopperProbability}
       />
     </div>
   );

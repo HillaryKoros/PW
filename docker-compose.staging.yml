@@ -2,7 +2,7 @@ services:
   # Backend API Service
   backend:
     container_name: pest_watch_backend
-    image: hkoros/pest_watch_backend:v1.0
+    image: hkoros/pest_watch_backend:v1.1
     ports:
       - "8098:5000"
     environment:
@@ -16,7 +16,7 @@ services:
   # Frontend Web Service
   frontend:
     container_name: pest_watch_frontend
-    image: hkoros/pest_watch_frontend:v1.0
+    image: hkoros/pest_watch_frontend:v1.1
     ports:
       - "8097:80"
     depends_on:
@@ -27,7 +27,7 @@ services:
   # MapServer WMS Service
   mapserver:
     container_name: pest_watch_mapserver
-    image: hkoros/pest_watch_mapserver:v1.0
+    image: hkoros/pest_watch_mapserver:v1.1
     ports:
       - "8099:80"
     environment:
@@ -53,7 +53,7 @@ services:
   # MapCache Tile Service
   mapcache:
     container_name: pest_watch_mapcache
-    image: hkoros/pest_watch_mapcache:v1.0
+    image: hkoros/pest_watch_mapcache:v1.1
     ports:
       - "8100:80"
     environment:

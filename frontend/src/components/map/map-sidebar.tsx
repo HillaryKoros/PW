@@ -263,14 +263,14 @@ export default function MapSidebar({
                 </div>
               )}
 
-              {/* Hopper Probability/Suitability */}
+              {/* Hoppers Habitat Suitability */}
               <div 
                 className="flex items-center justify-between p-2 rounded bg-gray-50 border cursor-pointer hover:bg-gray-100 transition-colors"
                 onClick={() => onToggleHopperProbability?.(!showHopperProbability)}
               >
                 <div className="flex items-center gap-2">
                   <Bug className="h-3 w-3 text-amber-600" />
-                  <span className="text-xs text-gray-700">Hopper Probability</span>
+                  <span className="text-xs text-gray-700">Hoppers Habitat Suitability</span>
                 </div>
                 <Switch
                   checked={showHopperProbability}

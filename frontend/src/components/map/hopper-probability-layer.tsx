@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
-import HopperProbabilityLegend from "./hopper-probability-legend";
+import { getMapServerUrl } from "../../utils/mapserver";
 
 interface HopperProbabilityLayerProps {
   visible: boolean;
@@ -15,42 +15,87 @@ export default function HopperProbabilityLayer({
   opacity = 0.7
 }: HopperProbabilityLayerProps) {
   const map = useMap();
+  const layerRef = useRef<L.TileLayer | null>(null);
 
   useEffect(() => {
-    if (!visible) return;
+    if (!map) return;
 
-    // Construct the WMS layer URL with the selected dekad
-    const wmsUrl = process.env.NODE_ENV === 'production' 
-      ? 'http://mapserver/cgi-bin/mapserv'
-      : 'http://localhost:8099/cgi-bin/mapserv';
+    // Remove existing layer if it exists
+    if (layerRef.current) {
+      map.removeLayer(layerRef.current);
+      layerRef.current = null;
+    }
 
-    // Extract year from dekad string (format: YYYYMMDD)
-    const year = dekad.substring(0, 4);
-    
-    // Create WMS layer for hopper probability with runtime substitution
-    const hopperLayer = L.tileLayer.wms(wmsUrl, {
-      layers: 'hopper_probability',
-      format: 'image/png',
-      transparent: true,
-      version: '1.3.0',
-      crs: L.CRS.EPSG4326,
-      opacity: opacity,
-      map: '/etc/mapserver/mapfiles/locust.map',
-      // Runtime substitution parameters
-      year: year,
-      dekad: dekad
-    } as any);
+    if (visible && dekad) {
+      // Extract year from dekad for runtime substitution
+      const year = dekad.substring(0, 4);
+      
+      console.log(`Loading hoppers habitat suitability layer for dekad: ${dekad}, year: ${year}`);
+      
+      // Create WMS layer with runtime substitution parameters
+      const baseUrl = getMapServerUrl();
+      const urlWithCacheBust = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}t=${Date.now()}&cache=${Math.random()}`;
+      console.log(`WMS URL: ${urlWithCacheBust}`);
+      
+      const wmsLayer = L.tileLayer.wms(urlWithCacheBust, {
+        layers: 'hopper_probability',
+        format: 'image/png',
+        transparent: true,
+        opacity: opacity,
+        attribution: `Hoppers Habitat Suitability - Dekad ${dekad}`,
+        version: '1.1.1',
+        // Runtime substitution parameters
+        year: year,
+        dekad: dekad,
+        maxZoom: 18,
+        minZoom: 1
+      } as any);
 
-    // Add layer to map
-    hopperLayer.addTo(map);
+      // Add error handling for failed tile loads
+      wmsLayer.on('tileerror', (e) => {
+        console.error(`Failed to load hoppers habitat suitability tile for dekad: ${dekad}`, e);
+      });
 
-    // Cleanup function to remove layer when component unmounts or visibility changes
+      // Add success handler to confirm layer loading
+      wmsLayer.on('tileload', () => {
+        console.log(`Successfully loaded hoppers habitat suitability tile for dekad: ${dekad}`);
+      });
+
+      // Add click event for hopper probability info
+      wmsLayer.on('click', (e: any) => {
+        const latlng = e.latlng;
+        L.popup()
+          .setLatLng(latlng)
+          .setContent(`
+            <div class="p-2">
+              <h3 class="font-semibold text-sm">Hoppers Habitat Suitability</h3>
+              <p class="text-xs text-gray-600">Dekad: ${dekad}</p>
+              <p class="text-xs text-gray-600">Location: ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}</p>
+              <p class="text-xs text-gray-600">VITO Model Output</p>
+            </div>
+          `)
+          .openOn(map);
+      });
+
+      wmsLayer.addTo(map);
+      layerRef.current = wmsLayer;
+    }
+
     return () => {
-      map.removeLayer(hopperLayer);
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
     };
   }, [map, visible, dekad, opacity]);
 
-  return <HopperProbabilityLegend visible={visible} />;
+  useEffect(() => {
+    if (layerRef.current && visible) {
+      layerRef.current.setOpacity(opacity);
+    }
+  }, [opacity, visible]);
+
+  return null;
 }
 
 // Helper function to generate dekad dates
@@ -85,11 +130,11 @@ export function generateDekadDates(startYear: number, endYear: number): Array<{v
 // Generate list of available dekads based on the TIFF files
 export const AVAILABLE_DEKADS = generateDekadDates(2017, 2024);
 
-// Color legend for hopper probability
+// Color legend for hopper habitat suitability
 export const HOPPER_PROBABILITY_LEGEND = [
-  { value: 0, color: "#eaeaea", label: "0% - No Risk" },
-  { value: 25, color: "#ffebbf", label: "25% - Low" },
-  { value: 50, color: "#ffd37f", label: "50% - Moderate" },
-  { value: 75, color: "#ffaa00", label: "75% - High" },
-  { value: 98, color: "#ff5500", label: "98%+ - Very High" }
+  { value: 0, color: "#00ff00", label: "0-20% - Very Low" },
+  { value: 25, color: "#80ff00", label: "20-40% - Low" },
+  { value: 50, color: "#ffff00", label: "40-60% - Moderate" },
+  { value: 75, color: "#ff8000", label: "60-80% - High" },
+  { value: 98, color: "#ff0000", label: "80%+ - Very High" }
 ];

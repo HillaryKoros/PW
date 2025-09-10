@@ -21,7 +21,7 @@ export default function HopperProbabilityLegend({ visible }: HopperProbabilityLe
     }
 
     // Create legend control
-    const legend = new L.Control({ position: "bottomright" });
+    const legend = new L.Control({ position: "topright" });
 
     legend.onAdd = function () {
       const div = L.DomUtil.create("div", "hopper-probability-legend");
@@ -39,28 +39,32 @@ export default function HopperProbabilityLegend({ visible }: HopperProbabilityLe
 
       div.innerHTML = `
         <div style="font-weight: 600; margin-bottom: 8px; color: #374151;">
-          Hopper Probability
+          Hoppers Habitat Suitability
         </div>
         <div style="display: flex; flex-direction: column; gap: 4px;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #eaeaea; border: 1px solid #ccc; border-radius: 2px;"></div>
-            <span style="color: #6b7280;">Very Low (0.0-0.2)</span>
+            <div style="width: 16px; height: 16px; background: transparent; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.0 - 0.01</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ffebbf; border: 1px solid #ccc; border-radius: 2px;"></div>
-            <span style="color: #6b7280;">Low (0.2-0.4)</span>
+            <div style="width: 16px; height: 16px; background: #00ff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.01 - 0.20</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ffd37f; border: 1px solid #ccc; border-radius: 2px;"></div>
-            <span style="color: #6b7280;">Moderate (0.4-0.6)</span>
+            <div style="width: 16px; height: 16px; background: #80ff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.20 - 0.40</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ffaa00; border: 1px solid #ccc; border-radius: 2px;"></div>
-            <span style="color: #6b7280;">High (0.6-0.8)</span>
+            <div style="width: 16px; height: 16px; background: #ffff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.40 - 0.60</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ff5500; border: 1px solid #ccc; border-radius: 2px;"></div>
-            <span style="color: #6b7280;">Very High (0.8-1.0)</span>
+            <div style="width: 16px; height: 16px; background: #ff8000; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.60 - 0.80</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="width: 16px; height: 16px; background: #ff0000; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <span style="color: #6b7280;">0.80 - 1.0</span>
           </div>
         </div>
       `;

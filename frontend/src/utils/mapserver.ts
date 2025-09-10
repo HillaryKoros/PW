@@ -1,24 +1,17 @@
 export function getMapServerUrl(): string {
-  // In production/staging, use the current host with port 8098
-  // In development, use localhost
-  const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  // Always use the current hostname with port 8099 for mapserver
+  // This works for both development (127.0.0.1:8097) and production
+  const hostname = window.location.hostname;
   
-  if (isDevelopment) {
-    return 'http://localhost:8099/cgi-bin/mapserv?map=/var/www/html/locust.map';
-  }
-  
-  // For staging/production, use the current hostname with port 8099
-  return `http://${window.location.hostname}:8099/cgi-bin/mapserv?map=/var/www/html/locust.map`;
+  // Use the same hostname as the frontend but different port for mapserver
+  return `http://${hostname}:8099/cgi-bin/mapserv?map=/var/www/html/locust.map`;
 }
 
 export function getMapCacheUrl(): string {
-  // MapCache WMS endpoint for improved performance
-  const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  // Always use the current hostname with port 8100 for mapcache
+  // This works for both development (127.0.0.1:8097) and production
+  const hostname = window.location.hostname;
   
-  if (isDevelopment) {
-    return 'http://localhost:8100/wms';
-  }
-  
-  // For staging/production, use the current hostname with port 8100
-  return `http://${window.location.hostname}:8100/wms`;
+  // Use the same hostname as the frontend but different port for mapcache
+  return `http://${hostname}:8100/wms`;
 }

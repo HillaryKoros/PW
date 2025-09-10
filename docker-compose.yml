@@ -2,6 +2,7 @@ services:
   # Backend API Service
   backend:
     container_name: pest_watch_backend
+    image: pest_watch-backend:latest
     build:
       context: .
       dockerfile: docker/backend.Dockerfile
@@ -18,6 +19,7 @@ services:
   # Frontend Web Service
   frontend:
     container_name: pest_watch_frontend
+    image: pest_watch-frontend:latest
     build:
       context: .
       dockerfile: docker/frontend.Dockerfile
@@ -31,6 +33,7 @@ services:
   # MapServer WMS Service
   mapserver:
     container_name: pest_watch_mapserver
+    image: pest_watch-mapserver:latest
     build:
       context: .
       dockerfile: docker/mapserver.Dockerfile
@@ -59,6 +62,7 @@ services:
   # MapCache Tile Service
   mapcache:
     container_name: pest_watch_mapcache
+    image: pest_watch-mapcache:latest
     build:
       context: .
       dockerfile: docker/mapcache.Dockerfile

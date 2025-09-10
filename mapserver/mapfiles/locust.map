@@ -546,6 +546,346 @@ MAP
     END
   END
 
+  # Hopper Probability Layer - January 2017 (First Dekad)
+  LAYER
+    NAME "hopper_jan_01_2017"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_2017_dekad_20170101.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Hopper Probability - January 1-10, 2017"
+      "wms_abstract" "VITO Hopper Probability for January 1-10, 2017"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=hopper_jan_01_2017&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Very Low"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Moderate"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 85 0
+        OPACITY 95
+      END
+    END
+  END
+
+  # Hopper Probability Layer - January 2017 (Second Dekad)
+  LAYER
+    NAME "hopper_jan_11_2017"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_2017_dekad_20170111.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Hopper Probability - January 11-20, 2017"
+      "wms_abstract" "VITO Hopper Probability for January 11-20, 2017"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=hopper_jan_11_2017&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Very Low"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Moderate"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 85 0
+        OPACITY 95
+      END
+    END
+  END
+
+  # Hopper Probability Layer - January 2017 (Third Dekad)
+  LAYER
+    NAME "hopper_jan_21_2017"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_2017_dekad_20170121.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Hopper Probability - January 21-31, 2017"
+      "wms_abstract" "VITO Hopper Probability for January 21-31, 2017"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=hopper_jan_21_2017&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Very Low"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Moderate"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 85 0
+        OPACITY 95
+      END
+    END
+  END
+
+  # Hopper Probability Layer - February 2017 (First Dekad)
+  LAYER
+    NAME "hopper_feb_01_2017"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_2017_dekad_20170201.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Hopper Probability - February 1-10, 2017"
+      "wms_abstract" "VITO Hopper Probability for February 1-10, 2017"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=hopper_feb_01_2017&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Very Low"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Moderate"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 85 0
+        OPACITY 95
+      END
+    END
+  END
+
+  # Hopper Probability Layer - February 2017 (Second Dekad)
+  LAYER
+    NAME "hopper_feb_11_2017"
+    TYPE RASTER
+    STATUS ON
+    GROUP "suitability_layers"
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_2017_dekad_20170211.tif"
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    METADATA
+      "wms_title" "Hopper Probability - February 11-20, 2017"
+      "wms_abstract" "VITO Hopper Probability for February 11-20, 2017"
+      "wms_srs" "EPSG:4326 EPSG:3857"
+      "wms_format" "image/png"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_legendurl_width" "20"
+      "wms_legendurl_height" "240"
+      "wms_legendurl_format" "image/png"
+      "wms_legendurl_href" "http://localhost:8099/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetLegendGraphic&LAYER=hopper_feb_11_2017&FORMAT=image/png"
+    END
+    PROCESSING "BANDS=1"
+    PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    CLASS
+      NAME "Very Low"
+      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      STYLE
+        COLOR 234 234 234
+        OPACITY 80
+      END
+    END
+    CLASS
+      NAME "Low"
+      EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
+      STYLE
+        COLOR 255 235 191
+        OPACITY 85
+      END
+    END
+    CLASS
+      NAME "Moderate"
+      EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
+      STYLE
+        COLOR 255 211 127
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "High"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
+      STYLE
+        COLOR 255 170 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 85 0
+        OPACITY 95
+      END
+    END
+  END
+
   # Outbreak Stages - Vector Layer
   LAYER
     NAME "outbreak_stages"
@@ -921,100 +1261,96 @@ MAP
     FILLED TRUE
   END
 
-END
-  # Hopper Probability Layer (Dynamic Dekadal Selection)
+  # Hopper Probability Layer - Dynamic Dekad Selection (2017-2024)
   LAYER
     NAME "hopper_probability"
     TYPE RASTER
-    STATUS OFF
+    STATUS ON
+    GROUP "suitability_layers"
+    
+    # Dynamic data path using runtime substitution
+    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_%year%_dekad_%dekad%.tif"
+    
+    EXTENT 21.838949 -11.745695 51.415695 23.145147
+    PROJECTION
+      "init=epsg:4326"
+    END
+    
+    # Validation patterns for runtime substitution
+    VALIDATION
+      "year" "^(201[7-9]|202[0-4])$"  # Years 2017-2024
+      "dekad" "^[0-9]{8}$"             # YYYYMMDD format
+      "default_year" "2024"
+      "default_dekad" "20240101"
+    END
+    
     METADATA
-      "wms_title" "Hopper Probability/Suitability"
-      "wms_abstract" "VITO hopper probability data by dekadal periods"
-      "wms_srs" "EPSG:4326"
-      "wms_enable_request" "*"
+      "wms_title" "Hoppers Habitat Suitability (Dekadal)"
+      "wms_abstract" "VITO Hoppers Habitat Suitability data - 10-day periods from 2017 to 2024"
+      "wms_srs" "EPSG:4326 EPSG:3857"
       "wms_format" "image/png"
-      "wms_layer_group" "/Desert Locust"
-      "wms_timeextent" "2017-01-01/2024-05-11/P10D"
-      "wms_timeitem" "TIME"
-      "wms_timedefault" "2024-01-01"
+      "wms_extent" "21.838949 -11.745695 51.415695 23.145147"
+      "wms_enable_request" "*"
       "wms_legendurl_width" "20"
       "wms_legendurl_height" "240"
       "wms_legendurl_format" "image/png"
     END
     
-    # Use runtime substitution for dynamic dekad selection
-    DATA "/etc/mapserver/attached_assets/hopper_suitability_VITO_tif/_HOPPER_PROB_%year%_dekad_%dekad%.tif"
-    EXTENT 21.838949 -11.745695 51.415695 23.145147
-    
-    # Validation for runtime substitution
-    VALIDATION
-      "dekad" "^[0-9]{8}$"
-      "year" "^[0-9]{4}$"
-    END
-    
-    PROJECTION
-      "init=epsg:4326"
-    END
-    
-    # Processing directives for better performance
     PROCESSING "BANDS=1"
-    PROCESSING "RESAMPLE=BILINEAR"
     PROCESSING "NODATA=-9999"
+    PROCESSING "RESAMPLE=NEAREST"
     PROCESSING "CLOSE_CONNECTION=DEFER"
     
-    # Color classification for probability values (0-100 represents 0.0-1.0 probability)
+    # Classification for probability values (0-100%)
     CLASS
-      NAME "No Data"
-      EXPRESSION ([pixel] = 0)
+      NAME "No Data / Water"
+      EXPRESSION ([pixel] <= 1 OR [pixel] = -9999)
       STYLE
         COLOR 255 255 255
         OPACITY 0
       END
     END
-    
     CLASS
-      NAME "Very Low (0.0-0.2)"
-      EXPRESSION ([pixel] > 0 AND [pixel] <= 20)
+      NAME "Very Low (1-20%)"
+      EXPRESSION ([pixel] > 1 AND [pixel] <= 20)
       STYLE
-        COLOR 234 234 234  # #eaeaea
+        COLOR 0 255 0
         OPACITY 80
       END
     END
-    
     CLASS
-      NAME "Low (0.2-0.4)"
+      NAME "Low (20-40%)"
       EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
       STYLE
-        COLOR 255 235 191  # #ffebbf
+        COLOR 128 255 0
         OPACITY 85
       END
     END
-    
     CLASS
-      NAME "Moderate (0.4-0.6)"
+      NAME "Moderate (40-60%)"
       EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
       STYLE
-        COLOR 255 211 127  # #ffd37f
-        OPACITY 85
-      END
-    END
-    
-    CLASS
-      NAME "High (0.6-0.8)"
-      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
-      STYLE
-        COLOR 255 170 0    # #ffaa00
+        COLOR 255 255 0
         OPACITY 90
       END
     END
-    
     CLASS
-      NAME "Very High (0.8-1.0)"
-      EXPRESSION ([pixel] > 80 AND [pixel] <= 100)
+      NAME "High (60-80%)"
+      EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
       STYLE
-        COLOR 255 85 0     # #ff5500
+        COLOR 255 128 0
+        OPACITY 90
+      END
+    END
+    CLASS
+      NAME "Very High (>80%)"
+      EXPRESSION ([pixel] > 80)
+      STYLE
+        COLOR 255 0 0
         OPACITY 95
       END
     END
   END
+
+END
 

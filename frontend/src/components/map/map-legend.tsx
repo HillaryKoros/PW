@@ -12,6 +12,7 @@ interface MapLegendProps {
   showGregarization?: boolean;
   showTemporalBreeding?: boolean;
   showOutbreakStages?: boolean;
+  showHopperProbability?: boolean;
 }
 
 export default function MapLegend({ 
@@ -21,12 +22,13 @@ export default function MapLegend({
   showFeedingSusceptibility = false,
   showGregarization = false,
   showTemporalBreeding = false,
-  showOutbreakStages = false
+  showOutbreakStages = false,
+  showHopperProbability = false
 }: MapLegendProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Don't render if no layers are visible
-  if (!showBreedingSuitability && !showTrajectory && !showSwarmCoverage && !showFeedingSusceptibility && !showGregarization && !showTemporalBreeding && !showOutbreakStages) {
+  if (!showBreedingSuitability && !showTrajectory && !showSwarmCoverage && !showFeedingSusceptibility && !showGregarization && !showTemporalBreeding && !showOutbreakStages && !showHopperProbability) {
     return null;
   }
 
@@ -37,7 +39,7 @@ export default function MapLegend({
       <Card className="min-w-48 bg-white border border-gray-300 shadow-xl pointer-events-auto">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-gray-800">Layer Legend</h2>
+            <h2 className="text-sm font-bold text-gray-800">Hoppers Habitat Suitability</h2>
             <Button
               variant="ghost"
               size="sm"
@@ -229,6 +231,38 @@ export default function MapLegend({
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FFEBEB' }}></div>
                     <span className="text-xs text-gray-700">Very Low (0.05-0.2)</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Hoppers Habitat Suitability */}
+            {showHopperProbability && (
+              <div>
+                <div className="space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300 bg-transparent"></div>
+                    <span className="text-xs text-gray-700">0.0 - 0.01</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#00ff00' }}></div>
+                    <span className="text-xs text-gray-700">0.01 - 0.20</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#80ff00' }}></div>
+                    <span className="text-xs text-gray-700">0.20 - 0.40</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ffff00' }}></div>
+                    <span className="text-xs text-gray-700">0.40 - 0.60</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ff8000' }}></div>
+                    <span className="text-xs text-gray-700">0.60 - 0.80</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ff0000' }}></div>
+                    <span className="text-xs text-gray-700">0.80 - 1.0</span>
                   </div>
                 </div>
               </div>
