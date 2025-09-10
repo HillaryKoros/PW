@@ -47,23 +47,23 @@ export default function HopperProbabilityLegend({ visible }: HopperProbabilityLe
             <span style="color: #6b7280;">0.0 - 0.01</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #00ff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <div style="width: 16px; height: 16px; background: #ACB334; border: 1px solid #ccc; border-radius: 2px;"></div>
             <span style="color: #6b7280;">0.01 - 0.20</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #80ff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <div style="width: 16px; height: 16px; background: #FAB733; border: 1px solid #ccc; border-radius: 2px;"></div>
             <span style="color: #6b7280;">0.20 - 0.40</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ffff00; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <div style="width: 16px; height: 16px; background: #FF9E15; border: 1px solid #ccc; border-radius: 2px;"></div>
             <span style="color: #6b7280;">0.40 - 0.60</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ff8000; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <div style="width: 16px; height: 16px; background: #FF4E11; border: 1px solid #ccc; border-radius: 2px;"></div>
             <span style="color: #6b7280;">0.60 - 0.80</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="width: 16px; height: 16px; background: #ff0000; border: 1px solid #ccc; border-radius: 2px;"></div>
+            <div style="width: 16px; height: 16px; background: #FF0D0D; border: 1px solid #ccc; border-radius: 2px;"></div>
             <span style="color: #6b7280;">0.80 - 1.0</span>
           </div>
         </div>

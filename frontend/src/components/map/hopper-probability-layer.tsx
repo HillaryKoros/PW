@@ -132,9 +132,9 @@ export const AVAILABLE_DEKADS = generateDekadDates(2017, 2024);
 
 // Color legend for hopper habitat suitability
 export const HOPPER_PROBABILITY_LEGEND = [
-  { value: 0, color: "#00ff00", label: "0-20% - Very Low" },
-  { value: 25, color: "#80ff00", label: "20-40% - Low" },
-  { value: 50, color: "#ffff00", label: "40-60% - Moderate" },
-  { value: 75, color: "#ff8000", label: "60-80% - High" },
-  { value: 98, color: "#ff0000", label: "80%+ - Very High" }
+  { value: 0, color: "#ACB334", label: "0-20% - Very Low" },
+  { value: 25, color: "#FAB733", label: "20-40% - Low" },
+  { value: 50, color: "#FF9E15", label: "40-60% - Moderate" },
+  { value: 75, color: "#FF4E11", label: "60-80% - High" },
+  { value: 98, color: "#FF0D0D", label: "80%+ - Very High" }
 ];

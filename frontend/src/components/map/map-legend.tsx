@@ -245,23 +245,23 @@ export default function MapLegend({
                     <span className="text-xs text-gray-700">0.0 - 0.01</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#00ff00' }}></div>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ACB334' }}></div>
                     <span className="text-xs text-gray-700">0.01 - 0.20</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#80ff00' }}></div>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FAB733' }}></div>
                     <span className="text-xs text-gray-700">0.20 - 0.40</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ffff00' }}></div>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF9E15' }}></div>
                     <span className="text-xs text-gray-700">0.40 - 0.60</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ff8000' }}></div>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF4E11' }}></div>
                     <span className="text-xs text-gray-700">0.60 - 0.80</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#ff0000' }}></div>
+                    <div className="w-3 h-3 border border-gray-300" style={{ backgroundColor: '#FF0D0D' }}></div>
                     <span className="text-xs text-gray-700">0.80 - 1.0</span>
                   </div>
                 </div>

@@ -1314,7 +1314,7 @@ MAP
       NAME "Very Low (1-20%)"
       EXPRESSION ([pixel] > 1 AND [pixel] <= 20)
       STYLE
-        COLOR 0 255 0
+        COLOR 172 179 52
         OPACITY 80
       END
     END
@@ -1322,7 +1322,7 @@ MAP
       NAME "Low (20-40%)"
       EXPRESSION ([pixel] > 20 AND [pixel] <= 40)
       STYLE
-        COLOR 128 255 0
+        COLOR 250 183 51
         OPACITY 85
       END
     END
@@ -1330,7 +1330,7 @@ MAP
       NAME "Moderate (40-60%)"
       EXPRESSION ([pixel] > 40 AND [pixel] <= 60)
       STYLE
-        COLOR 255 255 0
+        COLOR 255 158 21
         OPACITY 90
       END
     END
@@ -1338,7 +1338,7 @@ MAP
       NAME "High (60-80%)"
       EXPRESSION ([pixel] > 60 AND [pixel] <= 80)
       STYLE
-        COLOR 255 128 0
+        COLOR 255 78 17
         OPACITY 90
       END
     END
@@ -1346,7 +1346,7 @@ MAP
       NAME "Very High (>80%)"
       EXPRESSION ([pixel] > 80)
       STYLE
-        COLOR 255 0 0
+        COLOR 255 13 13
         OPACITY 95
       END
     END
